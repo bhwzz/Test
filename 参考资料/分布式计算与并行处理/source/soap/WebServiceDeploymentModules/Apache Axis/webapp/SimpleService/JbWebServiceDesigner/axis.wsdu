@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebservicesDesigner
+    xmlns="http://www.borland.com/jbuilder/webservices/axis/designer/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    autoScanAndExportSessionBeans="false" isLiveSyncExportEnabled="true"
+    preserveDeploymentState="false" isLiveSyncImportEnabled="false"
+    autoScanAndExportMessageDrivenBeans="false"
+    autoValidateOnBuild="true" addWSDLToProjectOnBuild="true"
+    autoRefreshImportWsdl="false" autoRefreshImportUDDIService="false"
+    defaultClientGenerationWhileExport="true"
+    defaultServerGenerationWhileImport="false" enabled="true" xsi:type="webserviceDesigner">
+    <import/>
+    <export>
+        <java2wsdl autoValidateOnBuild="true" enabled="true"
+            displayName="MyService" internalId="1136475245546"
+            isLiveSyncExportEnabled="false"
+            bindingname="MyServiceSoapBinding"
+            classname="soap.MyService"
+            location="http://localhost:8080/SimpleService/services/MyService"
+            methods="getSample, setSample" namespace="http://soap"
+            output="MyService.wsdl" porttypename="MyService"
+            serviceelementname="MyServiceService"
+            serviceportname="MyService"
+            stopclasses="javax.* java.* org.apache.axis.AxisFault "
+            style="rpc" typemappingversion="1.1" use="encoded"
+            useinheritedmethods="false" deployscope="Request" soapaction="DEFAULT">
+            <generatedFile file="../src/soap/generated/MyServiceService.java"/>
+            <generatedFile file="../src/soap/generated/MyServiceServiceLocator.java"/>
+            <generatedFile file="../src/soap/generated/MyService.java"/>
+            <generatedFile file="../src/soap/generated/MyServiceSoapBindingStub.java"/>
+            <generatedFile file="../test/soap/generated/MyServiceServiceTestCase.java"/>
+            <clientSettings autoValidateOnBuild="true" enabled="true"
+                isLiveSyncImportEnabled="false" all="true" debug="false"
+                deployscope="Request" helpergen="true" noimports="false"
+                output="src" serverside="false" skeletondeploy="false"
+                testcase="false" testcaseoverwrite="false" timeout="0"
+                typemappingversion="1.1" url="MyService.wsdl"
+                verbose="false" wrapped="true" packageforall="false" overWriteTypes="false">
+                <mapping namespace="http://soap" packagename="soap.generated"/>
+            </clientSettings>
+        </java2wsdl>
+        <java2wsdl autoValidateOnBuild="true" enabled="true"
+            displayName="HelloWorld" internalId="1166642969187"
+            isLiveSyncExportEnabled="false"
+            bindingname="HelloWorldSoapBinding"
+            classname="soap.HelloWorld"
+            location="http://localhost:8080/SimpleService/services/HelloWorld"
+            namespace="http://soap" output="HelloWorld.wsdl"
+            porttypename="HelloWorld"
+            serviceelementname="HelloWorldService"
+            serviceportname="HelloWorld"
+            stopclasses="java.*,javax.*,org.apache.axis.AxisFault"
+            style="rpc" typemappingversion="1.1" use="encoded"
+            useinheritedmethods="false" deployscope="Request" soapaction="DEFAULT">
+            <generatedFile file="../src/soap/generated/HelloWorldSoapBindingStub.java"/>
+            <generatedFile file="../src/soap/generated/HelloWorldServiceLocator.java"/>
+            <generatedFile file="../src/soap/generated/HelloWorldService.java"/>
+            <generatedFile file="../src/soap/generated/HelloWorld.java"/>
+            <generatedFile file="../test/soap/generated/HelloWorldServiceTestCase.java"/>
+            <clientSettings autoValidateOnBuild="true" enabled="true"
+                isLiveSyncImportEnabled="false" all="true" debug="false"
+                deployscope="Request" helpergen="true" noimports="false"
+                output="src" serverside="false" skeletondeploy="false"
+                testcase="true" testcaseoverwrite="false" timeout="0"
+                typemappingversion="1.1" url="HelloWorld.wsdl"
+                verbose="false" wrapped="true" packageforall="false" overWriteTypes="false">
+                <mapping namespace="http://soap" packagename="soap.generated"/>
+            </clientSettings>
+        </java2wsdl>
+        <java2wsdl autoValidateOnBuild="true" enabled="true"
+            displayName="EchoServer" internalId="1166645702062"
+            isLiveSyncExportEnabled="false"
+            bindingname="EchoServerSoapBinding"
+            classname="soap.EchoServer"
+            location="http://localhost:8080/SimpleService/services/EchoServer"
+            namespace="http://soap" output="EchoServer.wsdl"
+            porttypename="EchoServer"
+            serviceelementname="EchoServerService"
+            serviceportname="EchoServer"
+            stopclasses="java.*,javax.*,org.apache.axis.AxisFault"
+            style="rpc" typemappingversion="1.1" use="encoded"
+            useinheritedmethods="false" deployscope="Request" soapaction="DEFAULT">
+            <generatedFile file="../src/soap/generated/EchoServerService.java"/>
+            <generatedFile file="../src/soap/generated/EchoServer.java"/>
+            <generatedFile file="../src/soap/generated/EchoServerServiceLocator.java"/>
+            <generatedFile file="../src/soap/generated/EchoServerSoapBindingStub.java"/>
+            <generatedFile file="../test/soap/generated/EchoServerServiceTestCase.java"/>
+            <clientSettings autoValidateOnBuild="true" enabled="true"
+                isLiveSyncImportEnabled="false" all="true" debug="false"
+                deployscope="Request" helpergen="true" noimports="false"
+                output="src" serverside="false" skeletondeploy="false"
+                testcase="true" testcaseoverwrite="false" timeout="0"
+                typemappingversion="1.1" url="EchoServer.wsdl"
+                verbose="false" wrapped="true" packageforall="false" overWriteTypes="false">
+                <mapping namespace="http://soap" packagename="soap.generated"/>
+            </clientSettings>
+        </java2wsdl>
+    </export>
+</WebservicesDesigner>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns:java="http://xml.apache.org/axis/wsdd/providers/java"
+    xmlns:handler="http://xml.apache.org/axis/wsdd/providers/handler"
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    name="defaultClientConfig" xsi:type="deployment">
+    <globalConfiguration name="GlobalConfiguration1" type="" regenerateElement="false">
+        <parameter name="disablePrettyXML" value="true" regenerateElement="false"/>
+        <parameter name="dotNetSoapEncFix" value="true" regenerateElement="false"/>
+        <requestFlow name="RequestFlow1" type="" regenerateElement="false">
+            <handler name="Handler1"
+                type="java:org.apache.axis.handlers.JWSHandler" regenerateElement="false">
+                <parameter name="scope" value="session" regenerateElement="false"/>
+            </handler>
+            <handler name="Handler2"
+                type="java:org.apache.axis.handlers.JWSHandler" regenerateElement="false">
+                <parameter name="scope" value="request" regenerateElement="false"/>
+                <parameter name="extension" value=".jwr" regenerateElement="false"/>
+            </handler>
+        </requestFlow>
+    </globalConfiguration>
+    <handler name="URLMapper"
+        type="java:org.apache.axis.handlers.http.URLMapper" regenerateElement="false"/>
+    <handler name="LocalResponder"
+        type="java:org.apache.axis.transport.local.LocalResponder" regenerateElement="false"/>
+    <handler name="Authenticate"
+        type="java:org.apache.axis.handlers.SimpleAuthenticationHandler" regenerateElement="false"/>
+    <transport name="http" type="" regenerateElement="false">
+        <parameter name="qs:list"
+            value="org.apache.axis.transport.http.QSListHandler" regenerateElement="false"/>
+        <parameter name="qs:method"
+            value="org.apache.axis.transport.http.QSMethodHandler" regenerateElement="false"/>
+        <parameter name="qs:wsdl"
+            value="org.apache.axis.transport.http.QSWSDLHandler" regenerateElement="false"/>
+        <requestFlow name="RequestFlow1" type="" regenerateElement="false">
+            <handler name="Handler1" type="URLMapper" regenerateElement="false"/>
+            <handler name="Handler2"
+                type="java:org.apache.axis.handlers.http.HTTPAuthHandler" regenerateElement="false"/>
+        </requestFlow>
+    </transport>
+    <transport name="local" type="" regenerateElement="false">
+        <responseFlow name="ResponseFlow1" type="" regenerateElement="false">
+            <handler name="Handler1" type="LocalResponder" regenerateElement="false"/>
+        </responseFlow>
+    </transport>
+    <service name="AdminService" type="" regenerateElement="false"
+        provider="java:MSG" validate="false">
+        <parameter name="allowedMethods" value="AdminService" regenerateElement="false"/>
+        <parameter name="enableRemoteAdmin" value="false" regenerateElement="false"/>
+        <parameter name="className" value="org.apache.axis.utils.Admin" regenerateElement="false"/>
+        <namespace>http://xml.apache.org/axis/wsdd/</namespace>
+    </service>
+    <service name="Version" type="" regenerateElement="false"
+        provider="java:RPC" validate="false">
+        <parameter name="allowedMethods" value="getVersion" regenerateElement="false"/>
+        <parameter name="className" value="org.apache.axis.Version" regenerateElement="false"/>
+    </service>
+    <service name="MyService" type="" regenerateElement="true"
+        provider="java:RPC" style="rpc" use="encoded" validate="true">
+        <parameter name="scope" value="Request" regenerateElement="false"/>
+        <parameter name="className" value="soap.MyService" regenerateElement="false"/>
+        <parameter name="allowedMethods" value="getSample, setSample" regenerateElement="false"/>
+        <namespace>http://soap</namespace>
+    </service>
+    <service name="HelloWorld" type="" regenerateElement="true"
+        provider="java:RPC" style="rpc" use="encoded" validate="true">
+        <parameter name="scope" value="Request" regenerateElement="false"/>
+        <parameter name="className" value="soap.HelloWorld" regenerateElement="false"/>
+        <parameter name="allowedMethods" value="*" regenerateElement="false"/>
+        <namespace>http://soap</namespace>
+    </service>
+    <service name="EchoServer" type="" regenerateElement="true"
+        provider="java:RPC" style="rpc" use="encoded" validate="true">
+        <parameter name="scope" value="Request" regenerateElement="false"/>
+        <parameter name="className" value="soap.EchoServer" regenerateElement="false"/>
+        <parameter name="allowedMethods" value="*" regenerateElement="false"/>
+        <namespace>http://soap</namespace>
+    </service>
+</deployment>

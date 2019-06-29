@@ -1,0 +1,6 @@
+grant {
+    permission java.net.SocketPermission "*:1024-65535",
+        "connect,accept";
+    permission java.io.FilePermission
+        "D:\\课程\\分布式计算\\source\\RMI\\computeEngine\\classes", "read";
+};

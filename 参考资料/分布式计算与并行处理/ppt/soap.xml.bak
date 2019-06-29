@@ -1,0 +1,15 @@
+POST /WebModule1/services/Bean1 HTTP/1.0
+Content-Type: text/xml; charset=utf-8
+Accept: application/soap+xml, application/dime, multipart/related, text/*
+User-Agent: Axis/1.2beta3
+Host: 127.0.0.1:8082
+Cache-Control: no-cache
+Pragma: no-cache
+SOAPAction: ""
+Content-Length: 341
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <soapenv:Body>
+      <ns1:getSample soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns1="http://DefaultNamespace"/>
+   </soapenv:Body>
+</soapenv:Envelope>

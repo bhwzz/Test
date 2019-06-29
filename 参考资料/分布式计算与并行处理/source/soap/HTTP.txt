@@ -1,0 +1,75 @@
+POST /SimpleService/services/HelloWorld HTTP/1.0
+Content-Type: text/xml; charset=utf-8
+Accept: application/soap+xml, application/dime, multipart/related, text/*
+User-Agent: Axis/1.2.1
+Host: 127.0.0.1:8082
+Cache-Control: no-cache
+Pragma: no-cache
+SOAPAction: ""
+Content-Length: 378
+
+<?xml version="1.0" encoding="UTF-8"?>
+   <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <soapenv:Body>
+         <ns1:sayHello soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns1="http://soapinterop.org/"/>
+      </soapenv:Body>
+   </soapenv:Envelope>
+
+HTTP/1.1 200 OK
+Server: Apache-Coyote/1.1
+Content-Type: text/xml;charset=utf-8
+Date: Wed, 20 Dec 2006 19:37:20 GMT
+Connection: close
+
+<?xml version="1.0" encoding="utf-8"?>
+   <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <soapenv:Body>
+         <ns1:sayHelloResponse soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns1="http://soapinterop.org/">
+            <sayHelloReturn xsi:type="xsd:string">Hello world!</sayHelloReturn>
+         </ns1:sayHelloResponse>
+      </soapenv:Body>
+</soapenv:Envelope>
+
+
+
+
+POST /SimpleService/services/EchoServer HTTP/1.0
+Content-Type: text/xml; charset=utf-8
+Accept: application/soap+xml, application/dime, multipart/related, text/*
+User-Agent: Axis/1.2.1
+Host: 127.0.0.1:8082
+Cache-Control: no-cache
+Pragma: no-cache
+SOAPAction: ""
+Content-Length: 507
+
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope	xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+					xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <soapenv:Body>
+         <ns1:echoString soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns1="http://soapinterop.org/">
+            <ns1:arg0 xsi:type="soapenc:string" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">Hello!</ns1:arg0>
+         </ns1:echoString>
+      </soapenv:Body>
+</soapenv:Envelope>
+
+
+
+
+HTTP/1.1 200 OK
+Server: Apache-Coyote/1.1
+Content-Type: text/xml;charset=utf-8
+Date: Wed, 20 Dec 2006 20:18:37 GMT
+Connection: close
+
+<?xml version="1.0" encoding="utf-8"?>
+<soapenv:Envelope	xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+					xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <soapenv:Body>
+         <ns1:echoStringResponse soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns1="http://soapinterop.org/">
+            <echoStringReturn xsi:type="xsd:string">Hello!</echoStringReturn>
+         </ns1:echoStringResponse>
+      </soapenv:Body>
+</soapenv:Envelope>
