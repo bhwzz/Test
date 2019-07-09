@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    default="JB_Default_Task" xsi:type="project">
+    <taskdef name="java2wsdl" classname="org.apache.axis.tools.ant.wsdl.Java2WsdlAntTask"/>
+    <taskdef name="wsdl2java" classname="org.apache.axis.tools.ant.wsdl.JBWsdl2javaAntTask"/>
+    <target name="JB_Default_Task">
+        <java2wsdl bindingname="MyServiceSoapBinding"
+            classname="soap.MyService"
+            location="http://localhost:8080/SimpleService/services/MyService"
+            methods="getSample, setSample" namespace="http://soap"
+            output="D:/课程/分布式计算/source/soap/MyService.wsdl"
+            porttypename="MyService"
+            serviceelementname="MyServiceService"
+            serviceportname="MyService"
+            stopclasses="javax.* java.* org.apache.axis.AxisFault "
+            style="rpc" typemappingversion="1.1" use="encoded"
+            useinheritedmethods="false" soapaction="DEFAULT">
+            <classpath>
+                <pathelement path="D:\课程\分布式计算\source\soap\classes;C:\Borland\JBuilder2006\thirdparty\jakarta-tomcat-5.5.9\common\lib\servlet-api.jar;C:\Borland\JBuilder2006\thirdparty\jakarta-tomcat-5.5.9\common\lib\jsp-api.jar;C:\Borland\JBuilder2006\thirdparty\junit3.8\junit.jar;C:\Borland\JBuilder2006\lib\unittest.jar;C:\Borland\JBuilder2006\jdk1.5\lib\jconsole.jar;C:\Borland\JBuilder2006\jdk1.5\lib\tools.jar;C:\Borland\JBuilder2006\jdk1.5\lib\htmlconverter.jar;C:\Borland\JBuilder2006\jdk1.5\lib\dt.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\jsse.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\im\indicim.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\im\thaiim.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\jce.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\deploy.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\javaws.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\charsets.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\rt.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\ext\dnsns.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\ext\sunpkcs11.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\ext\localedata.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\ext\sunjce_provider.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\plugin.jar;"/>
+            </classpath>
+        </java2wsdl>
+        <wsdl2java all="true" debug="false" helperGen="true"
+            noimports="false"
+            testCaseOutputDirectory="D:/课程/分布式计算/source/soap/classes/ws-gen/test/1136475245546-MyService"
+            output="D:/课程/分布式计算/source/soap/classes/ws-gen/src/1136475245546-MyService"
+            serverside="false" skeletonDeploy="false" testcase="false"
+            testcaseoverwrite="false" typeMappingVersion="1.1"
+            url="file:///D:/课程/分布式计算/source/soap/MyService.wsdl"
+            verbose="false" noWrapped="false" overWriteTypes="false">
+            <mapping namespace="http://soap" package="soap.generated"/>
+        </wsdl2java>
+        <java2wsdl bindingname="HelloWorldSoapBinding"
+            classname="soap.HelloWorld"
+            location="http://localhost:8080/SimpleService/services/HelloWorld"
+            namespace="http://soap"
+            output="D:/课程/分布式计算/source/soap/HelloWorld.wsdl"
+            porttypename="HelloWorld"
+            serviceelementname="HelloWorldService"
+            serviceportname="HelloWorld"
+            stopclasses="java.*,javax.*,org.apache.axis.AxisFault"
+            style="rpc" typemappingversion="1.1" use="encoded"
+            useinheritedmethods="false" soapaction="DEFAULT">
+            <classpath>
+                <pathelement path="D:\课程\分布式计算\source\soap\classes;C:\Borland\JBuilder2006\thirdparty\jakarta-tomcat-5.5.9\common\lib\servlet-api.jar;C:\Borland\JBuilder2006\thirdparty\jakarta-tomcat-5.5.9\common\lib\jsp-api.jar;C:\Borland\JBuilder2006\thirdparty\junit3.8\junit.jar;C:\Borland\JBuilder2006\lib\unittest.jar;C:\Borland\JBuilder2006\jdk1.5\lib\jconsole.jar;C:\Borland\JBuilder2006\jdk1.5\lib\tools.jar;C:\Borland\JBuilder2006\jdk1.5\lib\htmlconverter.jar;C:\Borland\JBuilder2006\jdk1.5\lib\dt.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\jsse.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\im\indicim.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\im\thaiim.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\jce.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\deploy.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\javaws.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\charsets.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\rt.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\ext\dnsns.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\ext\sunpkcs11.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\ext\localedata.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\ext\sunjce_provider.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\plugin.jar;"/>
+            </classpath>
+        </java2wsdl>
+        <wsdl2java all="true" debug="false" helperGen="true"
+            noimports="false"
+            testCaseOutputDirectory="D:/课程/分布式计算/source/soap/classes/ws-gen/test/1166642969187-HelloWorld"
+            output="D:/课程/分布式计算/source/soap/classes/ws-gen/src/1166642969187-HelloWorld"
+            serverside="false" skeletonDeploy="false" testcase="true"
+            testcaseoverwrite="false" typeMappingVersion="1.1"
+            url="file:///D:/课程/分布式计算/source/soap/HelloWorld.wsdl"
+            verbose="false" noWrapped="false" overWriteTypes="false">
+            <mapping namespace="http://soap" package="soap.generated"/>
+        </wsdl2java>
+        <java2wsdl bindingname="EchoServerSoapBinding"
+            classname="soap.EchoServer"
+            location="http://localhost:8080/SimpleService/services/EchoServer"
+            namespace="http://soap"
+            output="D:/课程/分布式计算/source/soap/EchoServer.wsdl"
+            porttypename="EchoServer"
+            serviceelementname="EchoServerService"
+            serviceportname="EchoServer"
+            stopclasses="java.*,javax.*,org.apache.axis.AxisFault"
+            style="rpc" typemappingversion="1.1" use="encoded"
+            useinheritedmethods="false" soapaction="DEFAULT">
+            <classpath>
+                <pathelement path="D:\课程\分布式计算\source\soap\classes;C:\Borland\JBuilder2006\thirdparty\jakarta-tomcat-5.5.9\common\lib\servlet-api.jar;C:\Borland\JBuilder2006\thirdparty\jakarta-tomcat-5.5.9\common\lib\jsp-api.jar;C:\Borland\JBuilder2006\thirdparty\junit3.8\junit.jar;C:\Borland\JBuilder2006\lib\unittest.jar;C:\Borland\JBuilder2006\jdk1.5\lib\jconsole.jar;C:\Borland\JBuilder2006\jdk1.5\lib\tools.jar;C:\Borland\JBuilder2006\jdk1.5\lib\htmlconverter.jar;C:\Borland\JBuilder2006\jdk1.5\lib\dt.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\jsse.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\im\indicim.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\im\thaiim.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\jce.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\deploy.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\javaws.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\charsets.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\rt.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\ext\dnsns.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\ext\sunpkcs11.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\ext\localedata.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\ext\sunjce_provider.jar;C:\Borland\JBuilder2006\jdk1.5\jre\lib\plugin.jar;"/>
+            </classpath>
+        </java2wsdl>
+        <wsdl2java all="true" debug="false" helperGen="true"
+            noimports="false"
+            testCaseOutputDirectory="D:/课程/分布式计算/source/soap/classes/ws-gen/test/1166645702062-EchoServer"
+            output="D:/课程/分布式计算/source/soap/classes/ws-gen/src/1166645702062-EchoServer"
+            serverside="false" skeletonDeploy="false" testcase="true"
+            testcaseoverwrite="false" typeMappingVersion="1.1"
+            url="file:///D:/课程/分布式计算/source/soap/EchoServer.wsdl"
+            verbose="false" noWrapped="false" overWriteTypes="false">
+            <mapping namespace="http://soap" package="soap.generated"/>
+        </wsdl2java>
+    </target>
+</project>

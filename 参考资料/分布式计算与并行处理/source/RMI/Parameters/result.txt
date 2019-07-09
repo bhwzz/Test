@@ -1,0 +1,28 @@
+server:
+Registry created on host computer localhost on port 10002
+Remote HelloService implementation object created
+Bindings Finished, waiting for client requests.
+MessageObject: Class Number is #0 Object Number is #0
+MessageObject: Class Number is #1 Object Number is #1
+MessageObject: Class Number is #2 Object Number is #2
+MessageObject: Class Number is #3 Object Number is #3
+MessageObject: Class Number is #4 Object Number is #4
+MessageObject: Class Number is #5 Object Number is #5
+MessageObject: Class Number is #6 Object Number is #6
+MessageObject: Class Number is #7 Object Number is #7
+MessageObject: Class Number is #8 Object Number is #8
+MessageObject: Class Number is #9 Object Number is #9
+
+client:
+HelloService lookup successful
+The server says: Hello!
+MessageObject: Class Number is #0 Object Number is #0
+MessageObject: Class Number is #0 Object Number is #1
+MessageObject: Class Number is #0 Object Number is #2
+MessageObject: Class Number is #0 Object Number is #3
+MessageObject: Class Number is #0 Object Number is #4
+MessageObject: Class Number is #0 Object Number is #5
+MessageObject: Class Number is #0 Object Number is #6
+MessageObject: Class Number is #0 Object Number is #7
+MessageObject: Class Number is #0 Object Number is #8
+MessageObject: Class Number is #0 Object Number is #9
