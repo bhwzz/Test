@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="RMI/City/src/|soap/src/|RMI/|RMI/Calculator/|socket/src/|RMI/Parameters/|soap/test/|CORBA/HelloString/|RMI/Callbacks/|CORBA/HelloTie/|RMI/computeEngine/|CORBA/hello/" kind="src" path="参考资料/分布式计算与并行处理/source"/>
+	<classpathentry kind="src" path="参考资料/分布式计算与并行处理/source/CORBA/hello"/>
+	<classpathentry kind="src" path="参考资料/分布式计算与并行处理/source/CORBA/HelloString"/>
+	<classpathentry kind="src" path="参考资料/分布式计算与并行处理/source/CORBA/HelloTie"/>
+	<classpathentry excluding="City/src/|Calculator/|Parameters/|Callbacks/|computeEngine/" kind="src" path="参考资料/分布式计算与并行处理/source/RMI"/>
+	<classpathentry kind="src" path="参考资料/分布式计算与并行处理/source/RMI/Calculator"/>
+	<classpathentry kind="src" path="参考资料/分布式计算与并行处理/source/RMI/Callbacks"/>
+	<classpathentry kind="src" path="参考资料/分布式计算与并行处理/source/RMI/City/src"/>
+	<classpathentry kind="src" path="参考资料/分布式计算与并行处理/source/RMI/computeEngine"/>
+	<classpathentry kind="src" path="参考资料/分布式计算与并行处理/source/RMI/Parameters"/>
+	<classpathentry kind="src" path="参考资料/分布式计算与并行处理/source/soap/src"/>
+	<classpathentry kind="src" path="参考资料/分布式计算与并行处理/source/soap/test"/>
+	<classpathentry kind="src" path="参考资料/分布式计算与并行处理/source/socket/src"/>
+	<classpathentry kind="src" path="参考资料/学生选课系统/CourseSys/src"/>
+	<classpathentry kind="src" path="参考资料/student/src"/>
+	<classpathentry kind="src" path="Code/Student_Course_Selection_System/src"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="参考资料/学生选课系统/CourseSys/lib/AbsoluteLayout.jar"/>
+	<classpathentry kind="lib" path="参考资料/学生选课系统/CourseSys/lib/swing-layout-1.0.3.jar"/>
+	<classpathentry kind="output" path="参考资料/student/bin"/>
+</classpath>
