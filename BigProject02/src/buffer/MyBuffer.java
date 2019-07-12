@@ -1,4 +1,15 @@
+import EntityClass.Student;
 
-public class MyBuffer {
-
+public interface MyBuffer
+{
+	public Object Find(String s) ;   //找到返回true 没找到返回false
+	//public boolean change(Object s) ;   //找到返回true 没找到返回false
+	
+	public boolean Change(Object s);  
+	
+	public boolean Add(Object s);
+	
+	public boolean Delete(String s);  
+		
+	
 }

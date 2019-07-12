@@ -1,5 +1,7 @@
 package filetool;
 
+import EntityClass.Student;
+
 public class StuQuality {
 	private String id;
 	private String name;
@@ -14,6 +16,13 @@ public class StuQuality {
 		this.classroom = classroom;
 		this.gender = gender;
 	}
+	StuQuality(Student s){
+		this.id = s.getId();
+		this.name= s.getName();
+		this.classroom = s.getClassroom();
+		this.gender = s.getGender();
+	}
+	
 	public String get(String name,int classroom,char gender) {
 		this.name=name;
 		this.classroom = classroom;

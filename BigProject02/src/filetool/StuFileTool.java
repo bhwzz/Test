@@ -1,13 +1,16 @@
 package filetool;
 //编写一个学生文件
-
+//writeback前两行要改一下
 import java.io.*;
 import java.util.*;
+
+import EntityClass.Student;
+
 
 
 //Student s1=new Student("0000001","王丽安",18,'女');
 public class StuFileTool {
-
+	int LINELENGTH = 24;
 	File f1;
 	Map<String , String> bufferMap;
 	public StuFileTool(String s) {
@@ -15,12 +18,55 @@ public class StuFileTool {
 		f1 = new File(s);
 		
 	}
+
+	
+	
+	public void writeback(Student s) throws Exception {
+		String pathString = bufferMap.get(s.getId());
+//	
+//	
+//	public void writeback(String s) throws Exception {
+//		String pathString = bufferMap.get(s);
+		RandomAccessFile raf = new RandomAccessFile(f1, "rw");
+		raf.seek(Integer.parseInt(pathString)*LINELENGTH);
+		String tempString=new StuQuality(s).get()+",0"+"\r\n";	
+		raf.write(tempString.getBytes());
+		raf.close();
+	}
+	
+	public void delete(String s) throws Exception {
+		String pathString = bufferMap.get(s);
+		RandomAccessFile raf = new RandomAccessFile(f1, "rw");
+		raf.seek(Integer.parseInt(pathString)*LINELENGTH);
+		String tempString=new StuQuality(s).get()+",1"+"\r\n";
+		bufferMap.remove(s);
+		raf.write(tempString.getBytes());
+		raf.close();
+	}
+	
+	public void add(Student s) throws Exception {
+//	public void add(String s) throws Exception {
+	//String pathString = bufferMap.get(s);
+		RandomAccessFile raf=new RandomAccessFile(f1, "rw");
+	//	String pathString = bufferMap.get(s.getId());
+	//	
+	//	
+//		public void writeback(String s) throws Exception {
+//			String pathString = bufferMap.get(s);
+			//RandomAccessFile raf = new RandomAccessFile(f1, "rw");
+			raf.seek(raf.length());
+			String tempString=new StuQuality(s).get()+",0"+"\r\n";	
+			raf.write(tempString.getBytes());
+			
+			bufferMap.put(new String(tempString.getBytes(), 0, 7), (raf.length()/LINELENGTH)-1+"");
+			raf.close();
+	}
 	public void write() throws Exception {
 //		for(int i=0;i<9999999;i++)
 //		{
 //			int m=(int)(Math.random()*9+1)*1000000;
 //		}
-		Map<String, quality> map = new HashMap<String, quality>();
+		Map<String, StuQuality> map = new HashMap<String, StuQuality>();
 		//Map<Integer> hashset=new HashSet();
 	    for(int i=0;;i++)
 	    {
@@ -81,7 +127,7 @@ public class StuFileTool {
 	    	else g='女';
 	    	int id1=(1+(int)(Math.random()*10000000));
 	    	String id = String.format("%7d", id1).replace(" ", "0"); 
-	    	map.put(id, new quality(id,s1,d,g));
+	    	map.put(id, new StuQuality(id,s1,d,g));
 	        //map.add(id,new quality(id));
 	        //如果容量等于100  跳出循环
 	        if(map.size()==10)
@@ -91,18 +137,18 @@ public class StuFileTool {
 	    }
 	    //遍历
 	    
-	    PrintWriter fw = new PrintWriter("d:\\test3.txt");
+	    PrintWriter fw = new PrintWriter(f1.getAbsolutePath());
 		BufferedWriter bw = new BufferedWriter(fw);
 		
 
-	    for (Map.Entry<String, quality> entry : map.entrySet()) {
+	    for (Map.Entry<String, StuQuality> entry : map.entrySet()) {
 	
 	    		String m=entry.getValue().get()+",0"+"\r\n";
 	    		bw.write(m);
-	    		System.out.println(m.length());
-	    		System.out.println(m.getBytes().length);
+	   // 		System.out.println(m.length());
+	    //		System.out.println(m.getBytes().length);
 	    	
-	    	  System.out.println(entry.getValue().get());
+	   // 	  System.out.println(entry.getValue().get());
 	    }
 
 		bw.flush();
@@ -123,7 +169,14 @@ public class StuFileTool {
         int i=0;
         while( (len = br.read(buff)) != -1 ){  
         //    System.out.print(new String(buff, 0, len));  
-            bufferMap.put(new String(buff, 0, 7), i+"");
+        	if(new String(buff, 21, 1).equals("0"))
+            {
+            	 bufferMap.put(new String(buff, 0, 7), i+"");
+            	
+            }
+            else {
+            	System.out.println("已被删除");
+			}
             i++;
         } 
         in.close();
@@ -141,12 +194,23 @@ public class StuFileTool {
 			//BufferedReader br = new BufferedReader(new FileReader(s));  
 	        
 	       // char[] buff = new char[20];  
-			byte[] buff=new byte[24];
+			byte[] buff=new byte[LINELENGTH];
 	        int len = -1;  
 	        int i=0;
 	        while( (len = br.read(buff)) != -1 ){  
 	            System.out.print(new String(buff, 0, len));  
-	            bufferMap.put(new String(buff, 0, 7), i+"");
+	            System.out.println(new String(buff, 0, len).getBytes().length);
+	            //System.out.println(new String(buff, 0, len).get);
+	            System.out.println(new String(buff, 0, 7));
+	            if(new String(buff, 21, 1).equals("0"))
+	            {
+	            	 bufferMap.put(new String(buff, 0, 7), i+"");
+	            	
+	            }
+	            else {
+	            	System.out.println("已被删除");
+				}
+	         //   bufferMap.put(new String(buff, 0, 7), i+"");
 	            i++;
 	        } 
 	        in.close();
@@ -165,7 +229,7 @@ public class StuFileTool {
         //获取RandomAccessFile对象文件指针的位置，初始位置是0  
 			System.out.println("RandomAccessFile文件指针的初始位置:"+raf.getFilePointer());  
 			System.out.println(placeString);
-			raf.seek(Integer.parseInt(placeString)*24);//移动文件指针位置  
+			raf.seek(Integer.parseInt(placeString)*LINELENGTH);//移动文件指针位置  
 			//char[] buff = new char[20]; 
 //			String mString = new String(raf.readline().getBytes("ISO-8859-1"), "utf-8");
 			byte[] b = new byte[24];
@@ -185,9 +249,10 @@ public class StuFileTool {
 			{
 				return null;
 			}
-			System.out.println(mString+"");
+	//		System.out.println(mString+"");
 			mString =  mString.substring(0,mString.length()-2);
 			System.out.println(mString);
+			//Student student=Student.toStudent(mString);
 			return mString;
 			
 		}
@@ -195,11 +260,30 @@ public class StuFileTool {
 	
 	public static void main(String[] args) throws Exception {
 		
+//		StuFileTool test1 = new StuFileTool("d:\\test3.txt");
+//	//	test1.write();
+//		// TODO Auto-generated method stub
+//		test1.getbuffer();
+//		test1.findinfile("1722981");
+		
+		
 		StuFileTool test1 = new StuFileTool("d:\\test3.txt");
-	//	test1.write();
-		// TODO Auto-generated method stub
-		test1.getbuffer();
-		test1.findinfile("1722981");
+			test1.write();
+			// TODO Auto-generated method stub
+			test1.getbuffer();
+			System.out.println("ok");
+		//	test1.findinfile("1722981");
+//			 Scanner sc = new Scanner(System.in);
+		        //利用hasNextXXX()判断是否还有下一输入项
+//		    while(true) {
+//		            String str = sc.next();
+//		            if(str.equals("n"))
+//		            	break;
+//		            test1.findinfile(str);
+//		    }
+	//		 test1.writeback("2964715");
+			test1.add("2272176,双卿扑,03,男");
+			System.out.println(test1.bufferMap);
 	}
 
 }
