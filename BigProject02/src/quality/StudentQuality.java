@@ -1,12 +1,18 @@
-
+package quality;
+import EntityClass.*;
 public class StudentQuality {
-	public String nameString;
-	public String classString;
-	public String sexString;
+	public Student student;
+	public int flag;
 	public StudentQuality() {
 		// TODO Auto-generated constructor stub
-		nameString = null;
-		classString = null;
-		sexString = null;
+		this.flag = 0;
+	}
+	public StudentQuality(Student s) {
+		// TODO Auto-generated constructor stub
+		this.student = s;
+		this.flag = 0;
+	}
+	public Student getStudent() {
+		return student;
 	}
 }
