@@ -13,7 +13,7 @@ public class ThreadPoolSupport implements IOStrategy{
 	ThreadPoolSupport(IOStrategy ios){//初始化线程池
 		this.ios=ios;
 		//初始化选课协议
-		((ChooseProtocol)this.ios).Init();
+		//((ChooseProtocol)this.ios).Init();
 		
 		for(int i=0;i<INIT_THREADS;i++) {
 			IOThread t=new IOThread(ios);

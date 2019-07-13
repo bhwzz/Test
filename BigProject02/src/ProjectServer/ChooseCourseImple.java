@@ -1,5 +1,6 @@
 package ProjectServer;
 
+import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,29 +13,42 @@ import EntityClass.Stu_Course;
 //选课接口的实现类
 //服务器端提供服务时可以通过调用该类的函数进行
 public class ChooseCourseImple implements ChooseCourse{
-	static ArrayList<Course> C_array=new ArrayList<Course>();
-	static ArrayList<Stu_Course> SC_array=new ArrayList<Stu_Course>(100);//存储学生选课记录
-	//此处还应该有一个学生集合对象，存储学生已选课程信息，防止学生重复选课？？？
-	//如何实现学生退课记录？？？
+	Socket DBsocket;
 	
-	public static void Init() {//初始化C_array以及SC_array
-		//实际应该调用函数进行读文件
-		//测试用例
-		if(C_array.size()==0) {
-			Course c1=new Course("001","英语",2,1,1);
-			Course c2=new Course("002","数学",2,1,1);
-			Course c3=new Course("003","语文",2,1,1);
-			C_array.add(c1);
-			C_array.add(c2);
-			C_array.add(c3);
-		}
-		
+	public ChooseCourseImple(Socket dBsocket) {
+			super();
+			DBsocket = dBsocket;
+	}	
+	public ChooseCourseImple() {
+			super();
+			// TODO Auto-generated constructor stub
 	}
+//	static ArrayList<Course> C_array=null;	
+//	
+//	public static void Init() {//初始化C_array
+//		//实际应该调用函数进行读文件
+//		C_array=
+//		//测试用例
+//		if(C_array.size()==0) {
+//			Course c1=new Course("001","英语",2,1,1);
+//			Course c2=new Course("002","数学",2,1,1);
+//			Course c3=new Course("003","语文",2,1,1);
+//			C_array.add(c1);
+//			C_array.add(c2);
+//			C_array.add(c3);
+//		}		
+//	}
+	
 	//选课函数（学生id，要选课程id）
+	//返回1：选课成功；返回0：课余量不足；返回-1：该学生已经选过该门课不可重复选课
 	public int chooseCourse(String StuId,String CouId)
 	{
-		//判断该学生能否选这门课（未实现）
-		
+		//判断该学生能否选过这门课（未实现）
+//		boolean choose=IsChoose(stuId,couId);
+//		if(choose) {//已经选过该门课
+//			return -1;//返回-1表示这门课该学生已经选过
+//		}
+//		
 		//对于可以选课的情况：
 		int i;
 		for(i=0;i<C_array.size();i++) {
@@ -55,10 +69,10 @@ public class ChooseCourseImple implements ChooseCourse{
 					Stu_Course temp=new Stu_Course(StuId,CouId,sdf.format(cal.getTime()));
 					SC_array.add(temp);
 					temp.print();
+					addStu_Course(temp);
 					//将选课信息写入文件
 					//此时只需要增加记录即可
-					//调用写文件函数（可追加打开），append
-					
+					//调用写文件函数（可追加打开），append					
 					return 1;//选课成功
 				}
 				else
