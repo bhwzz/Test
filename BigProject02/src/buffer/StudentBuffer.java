@@ -26,7 +26,7 @@ public class StudentBuffer {
 	//public Map<String, Integer> map = new TreeMap<String, Integer>();
 	
 	//检查缓存大小的函数 将缓存数量控制在一定范围内
-	public boolean Check() {
+	public boolean Check() throws Exception {
 		if(studentMap.size()<=SIZE)
 			return false;
 		//如果现在的缓存没有被装满 返回false
@@ -93,7 +93,14 @@ public class StudentBuffer {
 		else{
 			//Delete(s.getId());
 			//加学生锁
-			tool1.writeback(s);
+		//	tool1.writeback(s);
+			studentMap.remove(s);
+			//studentMap.add
+			//Student s = studentMap.get(ID).getStudent();
+			StudentQuality sq = new StudentQuality(s);
+			sq.flag = 1;
+			studentMap.remove(s.getId());
+			studentMap.put(s.getId(), sq);
 			//解除学生锁
 			return true;
 		}
@@ -106,7 +113,17 @@ public class StudentBuffer {
 			System.out.println("该学生已经存在");
 			return false;
 		}
-		tool1.add(s);
+		//给tool1加锁
+		tool1.add(s);    
+		//给tool1解锁   和remove同理 比较省事
+		
+		StudentQuality sq = new StudentQuality(s);
+		sq.flag = 1;
+		
+		//给map加锁
+		studentMap.put(s.getId(), sq);
+		//给map解锁
+		Check();
 		return true;
 	}
 	
@@ -116,7 +133,11 @@ public class StudentBuffer {
 			return false;
 		}
 	
+		studentMap.remove(s);
+		
+		//tool加锁
 		tool1.delete(s);
+		//这个要remove----》省事 不用check里面再写一个if了  看看后期有没有bug
 		return true;
 	}
 	
