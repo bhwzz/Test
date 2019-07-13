@@ -50,9 +50,9 @@ public class Student {
 	public void setGerder(char gender) {
 		this.gender = gender;
 	}
-//	public void print() {
-//		System.out.println(id+","+name+","+classroom+","+gender);
-//	}
+	public void print() {
+		System.out.println(id+","+name+","+classroom+","+gender);
+	}
 	
 	//传入一个学生信息字符串，输出一个学生对象
 	public static Student toStudent(String stu) {
@@ -60,18 +60,21 @@ public class Student {
 		s=stu.split(",");
 		//System.out.println(s[0]+s[1]+Integer.parseInt(s[2])+s[3].charAt(0));
 		Student student=new Student(s[0],s[1],Integer.parseInt(s[2]),s[3].charAt(0));
-		return student;		
+		return student;	
+		
+		
 	}
 	//将学生转为字符串
 	public String toString() {
 		return ""+this.id+","+this.name+","+this.classroom+","+this.gender;
+		
 	}
 	
-//	public static void main(String[] args) {
-//		Student s1=new Student("0000001","王丽安",10,'女');
-//		s1.print();
-//		System.out.println(s1.toString());
-//		Student s2=toStudent("0000001, 丽安,10,女");
-//		s2.print();
-//	}
+	public static void main(String[] args) {
+		Student s1=new Student("0000001","王丽安",10,'女');
+		s1.print();
+		System.out.println(s1.toString());
+		Student s2=toStudent("0000001, 丽安,10,女");
+		s2.print();
+	}
 }

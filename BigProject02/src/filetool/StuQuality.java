@@ -34,6 +34,10 @@ public class StuQuality {
 	public String get() {
 		//String string = id+","+name+","+classroom+","+gender;
 		String classString = String.format("%2d", classroom).replace(" ", "0");
+		if(name.length()==2)
+		{
+			name="  "+name;
+		}
 		String string = id+","+name+","+classString+","+gender;
 		return string;
 	}
