@@ -43,24 +43,24 @@ public class Remote { //本地（客户端）代理，与服务器通信方式
 			throw new ArithmeticException(e.getMessage());
 		}
 	}
-	public String addStudent(String student)//id,name,classroom,gendar的复合串，中间逗号分隔
+	public boolean addStudent(String student)//id,name,classroom,gendar的复合串，中间逗号分隔
 	{
 		try {
 			pw.print(3);//3表示增加学生信息
 			pw.println(student); //以逗号作为分隔符向服务器传数据
 			pw.flush();
-			**return br.readLine();
+			return br.read()=='1';//**读的是字符1
 		}catch (Exception e) {
 			throw new ArithmeticException(e.getMessage());
 		}
 	}
-	public String deleteStudent(String id)//根据学号删除
+	public String deleteStudent(String id)//根据学号删除，返回 （1成功）/（0失败+错误信息）
 	{
 		try {
 			pw.print(4);//4表示删除学生信息
 			pw.println(id);
 			pw.flush();
-			**return br.readLine();
+			return br.readLine();
 		}catch (Exception e) {
 			throw new ArithmeticException(e.getMessage());
 		}
@@ -71,13 +71,13 @@ public class Remote { //本地（客户端）代理，与服务器通信方式
 			pw.print(5);//5表示修改学生信息
 			pw.println(student); //传递要修改的学生信息字符串
 			pw.flush();
-			**return br.readLine();
+			return br.read() == '1';
 		}catch (Exception e) {
 			throw new ArithmeticException(e.getMessage());
 		}
 
 	}
-	//查找相应学号的学生信息，返回是否存在（1/0）+（学生信息+已选课程）的字符串，以逗号作为分隔符，若不存在学生则返回null
+	//查找相应学号的学生信息，返回是否存在（1成功+学生信息）/（0失败）的字符串，以逗号作为学生信息分隔符，若不存在学生则返回null
 	public String findStudent(String id)
 	{
 		try {
