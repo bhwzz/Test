@@ -1,6 +1,8 @@
 package EntityClass;
 
-public class Student {
+import java.io.Serializable;
+
+public class Student implements Serializable{
 	private String id;
 	private String name;
 	private int classroom;
@@ -68,11 +70,11 @@ public class Student {
 		return ""+this.id+","+this.name+","+classString+","+this.gender;
 	}
 	
-	public static void main(String[] args) {
-		Student s1=new Student("0000001","王丽安",1,'女');
-		s1.print();
-		System.out.println(s1.toString());
-		Student s2=toStudent("0000001, 丽安,10,女");
-		s2.print();
-	}
+//	public static void main(String[] args) {
+//		Student s1=new Student("0000001","王丽安",1,'女');
+//		s1.print();
+//		System.out.println(s1.toString());
+//		Student s2=toStudent("0000001, 丽安,10,女");
+//		s2.print();
+//	}
 }
