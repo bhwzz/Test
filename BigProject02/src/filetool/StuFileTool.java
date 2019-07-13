@@ -12,11 +12,11 @@ import EntityClass.Student;
 public class StuFileTool {
 	int LINELENGTH = 24;
 	File f1;
-	Map<String , String> bufferMap;
-	public StuFileTool(String s) {
+	public Map<String , String> bufferMap;
+	public StuFileTool(String s) throws Exception {
 		// TODO Auto-generated constructor stub
 		f1 = new File(s);
-		
+		this.getbuffer();
 	}
 
 	
@@ -37,8 +37,9 @@ public class StuFileTool {
 	public void delete(String s) throws Exception {
 		String pathString = bufferMap.get(s);
 		RandomAccessFile raf = new RandomAccessFile(f1, "rw");
-		raf.seek(Integer.parseInt(pathString)*LINELENGTH);
-		String tempString=new StuQuality(s).get()+",1"+"\r\n";
+		raf.seek(Integer.parseInt(pathString)*LINELENGTH+21);
+	//	String tempString=new StuQuality(s).get()+",1"+"\r\n";
+		String tempString = "1";
 		bufferMap.remove(s);
 		raf.write(tempString.getBytes());
 		raf.close();
@@ -270,7 +271,7 @@ public class StuFileTool {
 		StuFileTool test1 = new StuFileTool("d:\\test3.txt");
 			test1.write();
 			// TODO Auto-generated method stub
-			test1.getbuffer();
+//			test1.getbuffer();
 			System.out.println("ok");
 		//	test1.findinfile("1722981");
 //			 Scanner sc = new Scanner(System.in);
