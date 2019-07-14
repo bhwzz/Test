@@ -38,34 +38,50 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 		System.out.print("学号：");
 		Scanner sc=new Scanner(System.in);
 		String id = sc.next(); //读入学号
-		//if已有该学号的学生，则提示错误，return
-		if(r.findStudent(id) != null){
-			System.out.println("学号重复，添加失败");
-			return;
+		while(id.length()!=7){
+			System.out.println("长度有误，请输入7位数字学号：");
+			id = sc.next();
 		}
-		
 		System.out.print("姓名：");
 		String name = sc.next(); //读入姓名
 		System.out.print("班级：");
 		int classroom = sc.nextInt(); //读入班级
 		System.out.print("性别：");
 		char gender = sc.next().charAt(0); //读入性别
-		r.addStudent(id+","+name+","+classroom+","+gender);
+		String student = new String(id+","+name+","+classroom+","+gender);//向服务器传递的待增加的学生信息
+		//若添加失败，则说明已存在该学号，提示错误
+		if(r.addStudent(student)){
+			System.out.println("添加成功");	
+		}
+		else {
+			System.out.println("学号重复，添加失败");
+		}
 		
+		ClientUI.delay(2000);
+		return;
 	}
 	public void deleteStudent()
 	{
 		System.out.print("请输入要删除学生的学号：");
 		Scanner sc=new Scanner(System.in);
 		String id = sc.next(); //读入学号
-		//if没有该学号的学生，则提示错误，return
-		if(r.findStudent(id) == null){
-			System.out.println("该学生不存在");
-			return;
+		while(id.length()!=7){
+			System.out.println("长度有误，请输入7位数字学号：");
+			id = sc.next();
 		}
-		else {
-			r.deleteStudent(id);
+		String s = r.findStudent(id);
+		switch(s.charAt(0)){
+		case '0':
+			String info = s.substring(1); //除去第一位的子串，表示错误信息
+			System.out.println("删除失败，失败原因："+info);
+			break;
+		case '1':
+			System.out.println("删除成功");
+			break;
 		}
+		
+		ClientUI.delay(2000);
+		return;
 	}
 	public void changeStudent()//全串
 	{
@@ -73,19 +89,26 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 		System.out.print("学号：");
 		Scanner sc=new Scanner(System.in);
 		String id = sc.next(); //读入学号
-		//if没有该学号的学生，则提示错误，return
-		if(r.findStudent(id) == null){
-			System.out.println("不存在该学生");
-			return;
+		while(id.length()!=7){
+			System.out.println("长度有误，请输入7位数字学号：");
+			id = sc.next();
 		}
-		
 		System.out.print("姓名：");
 		String name = sc.next(); //读入姓名
 		System.out.print("班级：");
 		int classroom = sc.nextInt(); //读入班级
 		System.out.print("性别：");
 		char gender = sc.next().charAt(0); //读入性别
-		r.deleteStudent(id+","+name+","+classroom+","+gender);
+		String student = new String(id+","+name+","+classroom+","+gender);//向服务器传递的待修改的学生信息
+		if(r.changeStudent(student)) {
+			System.out.println("删除成功");
+		}
+		else {
+			System.out.println("不存在该学号，删除失败");
+		}
+		
+		ClientUI.delay(2000);
+		return;
 	}
 	public void findStudent() //返回
 	{
@@ -93,8 +116,12 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 		System.out.print("请输入要查询学生的学号：");
 		Scanner sc=new Scanner(System.in);
 		String id = sc.next(); //读入学号
+		while(id.length()!=7){
+			System.out.println("长度有误，请输入7位数字学号：");
+			id = sc.next();
+		}
 		String s = r.findStudent(id);
-		switch(r.charAt(0)){
+		switch(s.charAt(0)){
 		case '0':
 			System.out.println("该学生不存在");
 			break;
@@ -102,12 +129,13 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 			System.out.println("学生信息如下：");
 			String info[] = s.substring(1).split(",");
 			System.out.println("学号："+info[0]+"\n姓名:"+info[1]+"\n班级:"+info[2]+"\n性别"+info[3]);
-			int courseNum = info[4];
+			//int courseNum = Integer.parseInt(info[4]);
 			break;
 		}
-		else if( s.charAt(0) == 0)
-		System.out.println(r.findStudent(id)); //输出查找结果
-		return id;
+		
+		ClientUI.delay(2000);
+		return;
+	
 	}
 	public void addCourse(String id, String name, int classroom, char gender)//全串
 	{
