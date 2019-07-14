@@ -8,6 +8,11 @@ public class StuCouQuality {
 	File rootfile;
 	List<String> bookList;
 	String StuID;
+	public StuCouQuality(File f) {
+		// TODO Auto-generated constructor stub
+		rootfile = f;
+	}
+	
 	
 	
 }
