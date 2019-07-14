@@ -8,7 +8,7 @@ import java.awt.event.*;
 abstract public class ClientUI {
 	static Client client;
 	public static void main(String[] args) throws Exception {		
-		ClientUI.client = new Client("192.168.56.1",4444);
+		ClientUI.client = new Client("localhost",4444);
 		ClientUI.mainInterface();
 	}
 	//Ö÷½çÃæ
@@ -86,16 +86,16 @@ abstract public class ClientUI {
 			int i=sc.nextInt();
 			switch(i) {
 			case 1:
-				
+				client.addStudent();
 				break;
 			case 2:
-				
+				client.deleteStudent();
 				break;
 			case 3:
-				
+				client.changeStudent();
 				break;
 			case 4:
-				
+				client.findStudent();
 				break;
 			case 5:
 				return;

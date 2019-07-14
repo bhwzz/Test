@@ -16,8 +16,8 @@ public class Remote { //本地（客户端）代理，与服务器通信方式
 		this.host = host;
 		this.port = port;
 		Socket socket = new Socket(host, port);
-		dis = new DataInputStream(s.getInputStream());
-		dos = new DataOutputStream(s.getOutputStream());
+		dis = new DataInputStream(socket.getInputStream());
+		dos = new DataOutputStream(socket.getOutputStream());
 		//br=new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		//pw=new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
 	}
