@@ -10,6 +10,7 @@ public class NwServer {
 		ServerSocket ss=new ServerSocket(port);
 		while(true) {
 			Socket s=ss.accept();
+			System.out.println("连接客户端成功！");
 			ios.Service(s);
 		}
 	}

@@ -33,57 +33,61 @@ public class ServerProtocol implements IOStrategy{
 		String cid=null; 
 		String s=null;
 		int bool;
+		System.out.println("服务器开始service！");
 		try {
 			DataInputStream dis=new DataInputStream(Clientsocket.getInputStream());
-			ObjectInputStream ois=new ObjectInputStream(Clientsocket.getInputStream());
 			DataOutputStream dos=new DataOutputStream(Clientsocket.getOutputStream());
-			ObjectOutputStream oos=new ObjectOutputStream(Clientsocket.getOutputStream());
-			PrintWriter pw=new PrintWriter(new OutputStreamWriter(Clientsocket.getOutputStream()));
-			
-			BufferedReader br=new BufferedReader(new InputStreamReader(Clientsocket.getInputStream()));
-			BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(Clientsocket.getOutputStream()));
-			int i=dis.readInt();
+//			ObjectInputStream ois=new ObjectInputStream(Clientsocket.getInputStream());
+//			ObjectOutputStream oos=new ObjectOutputStream(Clientsocket.getOutputStream());
+//			PrintWriter pw=new PrintWriter(new OutputStreamWriter(Clientsocket.getOutputStream()));			
+//			BufferedReader br=new BufferedReader(new InputStreamReader(Clientsocket.getInputStream()));
+//			BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(Clientsocket.getOutputStream()));
 			while(true) {
+				int i=dis.readInt();
+				System.out.println("客户端请求："+i);
 				switch(i) {
-				case 1://选课:返回1选课成功；返回0选课失败，接着返回一个字符串（
-					sid=br.readLine();
-					cid=br.readLine();
-					bool=cci.chooseCourse(sid,cid);
-					bw.write(bool);
-					bw.flush();
-					break;
-				case 2://退选
-					sid=br.readLine();
-					cid=br.readLine();
-					bool=cci.dropCourse(sid,cid);
-					bw.write(bool);
-					bw.flush();
-					break;
+//				case 1://选课:返回1选课成功；返回0选课失败，接着返回一个字符串（
+//					sid=br.readLine();
+//					cid=br.readLine();
+//					bool=cci.chooseCourse(sid,cid);
+//					bw.write(bool);
+//					bw.flush();
+//					break;
+//				case 2://退选
+//					sid=br.readLine();
+//					cid=br.readLine();
+//					bool=cci.dropCourse(sid,cid);
+//					bw.write(bool);
+//					bw.flush();
+//					break;
 				case 3://增加学生信息，传给我一个整的字符串
-					s=br.readLine();//传给我一个整的字符串
+					s=dis.readUTF();//传给我一个整的字符串
 					Student stu=Student.toStudent(s);
 					bool=sii.Add(stu)?1:0;
+//					System.out.println("增加结果"+bool);
 					dos.writeInt(bool);//返回1，增加成功；返回0该学生已存在
 					dos.flush();
 					break;
 				case 4://删除学生信息，传给我一个学生id
-					sid=br.readLine();
+					sid=dis.readUTF();
 					bool=sii.Delete(sid)?1:0;//删除学生的函数要判断该学生有没有选课
 					dos.writeInt(bool);//返回1：删除成功；返回0：删除学生失败？？？？？？？（待修改）
+					System.out.println("删除结果"+bool);
 					if(bool==0) {//删除失败返回一个失败原因字符串
 						dos.writeUTF("not found");
 					}
 					dos.flush();
 					break;
 				case 5://修改学生信息，传给我一整个学生信息字符串
-					s=br.readLine();
+					s=dis.readUTF();
 					Student stu2=Student.toStudent(s);
 					bool=sii.Change(stu2)?1:0;
+					System.out.println("修改结果"+bool);
 					dos.writeInt(bool);;//返回1：修改成功；返回0：修改失败
 					dos.flush();
 					break;
 				case 6://查找学生信息，传给我学生id
-					sid=br.readLine();
+					sid=dis.readUTF();
 					//返回学生个人信息以及选课信息
 					Student stu3=(Student)sii.Find(sid);
 					if(stu3==null)
@@ -106,7 +110,7 @@ public class ServerProtocol implements IOStrategy{
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			System.out.println("没有连接到客户端");
+			System.out.println("。。。。。。没有连接到客户端");
 		}
 	}
 

@@ -19,17 +19,24 @@ import java.util.Properties;
 import EntityClass.Student;
 
 public class DBProtocol {
-	StudentBuffer sb=new StudentBuffer();//用于学生操作
+	StudentBuffer sb=null;//用于学生操作
 	
+	public DBProtocol(String file) throws Exception {
+		super();
+		this.sb=new StudentBuffer(file);
+	}
+
 	public void Service(Socket serverSocket) throws ClassNotFoundException, Exception {
 		try {
 			DataInputStream dis=new DataInputStream(serverSocket.getInputStream());
-			ObjectInputStream ois=new ObjectInputStream(serverSocket.getInputStream());
-			DataOutputStream dos=new DataOutputStream(serverSocket.getOutputStream());
-			ObjectOutputStream oos=new ObjectOutputStream(serverSocket.getOutputStream());
-			PrintWriter pw=new PrintWriter(new OutputStreamWriter(serverSocket.getOutputStream()));
-			int i=dis.readInt();
+			DataOutputStream dos=new DataOutputStream(serverSocket.getOutputStream());;
+//			ObjectInputStream ois;
+//			ObjectOutputStream oos=new ObjectOutputStream(serverSocket.getOutputStream());
+//			PrintWriter pw=new PrintWriter(new OutputStreamWriter(serverSocket.getOutputStream()));
+			int i;
 			while(true) {
+				i=dis.readInt();
+				System.out.println("服务器请求："+i);
 				switch(i) {
 				case 1://选课
 					break;
@@ -37,20 +44,23 @@ public class DBProtocol {
 					break;
 					
 				case 3://增加学生信息，传来一个学生对象
-					dos.writeBoolean(sb.Add((Student)ois.readObject()));
+					dos.writeBoolean(sb.Add(Student.toStudent(dis.readUTF())));
+					System.out.println("数据库端增加学生成功！");
 					dos.flush();
 					break;
 				case 4://删除学生信息，传给我一个学生id
 					dos.writeBoolean(sb.Delete(dis.readUTF()));
+					System.out.println("数据库删除学生成功！");
 					dos.flush();
 					break;
 				case 5://修改学生信息，传来一个学生对象
-					dos.writeBoolean(sb.Change((Student)ois.readObject()));
+					dos.writeBoolean(sb.Change(Student.toStudent(dis.readUTF())));
+					System.out.println("数据库端修改学生成功！");
 					dos.flush();
 					break;
 				case 6://查找学生信息，传给我学生id
-					oos.writeObject(sb.Find(dis.readUTF()));
-					oos.flush();
+					dos.writeUTF(sb.Find(dis.readUTF()).toString());
+					System.out.println("数据库端查找学生成功！");
 					break;
 					
 				case 7://增加课程
@@ -72,9 +82,11 @@ public class DBProtocol {
 	public static void main(String[] args) throws ClassNotFoundException, Exception {
 		Properties p=new Properties();
 		p.load(new FileInputStream("file.properties"));
-		String Serverport=p.getProperty("Serverport");
-		ServerSocket ss=new ServerSocket(Integer.parseInt(Serverport));
-		DBProtocol dbp=new DBProtocol();
+		String DBport=p.getProperty("DBport");
+		System.out.println(DBport);
+		ServerSocket ss=new ServerSocket(Integer.parseInt(DBport));
+		System.out.println("数据库服务程序已经准备好了！");
+		DBProtocol dbp=new DBProtocol("D:\\test2.txt");
 		while(true) {
 			Socket s=ss.accept();
 			dbp.Service(s);

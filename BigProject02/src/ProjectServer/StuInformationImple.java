@@ -13,16 +13,12 @@ public class StuInformationImple implements InformationOperate{
 	//Socket DBsocket;
 	DataInputStream dis=null;
 	DataOutputStream dos=null;
-	ObjectOutputStream oos=null;
-	ObjectInputStream ois=null;
 	public StuInformationImple(Socket DBsocket) {
 		super();
 		//DBsocket = dBsocket;
 		try {
 			dis=new DataInputStream(DBsocket.getInputStream());
 			dos=new DataOutputStream(DBsocket.getOutputStream());
-			oos=new ObjectOutputStream(DBsocket.getOutputStream());
-			ois=new ObjectInputStream(DBsocket.getInputStream());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -39,8 +35,10 @@ public class StuInformationImple implements InformationOperate{
 		Student s=(Student)o;
 		boolean bool=false;
 		try {
-			oos.writeObject(s);//直接给数据库端传学生信息
+			dos.writeInt(3);
+			dos.writeUTF(s.toString());//直接给数据库端传学生信息
 			bool = dis.readBoolean();
+			System.out.println("客户端向服务器请求增加学生成功！");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,6 +50,7 @@ public class StuInformationImple implements InformationOperate{
 	public boolean Delete(String id) {//删除学生,删除成功返回1，学生不存在返回-1，学生有选课记录返回-2???????(待修改）
 		boolean bool=false;
 		try {
+			dos.writeInt(4);
 			dos.writeUTF(id);;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -70,7 +69,8 @@ public class StuInformationImple implements InformationOperate{
 	public boolean Change(Object o) {//修改学生信息，无需判断该学生是否已经存在，不存在返回false
 		boolean bool=false;
 		try {
-			oos.writeObject((Student)o);
+			dos.writeInt(5);
+			dos.writeUTF(o.toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -88,17 +88,18 @@ public class StuInformationImple implements InformationOperate{
 	public Object Find(String id) {//查找学生信息，找到返回student没找到返回null
 		Student stu=null;
 		try {
+			dos.writeInt(6);
 			dos.writeUTF(id);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			stu=(Student)ois.readObject();
-		} catch (ClassNotFoundException | IOException e) {
+			stu=Student.toStudent(dis.readUTF());
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}	
 		return stu;
 	}
 	//查找学生已选课程

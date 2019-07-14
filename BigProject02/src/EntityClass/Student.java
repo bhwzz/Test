@@ -62,7 +62,9 @@ public class Student implements Serializable{
 		s=stu.split(",");
 		//System.out.println(s[0]+s[1]+Integer.parseInt(s[2])+s[3].charAt(0));
 		Student student=new Student(s[0],s[1],Integer.parseInt(s[2]),s[3].charAt(0));
-		return student;		
+		return student;	
+		
+		
 	}
 	//将学生转为字符串
 	public String toString() {
@@ -77,4 +79,5 @@ public class Student implements Serializable{
 //		Student s2=toStudent("0000001, 丽安,10,女");
 //		s2.print();
 //	}
+
 }
