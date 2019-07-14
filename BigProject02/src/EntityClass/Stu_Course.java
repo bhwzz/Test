@@ -7,6 +7,18 @@ public class Stu_Course {
 	String couId;
 	String date;//Ñ¡¿ÎÊ±¼ä
 	
+	public String getstuId() {
+		return stuId;
+	}
+	
+	public String getcouId() {
+		return couId;
+	}
+	
+	public String getdate() {
+		return date;
+	}
+	
 	public Stu_Course() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -18,6 +30,7 @@ public class Stu_Course {
 		this.couId = couId;
 		this.date = string;
 	}
+	
 	
 	public void print() {
 		System.out.println(stuId+","+couId+","+date);
