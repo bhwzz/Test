@@ -1,12 +1,7 @@
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.RandomAccessFile;
-import java.nio.channels.NonReadableChannelException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.io.*;
+
+import java.util.*;
+
 
 import EntityClass.Stu_Course;
 import EntityClass.Student;
@@ -15,7 +10,8 @@ import quality.StudentQuality;
 public class Stu_CourseBuffer {
 
 	private StudentBuffer stubuffer;
-	public Map<String, List> stu_coubuffer;
+	private CourseBuffer coubuffer;
+	public Map<String, Map> stu_coubuffer;
 	public File rootfile;
 	int LINELENGTH = 0;
 	int STUIDSIZE = 7;
@@ -28,18 +24,22 @@ public class Stu_CourseBuffer {
 		rootfile = new File(s);
 		// TODO Auto-generated constructor stub
 	}
-	public List find(String Stuid) {
+	public Set find(String Stuid) {
 		if(stubuffer.Find(Stuid)==null)
 		{
 			System.out.println("该学生不存在");
 			return null;
 		}
-		return stu_coubuffer.get(Stuid);
+		return stu_coubuffer.get(Stuid).keySet();
 	}
 	public boolean find(String Stuid,String Couid) {
 		if(stubuffer.Find(Stuid)==null)
 		{
 			System.out.println("该学生不存在");
+			return false;
+		}
+		else if(coubuffer.Find(Couid)==null) {
+			System.out.println("该课程不存在");
 			return false;
 		}
 		else if(stu_coubuffer.get(Stuid)==null)
@@ -48,33 +48,41 @@ public class Stu_CourseBuffer {
 			return false;
 		}
 		else {
-			List<String> list=stu_coubuffer.get(Stuid);
-			
-			RandomAccessFile raf=new RandomAccessFile(rootfile, "r");  
-	        //获取RandomAccessFile对象文件指针的位置，初始位置是0  
-			System.out.println("RandomAccessFile文件指针的初始位置:"+raf.getFilePointer()); 
-			for(int i = 0 ; i < list.size() ; i++) {
-					  //system.out.println(list.get(i));
-				String placeString = list.get(i);
-				System.out.println(placeString);
-				raf.seek(Integer.parseInt(placeString)*LINELENGTH);//移动文件指针位置
-				byte[] b = new byte[LINELENGTH];
-				raf.read(b);
-				String mString=new String(b);
-				System.out.println(mString+"");
-				mString = mString.replaceAll("[\\t\\n\\r]", "");
-				mString = mString.replaceAll(" ", "");
-				String lastString = mString.substring(mString.length()-1, mString.length());//取最后一位
-				String courseIDString = mString.substring(8, 11);
-				if(lastString.equals("1"))
-				{
-					continue;
-				}
-				else if(courseIDString.equals(Couid)) {
-					return true;
-				}
-					
+			Map<String,String> map=stu_coubuffer.get(Stuid);
+			if(map.get(Couid)==null) {
+				System.out.println("该学生未选过这节课");
+				return false;
 			}
+			return true;
+		}
+		
+			
+			
+//			RandomAccessFile raf=new RandomAccessFile(rootfile, "r");  
+//	        //获取RandomAccessFile对象文件指针的位置，初始位置是0  
+//			System.out.println("RandomAccessFile文件指针的初始位置:"+raf.getFilePointer()); 
+//			for(int i = 0 ; i < list.size() ; i++) {
+//					  //system.out.println(list.get(i));
+//				String placeString = list.get(i);
+//				System.out.println(placeString);
+//				raf.seek(Integer.parseInt(placeString)*LINELENGTH);//移动文件指针位置
+//				byte[] b = new byte[LINELENGTH];
+//				raf.read(b);
+//				String mString=new String(b);
+//				System.out.println(mString+"");
+//				mString = mString.replaceAll("[\\t\\n\\r]", "");
+//				mString = mString.replaceAll(" ", "");
+//				String lastString = mString.substring(mString.length()-1, mString.length());//取最后一位
+//				String courseIDString = mString.substring(8, 11);
+//				if(lastString.equals("1"))
+//				{
+//					continue;
+//				}
+//				else if(courseIDString.equals(Couid)) {
+//					return true;
+//				}
+//					
+//			}
 			return false;
 		}
 	}
