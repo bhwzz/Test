@@ -59,8 +59,15 @@ public class DBProtocol {
 					dos.flush();
 					break;
 				case 6://查找学生信息，传给我学生id
-					dos.writeUTF(sb.Find(dis.readUTF()).toString());
+					Student s=sb.Find(dis.readUTF());
+					if(s==null) {
+						dos.writeUTF("null");
+						System.out.println("null");
+					}
+					else {
+						dos.writeUTF(s.toString());
 					System.out.println("数据库端查找学生成功！");
+					}
 					break;
 					
 				case 7://增加课程
