@@ -175,11 +175,17 @@ public class StudentBuffer {
 		Student s1 = Student.toStudent("2202197,ίχίχ,03,ΔΠ");
 		s1.print();
 		studentBuffer.Add(s1);
+		
+		Student s2 = studentBuffer.Find("5673314");
+		s2.print();
+		studentBuffer.Add(s2);
+		System.out.println(studentBuffer.studentMap);
 		studentBuffer.Clear();
 		System.out.println(studentBuffer.tool1.bufferMap);
 		studentBuffer.Delete("2202197");
 		studentBuffer.Clear();
 		System.out.println(studentBuffer.tool1.bufferMap);
+		System.out.println(studentBuffer.studentMap);
 	}		
 	
 	
