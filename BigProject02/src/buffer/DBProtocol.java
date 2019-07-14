@@ -93,7 +93,7 @@ public class DBProtocol {
 		System.out.println(DBport);
 		ServerSocket ss=new ServerSocket(Integer.parseInt(DBport));
 		System.out.println("数据库服务程序已经准备好了！");
-		DBProtocol dbp=new DBProtocol("D:\\test2.txt");
+		DBProtocol dbp=new DBProtocol("D:\\test3.txt");
 		while(true) {
 			Socket s=ss.accept();
 			dbp.Service(s);

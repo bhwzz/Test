@@ -50,8 +50,26 @@ public class Course {
 	public void setStu_num(int stu_num) {
 		this.stu_num = stu_num;
 	}
+	public static Course toCourse(String cou) {
+		String []c=new String[5];
+		c=cou.split(",");
+		return new Course(c[0],c[1],Integer.parseInt(c[2]),Integer.parseInt(c[3]),Integer.parseInt(c[4]));
+	}
+	public String toString() {
+		return ""+this.course_id+this.course_name+this.num+this.left_num+this.stu_num;
+	}
+	public void print() {
+		System.out.println(course_id+","+course_name+","+num+","+left_num+","+stu_num);
+	}	
 	
 	//添加课程(要添加的数量)数据的读写要加锁
 	//删除课程
-	
+//	public static void main(String[] args) {
+//		String s="001,数学，50";
+//		String ss=s+",0,0";
+//		System.out.println(ss);
+//		Course c=Course.toCourse("001,数学,50"+",0,0");
+//		c.print();
+//		
+//	}
 }

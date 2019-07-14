@@ -61,8 +61,7 @@ public class Student implements Serializable{
 		String [] s=new String[4];
 		s=stu.split(",");
 		//System.out.println(s[0]+s[1]+Integer.parseInt(s[2])+s[3].charAt(0));
-		Student student=new Student(s[0],s[1],Integer.parseInt(s[2]),s[3].charAt(0));
-		return student;	
+		return new Student(s[0],s[1],Integer.parseInt(s[2]),s[3].charAt(0));
 		
 		
 	}
@@ -78,6 +77,17 @@ public class Student implements Serializable{
 //		System.out.println(s1.toString());
 //		Student s2=toStudent("0000001, Àö°²,10,Å®");
 //		s2.print();
+//		Student s3=null;
+//		Student s4=new Student();
+//		Student s5=s1;
+//		if(s3==null)
+//			System.out.println("s3=null");
+//		if(s1==null)
+//			System.out.println("s1==null");
+//		if(s4==null)
+//			System.out.println("s4==null");
+//		if(s5==null)
+//			System.out.println("s5==null");
 //	}
 
 }

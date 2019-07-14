@@ -69,7 +69,7 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 			System.out.println("长度有误，请输入7位数字学号：");
 			id = sc.next();
 		}
-		String s = r.findStudent(id);
+		String s = r.deleteStudent(id);
 		switch(s.charAt(0)){
 		case '0':
 			String info = s.substring(1); //除去第一位的子串，表示错误信息
@@ -101,10 +101,10 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 		char gender = sc.next().charAt(0); //读入性别
 		String student = new String(id+","+name+","+classroom+","+gender);//向服务器传递的待修改的学生信息
 		if(r.changeStudent(student)) {
-			System.out.println("删除成功");
+			System.out.println("修改成功");
 		}
 		else {
-			System.out.println("不存在该学号，删除失败");
+			System.out.println("不存在该学号，修改失败");
 		}
 		
 		ClientUI.delay(2000);
@@ -128,7 +128,7 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 		case '1':
 			System.out.println("学生信息如下：");
 			String info[] = s.substring(1).split(",");
-			System.out.println("学号："+info[0]+"\n姓名:"+info[1]+"\n班级:"+info[2]+"\n性别"+info[3]);
+			System.out.println("学号："+info[0]+"\n姓名:"+info[1]+"\n班级:"+info[2]+"\n性别:"+info[3]);
 			//int courseNum = Integer.parseInt(info[4]);
 			break;
 		}

@@ -89,22 +89,32 @@ public class ServerProtocol implements IOStrategy{
 				case 6://查找学生信息，传给我学生id
 					sid=dis.readUTF();
 					//返回学生个人信息以及选课信息
+					System.out.println("客户端要查找的学生id："+sid);
 					Student stu3=(Student)sii.Find(sid);
 					if(stu3==null)
 						dos.writeInt(0);
 					else {
 						dos.writeInt(1);
+						System.out.println("数据库查找该学生成功！");
 						dos.writeUTF(stu3.toString());
+						System.out.println(stu3.toString());
 					}
 					dos.flush();
 					break;
-				case 7://增加课程
+				case 7://增加课程:传给我一个字符串（id，name，容量）
+					s=dis.readUTF();
+					
 					break;
-				case 8://删除课程，要求该课程的选课人数为0
+				case 8://删除课程，要求该课程的选课人数为0（返回结果同student）
+					
 					break;
-				case 9://修改课程信息
+				case 9://修改课程信息(只允许修改课程名字）传课程id+name//返回1，0
+					
 					break;
-				case 10://查找课程信息
+				case 10://查找课程信息，返回所有课程信息，有几个课程传几次
+					
+					break;
+				case 11://增加课程容量，传id+addnum//返回1，0
 					break;
 				}
 			}

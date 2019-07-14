@@ -37,6 +37,7 @@ public class StuInformationImple implements InformationOperate{
 		try {
 			dos.writeInt(3);
 			dos.writeUTF(s.toString());//直接给数据库端传学生信息
+			dos.flush();
 			bool = dis.readBoolean();
 			System.out.println("客户端向服务器请求增加学生成功！");
 		} catch (IOException e) {
@@ -51,7 +52,29 @@ public class StuInformationImple implements InformationOperate{
 		boolean bool=false;
 		try {
 			dos.writeInt(4);
-			dos.writeUTF(id);;
+			dos.writeUTF(id);
+			dos.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			bool=dis.readBoolean();
+			System.out.println("客户端向服务器请求删除学生成功！");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return bool;
+	}
+
+	@Override
+	public boolean Change(Object o) {//修改学生信息，无需判断该学生是否已经存在，不存在返回false
+		boolean bool=false;
+		try {
+			dos.writeInt(5);
+			dos.writeUTF(o.toString());
+			dos.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -66,36 +89,21 @@ public class StuInformationImple implements InformationOperate{
 	}
 
 	@Override
-	public boolean Change(Object o) {//修改学生信息，无需判断该学生是否已经存在，不存在返回false
-		boolean bool=false;
-		try {
-			dos.writeInt(5);
-			dos.writeUTF(o.toString());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			bool=dis.readBoolean();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	@Override
 	public Object Find(String id) {//查找学生信息，找到返回student没找到返回null
 		Student stu=null;
 		try {
 			dos.writeInt(6);
 			dos.writeUTF(id);
+			dos.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			stu=Student.toStudent(dis.readUTF());
+			String s=dis.readUTF();
+			System.out.println(s);
+			if(!s.equals("null"))
+				stu=Student.toStudent(s);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -38,5 +38,7 @@ public class CouInformationImple implements InformationOperate {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	public boolean AddCapacity(String id,int num) {
+		return false;
+	}
 }

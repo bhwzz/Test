@@ -66,6 +66,8 @@ public class StudentBuffer {
 	
 	public Student Find(String ID) throws Exception//找到了return student 没找到return null
 	{
+		System.out.println("要查找的学生id"+ID);
+		
 		if (studentMap.get(ID)!=null) {
 			Student s = studentMap.get(ID).getStudent();
 			StudentQuality sq = new StudentQuality(s);
@@ -93,7 +95,7 @@ public class StudentBuffer {
 	}
 	
 	public boolean Change(Student s) throws Exception {
-		if(Find(s.getId()).equals(null))
+		if(Find(s.getId())==null)
 		{
 			System.out.println("该学生不存在");
 			return false;
@@ -137,7 +139,7 @@ public class StudentBuffer {
 	}
 	
 	public boolean Delete(String s) throws Exception {
-		if(Find(s).equals(null))
+		if(Find(s)==null)
 		{
 			return false;
 		}
@@ -146,6 +148,7 @@ public class StudentBuffer {
 		
 		//tool加锁
 		tool1.delete(s);
+		System.out.println("删除学生函数结束！");
 		//这个要remove----》省事 不用check里面再写一个if了  看看后期有没有bug
 		return true;
 	}
