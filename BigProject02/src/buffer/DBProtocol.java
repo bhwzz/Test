@@ -27,11 +27,11 @@ public class DBProtocol {
 	CourseBuffer cb=null;//用于课程操作
 	Stu_CourseBuffer scb=null;
 	
-	public DBProtocol(String stufile,String coufile) throws Exception {//构造函数还需要修改！！！！
+	public DBProtocol(String stufile,String coufile,String stucoufile) throws Exception {//构造函数还需要修改！！！！
 		super();
 		this.sb=new StudentBuffer(stufile);
 		this.cb=new CourseBuffer(coufile);
-		this.scb=new Stu_CourseBuffer(sb,cb);
+		this.scb=new Stu_CourseBuffer(sb,cb,stucoufile);
 		
 	}
 
