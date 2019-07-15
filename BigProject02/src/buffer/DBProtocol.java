@@ -32,7 +32,7 @@ public class DBProtocol {
 		this.sb=new StudentBuffer(stufile);
 		this.cb=new CourseBuffer(coufile);
 		this.scb=new Stu_CourseBuffer(sb,cb,stucoufile);
-		
+		this.sb.set(scb);
 	}
 
 	public void Service(Socket serverSocket) throws ClassNotFoundException, Exception {
@@ -131,7 +131,7 @@ public class DBProtocol {
 		System.out.println(DBport);
 		ServerSocket ss=new ServerSocket(Integer.parseInt(DBport));
 		System.out.println("数据库服务程序已经准备好了！");
-		DBProtocol dbp=new DBProtocol("D:\\test3.txt","D:\\Test4.txt");
+		DBProtocol dbp=new DBProtocol("D:\\test3.txt","D:\\Test4.txt","D:\\testK.txt");
 		while(true) {
 			Socket s=ss.accept();
 			dbp.Service(s);
