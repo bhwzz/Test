@@ -131,17 +131,17 @@ public class ServerProtocol implements IOStrategy{
 					else {
 						s = "1";
 						System.out.println("数据库查找该学生成功！");
-						s+=stu3.toString();
+						s=s.concat(stu3.toString());
 						System.out.println(stu3.toString());
 						//学生存在查找学生选课信息
 						List<Stu_Course> list=sii.FindCourse(sid);
 						int num=list.size();
-						dos.writeInt(num);//先写回选课数目
 						if(num>0) {
 							for(int i1=0;i1<num;i1++) {
-								s+="."+list.get(i1).toString();//每次写回一条选课记录
+								s=s.concat("."+list.get(i1).toString());//每次写回一条选课记录
 							}
 						}
+						System.out.println(s);
 						dos.writeUTF(s);
 						dos.flush();
 					}
