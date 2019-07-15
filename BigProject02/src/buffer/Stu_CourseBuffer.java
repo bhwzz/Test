@@ -24,7 +24,14 @@ public class Stu_CourseBuffer {
 	int COUIDSIZE = 3;
 	int TIMESIZE = 0;
 	int SIZE = 10;
-	
+	public Stu_CourseBuffer(StudentBuffer s,CourseBuffer c,String filename) {
+		stubuffer = s;
+		coubuffer = c;
+		rootfile = new File(filename);
+		tool2 = new StuCouTool(rootfile);
+		stu_couBuffer = new HashMap<String, Map>();
+		// TODO Auto-generated constructor stub
+	}
 	public boolean Check() throws Exception {
 		if(stu_couBuffer.size()<=SIZE)
 			return false;
@@ -53,12 +60,12 @@ public class Stu_CourseBuffer {
 			return true;
 		}
 	
-	public Stu_CourseBuffer(StudentBuffer stu,String s) {
-		this.stubuffer = stu;
-		stu_couBuffer = new LinkedHashMap<String, Map>();
-		rootfile = new File(s);
-		// TODO Auto-generated constructor stub
-	}
+//	public Stu_CourseBuffer(StudentBuffer stu,String s) {
+//		this.stubuffer = stu;
+//		stu_couBuffer = new LinkedHashMap<String, Map>();
+//		rootfile = new File(s);
+//		// TODO Auto-generated constructor stub
+//	}
 	public Map find(String Stuid) {
 		if(stubuffer.Find(Stuid)==null)
 		{
@@ -181,57 +188,8 @@ public class Stu_CourseBuffer {
 		}
 	}
 //			Map <String,String> map=new HashMap<String, String>();
-//			map.put(s.getcouId(),""+(rootfile.length()/LINELENGTH));
-//		
-//			stu_coubuffer.put(Stuid, map);
-//			
-//			
-//			RandomAccessFile raf=new RandomAccessFile(rootfile, "r");  
-//	        //获取RandomAccessFile对象文件指针的位置，初始位置是0  
-//			
-//			System.out.println("RandomAccessFile文件指针的初始位置:"+raf.getFilePointer()); 
-//			raf.seek(rootfile.length());
-//			raf.writeBytes(s.toString()+",0,\r\n".getBytes());
-//			raf.close();
-//			
-//			
-//			return true;
-		
-//		else if(stu_coubuffer.get(Stuid).get(Couid)==null){//该学生选过课 但是没选过这节课
-//			System.out.println("该学生选过课 但是没选过这节课");
-//			Map <String,String> map=stu_coubuffer.get(Stuid);
-//			map.put(s.getcouId(),""+(rootfile.length()/LINELENGTH));
-//		
-//			stu_coubuffer.put(Stuid, map);
-//			
-//			
-//			RandomAccessFile raf=new RandomAccessFile(rootfile, "r");  
-//	        //获取RandomAccessFile对象文件指针的位置，初始位置是0  
-//			
-//			System.out.println("RandomAccessFile文件指针的初始位置:"+raf.getFilePointer()); 
-//			raf.seek(rootfile.length());
-//			raf.writeBytes(s.toString()+",0,\r\n".getBytes());
-//			raf.close();
-//			return true;
-//		}
-//		else {  //该学生选过这节课
-//			System.out.println("该学生选过这节课");
-//			return false;
-//		}
-//	}
-				//char[] buff = new char[20]; 
-//				String mString = new String(raf.readline().getBytes("ISO-8859-1"), "utf-8");
-			
-			//	raf.read(b);
-			//	char c[] = new char[20];
-			//	for(int i=0;i<20;i++) {
-			//		c[i]=raf.readChar();
-			//	}
-				
-				
-				//System.out.println(mString.toCharArray());
-				//int i=mString()
-		public boolean delete(String Stuid,String Couid) {
+
+	public boolean delete(String Stuid,String Couid) {
 			if(stubuffer.Find(Stuid)==null)
 			{
 				System.out.println("该学生不存在");
@@ -278,54 +236,11 @@ public class Stu_CourseBuffer {
 		}
 			
 			
-		
+	public static void main(String[] args) {
+		Stu_CourseBuffer mBuffer = new Stu_CourseBuffer(, c, filename)
+	}
 	
 	
 	
-//	public void getbuffer() {
-//		stu_coubuffer = new TreeMap<String, Map>();
-//		//FileReader r1=new FileReader(f1.getAbsolutePath());
-//		//bufferMap = new TreeMap<String, String>();
-//		//	FileReader r1= new FileReader(s);
-//			FileInputStream in = new FileInputStream(rootfile.getAbsolutePath());
-//			BufferedInputStream br=new BufferedInputStream(in);
-//			//BufferedReader br = new BufferedReader(new FileReader(s));  
-//	        
-//	       // char[] buff = new char[20];  
-//			byte[] buff=new byte[LINELENGTH];
-//	        int len = -1;  
-//	        int i=0;
-//	        while( (len = br.read(buff)) != -1 ){  
-//	            System.out.print(new String(buff, 0, len));  
-//	            System.out.println(new String(buff, 0, len).getBytes().length);
-//	            //System.out.println(new String(buff, 0, len).get);
-//	            System.out.println(new String(buff, 0, 7));
-//	            
-//	            if(new String(buff, 21, 1).equals("0"))
-//	            {
-//	            	// bufferMap.put(new String(buff, 0, 7), i+"");
-//	            	String stuidString = new String(buff, 0, 7);
-//	            	if(stu_coubuffer.get(stuidString)!=null)
-//	            	{
-//	            		stu_coubuffer.get(stuidString).add(i+"");
-//	            	}
-//	            	if(stu_coubuffer.get(stuidString)==null)
-//	            	{
-//	            		List<String> list=new ArrayList<String>();
-//	            		list.add(i+"");
-//	            		stu_coubuffer.put(stuidString,list);
-//	            	}
-//	            }
-//	          
-//	            else {
-//	            	System.out.println("已被删除");
-//				}
-//	         //   bufferMap.put(new String(buff, 0, 7), i+"");
-//	            i++;
-//	        } 
-//	        in.close();
-//	        br.close();
-//	        System.out.println(bufferMap);
-//	}
-//	
+
 }

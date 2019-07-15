@@ -102,6 +102,8 @@ public class StuCouTool {
 		raf.seek(Integer.valueOf((String)bookMap.get(stuid).get(couid)).intValue()*LINELENGTH+23);
 		raf.write("1\r\n".getBytes());
 		bookMap.get(stuid).remove(couid);
+		if(bookMap.get(stuid).size()==0)
+			bookMap.remove(stuid);
 		raf.close();
 	}
 	public static void main(String[] args) throws Exception {
