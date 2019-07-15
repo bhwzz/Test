@@ -127,11 +127,11 @@ public class ServerProtocol implements IOStrategy{
 					System.out.println("客户端要查找的学生id："+sid);
 					Student stu3=(Student)sii.Find(sid);
 					if(stu3==null)
-						dos.writeInt(0);
+						s = "0";
 					else {
-						dos.writeInt(1);
+						s = "1";
 						System.out.println("数据库查找该学生成功！");
-						dos.writeUTF(stu3.toString());
+						s+=stu3.toString();
 						System.out.println(stu3.toString());
 						//学生存在查找学生选课信息
 						List<Stu_Course> list=sii.FindCourse(sid);
@@ -139,22 +139,33 @@ public class ServerProtocol implements IOStrategy{
 						dos.writeInt(num);//先写回选课数目
 						if(num>0) {
 							for(int i1=0;i1<num;i1++) {
-								dos.writeUTF(list.get(i1).toString());//每次写回一条选课记录
+								s+="."+list.get(i1).toString();//每次写回一条选课记录
 							}
 						}
+						dos.writeUTF(s);
 						dos.flush();
 					}
 					dos.flush();
 					break;
 				case 7://增加课程:传给我一个字符串（id，name，容量）
 					s=dis.readUTF();
-					bool=cii.Add(Course.toCourse(s+",0,0"))?1:0;
+					bool=cii.Add(Course.toCourse(s+","+s.split(",")[2]+",0"))?1:0;
 					dos.writeInt(bool);
 					dos.flush();
 					break;
 				case 8://删除课程，要求该课程的选课人数为0（返回-2，-1，1）
 					cid=dis.readUTF();
-					dos.writeInt(cii.Delete(cid));
+					bool=cii.Delete(cid);
+					if(bool==1)
+						dos.writeInt(1);
+					else if(bool==-1) {
+						dos.writeInt(0);
+						dos.writeUTF("This course does not exist!");
+					}
+					else if(bool==-2) {
+						dos.writeInt(0);
+						dos.writeUTF("The course has been selected by students and cannot be deleted!");
+					}					
 					dos.flush();
 					break;
 				case 9://修改课程信息(只允许修改课程名字）传课程id+name//返回1，0

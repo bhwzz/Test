@@ -111,7 +111,7 @@ public class Remote { //本地（客户端）代理，与服务器通信方式
 			throw new ArithmeticException(e.getMessage());
 		}
 	}
-	public String deleteCourse(String id)//返回(1成功)/(0失败+失败原因)
+	public String deleteCourse(String id)//返回(1成功)/(0失败+失败原因)①不存在该课程②该课程有人选，无法删除
 	{
 		try {
 			dos.writeInt(8);//8表示删除课程信息
@@ -152,7 +152,8 @@ public class Remote { //本地（客户端）代理，与服务器通信方式
 	{
 		try {
 			dos.writeInt(11);//11表示增加课程容量
-			dos.writeUTF(id+","+addNum);
+			dos.writeUTF(id);
+			dos.writeInt(addNum);
 			dos.flush();
 			return dis.readInt()== 1;
 		}catch (Exception e) {
