@@ -13,7 +13,7 @@ import EntityClass.*;
 import EntityClass.Student;
 import quality.StudentQuality;
 import filetool.*;
-import filetool.StuCouQuality;
+//import filetool.StuCouQuality;
 
 public class Stu_CourseBuffer {
 
@@ -50,30 +50,13 @@ public class Stu_CourseBuffer {
 			//选课信息貌似不会被修改？只有增加和删除？？？
 									
 			for (StuCouQuality value : m2.values()) {
-
-				if(value.flag==1)
-					add(value.stu_Course.getstuId(), value.stu_Course.getcouId());
-
+				if(value.flag1==1)
+					tool2.add(value.stu_Course);;
+				if(value.flag1==-1)
+					tool2.delete(value.stu_Course.getstuId(), value.stu_Course.getcouId());
+					//add(value.stu_Course.getstuId(), value.stu_Course.getcouId());
 			}
-		
-			
-			
-//			if(item.getValue().flag==0)
-//			{
-				stu_couBuffer.remove(item.getKey());
-				//没有被修改过 直接丢弃
-//			}
-//			
-//			else if(item.getValue().flag!=0)
-//			{
-//				
-//				tool1.writeback(item.getValue().getStudent());
-//				studentMap.remove(item.getKey());
-//				//被修改过 写回去
-//			}
-			//TreeMap<String,String>写索引
-			//RandomAccessFile 随机访问文件
-			
+			stu_couBuffer.remove(item.getKey());	
 			return true;
 		}
 	}
@@ -98,7 +81,7 @@ public class Stu_CourseBuffer {
 			Map<String, Stu_Course> map2 = new HashMap<String, Stu_Course>();
 		
 			for (StuCouQuality value : map.values()) {
-				if(value.flag!=1)
+				if(value.flag!=-1)
 					map2.put(value.stu_Course.getcouId(), value.stu_Course);
 
 			}
@@ -146,7 +129,7 @@ public class Stu_CourseBuffer {
 			}
 			Map<String, Stu_Course> map3=new HashMap<String, Stu_Course>();
 			for (StuCouQuality value : mapp.values()) {
-			//	if(value.flag==0)
+				if(value.flag1!=-1)
 					map3.put(value.stu_Course.getcouId(), value.stu_Course);
 
 			}
@@ -196,7 +179,7 @@ public class Stu_CourseBuffer {
 		else if(stu_couBuffer.get(Stuid)!=null)
 		{//在缓存中能找到这个学生
 			Map map = stu_couBuffer.get(Stuid);
-			if(map.get(Couid)==null) {  //这个学生没有选过这节课
+			if(map.get(Couid)==null||(StuCouQuality)map.get(Couid).flag1==-1) {  //这个学生没有选过这节课
 				if(!coubuffer.AddCourse(Couid)) {
 					System.out.println("该课程已满课");
 					return -3;
@@ -205,6 +188,7 @@ public class Stu_CourseBuffer {
 				String time= sdf.format( new Date());
 				Stu_Course s=new Stu_Course(Stuid,Couid,time);
 				StuCouQuality quality=new StuCouQuality(s);
+				quality.changeflag();
 				map.put(Couid, quality);
 			//	tool2.add(s);
 				Check();
@@ -312,6 +296,7 @@ public class Stu_CourseBuffer {
 			
 	public static void main(String[] args) {
 		//Stu_CourseBuffer mBuffer = new Stu_CourseBuffer(, c, filename)
+		System.out.println("lalalalala");
 	}
 	
 	
