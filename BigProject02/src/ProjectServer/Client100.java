@@ -2,28 +2,40 @@ package ProjectServer;
 
 import java.io.IOException;
 
-public class Client100 extends Thread{
-	private String sid;
-	private String cid;
-	Client100(String sid,String cid){
-		this.sid=sid;
-		this.cid=cid;
+public class Client100 extends Thread{  //未完成
+	private String studentId;
+	private String courseId;
+	private Remote remote;
+	Client100(){
+		
 	}
+	Client100(String host, int post, String sid, String cid) throws Exception{
+		remote = new Remote(host, post); //通过客户端代理建立到服务器的连接
+		//建立选课信息
+		studentId=sid;
+		courseId=cid;
+	}
+	@Override
 	public void run() {
-		try {
-			ChooseCourseRemote ccr=new ChooseCourseRemote("wanglilili",4444);
-			int bool=ccr.chooseCourse(sid,cid);
-			if(bool==1) {
-				System.out.println(Thread.currentThread().getName()+"选课："+sid+"-->"+cid+"成功！");
+			String info = remote.chooseCourse(studentId, courseId); //info记录选课结果信息
+			switch(info.charAt(0)){
+			case '0':
+				String s = info.substring(1); //除去第一位的子串，表示失败原因
+				System.out.println("选课失败，失败原因："+s);
+				break;
+			case '1':
+				System.out.println("选课成功");
+				break;
 			}
-			else if(bool==0){
-				System.out.println(Thread.currentThread().getName()+"选课："+sid+"-->"+cid+"失败！没有课余量了！");
-			}
-			else
-				System.out.println("课程编号有误");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("没有找到服务器！");
+
+	}
+	public static void main(String[] args) throws Exception {
+		Client100[] client = new Client100[100];
+		for(int i=0; i<100; i++) {
+			client[i] = new Client100("localhost", 4563, i+1234500+"", "001");
+		}
+		for(int i=0; i<100; i++) {
+			client[i].start();
 		}
 	}
 }

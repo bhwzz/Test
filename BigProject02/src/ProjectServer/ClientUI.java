@@ -1,14 +1,20 @@
 package ProjectServer;
 
+import java.util.Properties;
 import java.util.Scanner;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.*;
+import java.io.FileInputStream;
 
 abstract public class ClientUI {
 	static Client client;
 	public static void main(String[] args) throws Exception {		
-		ClientUI.client = new Client("localhost",4444);
+		Properties p=new Properties();
+		p.load(new FileInputStream("file.properties"));
+		String host = p.getProperty("DBserver");
+		String clientPort = p.getProperty("Clientport");
+		ClientUI.client = new Client("localhost",Integer.parseInt(clientPort));
 		ClientUI.mainInterface();
 	}
 	//Ö÷½çÃæ

@@ -22,27 +22,34 @@ public class StuFileTool {
 	
 	
 	public void writeback(Student s) throws Exception {
-		String pathString = bufferMap.get(s.getId());
-//	
-//	
-//	public void writeback(String s) throws Exception {
-//		String pathString = bufferMap.get(s);
-		RandomAccessFile raf = new RandomAccessFile(f1, "rw");
-		raf.seek(Integer.parseInt(pathString)*LINELENGTH);
-		String tempString=new StuQuality(s).get()+",0"+"\r\n";	
-		raf.write(tempString.getBytes());
-		raf.close();
+		if(bufferMap.get(s.getId())!=null) {
+			String pathString = bufferMap.get(s.getId());
+	//	
+	//	
+	//	public void writeback(String s) throws Exception {
+	//		String pathString = bufferMap.get(s);
+			RandomAccessFile raf = new RandomAccessFile(f1, "rw");
+			raf.seek(Integer.parseInt(pathString)*LINELENGTH);
+			String tempString=new StuQuality(s).get()+",0"+"\r\n";	
+			raf.write(tempString.getBytes());
+			raf.close();
+		}
+		else if(bufferMap.get(s.getId())==null) {
+			add(s);
+		}
 	}
 	
 	public void delete(String s) throws Exception {
-		String pathString = bufferMap.get(s);
-		RandomAccessFile raf = new RandomAccessFile(f1, "rw");
-		raf.seek(Integer.parseInt(pathString)*LINELENGTH+21);
-	//	String tempString=new StuQuality(s).get()+",1"+"\r\n";
-		String tempString = "1";
-		bufferMap.remove(s);
-		raf.write(tempString.getBytes());
-		raf.close();
+		if( bufferMap.get(s)!=null) {
+			String pathString = bufferMap.get(s);
+			RandomAccessFile raf = new RandomAccessFile(f1, "rw");
+			raf.seek(Integer.parseInt(pathString)*LINELENGTH+21);
+		//	String tempString=new StuQuality(s).get()+",1"+"\r\n";
+			String tempString = "1";
+			bufferMap.remove(s);
+			raf.write(tempString.getBytes());
+			raf.close();
+		}
 	}
 	
 	public void add(Student s) throws Exception {

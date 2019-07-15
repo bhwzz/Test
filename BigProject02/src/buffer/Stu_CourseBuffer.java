@@ -3,6 +3,7 @@ package buffer;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import quality.*;
 //
 //import com.sun.jndi.rmi.registry.ReferenceWrapper;
 //import com.sun.tools.classfile.StackMapTable_attribute.same_frame;
@@ -12,6 +13,7 @@ import EntityClass.*;
 import EntityClass.Student;
 import quality.StudentQuality;
 import filetool.*;
+//import filetool.StuCouQuality;
 
 public class Stu_CourseBuffer {
 
@@ -44,25 +46,20 @@ public class Stu_CourseBuffer {
 //			studentMap.remove(key)
 			Map.Entry<String, Map> item = (Entry<String, Map>)stu_couBuffer.entrySet().iterator().next();
 			//获取第一个键值对
+			Map<String, StuCouQuality> m2= item.getValue();
 			//选课信息貌似不会被修改？只有增加和删除？？？
-//			if(item.getValue().flag==0)
-//			{
-				stu_couBuffer.remove(item.getKey());
-				//没有被修改过 直接丢弃
+									
+			for (StuCouQuality value : m2.values()) {
+				if(value.flag1==1)
+					tool2.add(value.stu_Course);;
+				if(value.flag1==-1)
+					tool2.delete(value.stu_Course.getstuId(), value.stu_Course.getcouId());
+					//add(value.stu_Course.getstuId(), value.stu_Course.getcouId());
 			}
-//			
-//			else if(item.getValue().flag!=0)
-//			{
-//				
-//				tool1.writeback(item.getValue().getStudent());
-//				studentMap.remove(item.getKey());
-//				//被修改过 写回去
-//			}
-			//TreeMap<String,String>写索引
-			//RandomAccessFile 随机访问文件
-			
+			stu_couBuffer.remove(item.getKey());	
 			return true;
 		}
+	}
 	
 //	public Stu_CourseBuffer(StudentBuffer stu,String s) {
 //		this.stubuffer = stu;
@@ -78,10 +75,18 @@ public class Stu_CourseBuffer {
 		}
 		else if(stu_couBuffer.get(Stuid)!=null)
 		{
-			Map map=stu_couBuffer.get(Stuid);
+			Map<String,StuCouQuality> map=stu_couBuffer.get(Stuid);
 			stu_couBuffer.remove(Stuid);
 			stu_couBuffer.put(Stuid, map);
-			return map;
+			Map<String, Stu_Course> map2 = new HashMap<String, Stu_Course>();
+		
+			for (StuCouQuality value : map.values()) {
+				if(value.flag1!=-1)
+					map2.put(value.stu_Course.getcouId(), value.stu_Course);
+
+			}
+			
+				return map2;
 		}
 		else {
 			Map<String,Stu_Course> map = tool2.get(Stuid);
@@ -91,7 +96,12 @@ public class Stu_CourseBuffer {
 				Map <String ,Stu_Course> map2=new HashMap<String, Stu_Course>();
 				return map2;
 			}
-			stu_couBuffer.put(Stuid, map);
+			Map<String, StuCouQuality> map3=new HashMap<String, StuCouQuality>();
+			for (Stu_Course value : map.values()) {
+				map3.put(value.getcouId(), new StuCouQuality(value));
+
+			}
+			stu_couBuffer.put(Stuid, map3);
 			return map;
 		}
 	}
@@ -112,8 +122,18 @@ public class Stu_CourseBuffer {
 //		}
 		else if(stu_couBuffer.get(Stuid)!=null){
 			
-			Map<String,Stu_Course> map=(Map)stu_couBuffer.get(Stuid);
-			if(map.get(Couid)==null||map.size()==0) {
+			Map<String,StuCouQuality> mapp=(Map)stu_couBuffer.get(Stuid);
+			if(mapp.get(Couid)==null||mapp.size()==0) {
+				System.out.println("该学生未选过这节课");
+				return -3;
+			}
+			Map<String, Stu_Course> map3=new HashMap<String, Stu_Course>();
+			for (StuCouQuality value : mapp.values()) {
+				if(value.flag1!=-1)
+					map3.put(value.stu_Course.getcouId(), value.stu_Course);
+
+			}
+			if(map3.size()==0) {
 				System.out.println("该学生未选过这节课");
 				return -3;
 			}
@@ -121,12 +141,17 @@ public class Stu_CourseBuffer {
 		}
 	
 		else {
-			Map map=tool2.get(Stuid);
+			Map<String,Stu_Course> map=tool2.get(Stuid);
 			if(map==null||map.size()==0) {
 				System.out.println("该学生未选过课");
 				return -3;
 			}
-			stu_couBuffer.put(Stuid, map);
+			Map<String, StuCouQuality> map3=new HashMap<String, StuCouQuality>();
+			for (Stu_Course value : map.values()) {
+				map3.put(value.getcouId(), new StuCouQuality(value));
+
+			}
+			stu_couBuffer.put(Stuid, map3);
 			Check();
 			if(map.get(Couid)==null) {
 				System.out.println("该学生未选过这节课");
@@ -154,7 +179,7 @@ public class Stu_CourseBuffer {
 		else if(stu_couBuffer.get(Stuid)!=null)
 		{//在缓存中能找到这个学生
 			Map map = stu_couBuffer.get(Stuid);
-			if(map.get(Couid)==null) {  //这个学生没有选过这节课
+			if(map.get(Couid)==null||((StuCouQuality)map.get(Couid)).flag1==-1) {  //这个学生没有选过这节课
 				if(!coubuffer.AddCourse(Couid)) {
 					System.out.println("该课程已满课");
 					return -3;
@@ -162,8 +187,10 @@ public class Stu_CourseBuffer {
 				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
 				String time= sdf.format( new Date());
 				Stu_Course s=new Stu_Course(Stuid,Couid,time);
-				map.put(Couid, s);
-				tool2.add(s);
+				StuCouQuality quality=new StuCouQuality(s);
+				quality.changeflag();
+				map.put(Couid, quality);
+			//	tool2.add(s);
 				Check();
 				return 1;
 			}
@@ -176,7 +203,7 @@ public class Stu_CourseBuffer {
 			
 		}
 		else {
-			Map map=tool2.get(Stuid);
+			Map<String,Stu_Course> map=tool2.get(Stuid);
 			if(map==null||map.size()==0) {
 				System.out.println("这个学生没有选过任何课");
 				if(!coubuffer.AddCourse(Couid)) {
@@ -186,9 +213,11 @@ public class Stu_CourseBuffer {
 				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
 				String time= sdf.format( new Date());
 				Stu_Course s=new Stu_Course(Stuid,Couid,time);
-				tool2.add(s);//往文件里面加入一条记录
-				Map<String, Stu_Course> map2 = new HashMap<String, Stu_Course>();
-				map2.put(Couid, s);
+				//tool2.add(s);//往文件里面加入一条记录
+				Map<String, StuCouQuality> map2 = new HashMap<String, StuCouQuality>();
+				StuCouQuality quality=new StuCouQuality(s);
+				quality.changeflag();
+				map2.put(Couid, quality);
 				stu_couBuffer.put(Stuid, map2);
 				Check();
 				return 1;
@@ -202,12 +231,19 @@ public class Stu_CourseBuffer {
 					System.out.println("该课程已满课");
 					return -3;
 				}
+				Map<String, StuCouQuality> map3=new HashMap<String, StuCouQuality>();
+				for (Stu_Course value : map.values()) {
+					map3.put(value.getcouId(), new StuCouQuality(value));
+
+				}
 				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
 				String time= sdf.format( new Date());
 				Stu_Course s=new Stu_Course(Stuid,Couid,time);
-				tool2.add(s);//往文件里面加入一条记录
-				map.put(Couid, s);
-				stu_couBuffer.put(Stuid, map);
+				StuCouQuality quality=new StuCouQuality(s);
+				quality.changeflag();
+			//	tool2.add(s);//往文件里面加入一条记录
+				map3.put(Couid, quality);
+				stu_couBuffer.put(Stuid, map3);
 				Check();
 				return 1;
 			}
@@ -234,13 +270,14 @@ public class Stu_CourseBuffer {
 				}
 				else {
 					coubuffer.DropCourse(Couid);
-					map.remove(Couid);
-					tool2.delete( Stuid, Couid);
+					((StuCouQuality)map.get(Couid)).delflag();
+					//map.remove(Couid);
+					//tool2.delete( Stuid, Couid);
 					return 1;
 				}
 			}
 			else {
-				Map map=tool2.get(Stuid);
+				Map<String,Stu_Course> map=tool2.get(Stuid);
 				if(map==null||map.size()==0) {
 					System.out.println("该学生从未选过课");
 					return -3;
@@ -252,9 +289,15 @@ public class Stu_CourseBuffer {
 				}
 				else if(map.get(Couid)!=null) {
 					coubuffer.DropCourse(Couid);
-					tool2.delete(Stuid, Couid);
-					map.remove(Couid);
-					stu_couBuffer.put(Stuid, map);
+					//tool2.delete(Stuid, Couid);
+					//map.remove(Couid);
+					Map<String, StuCouQuality> map3=new HashMap<String, StuCouQuality>();
+					for (Stu_Course value : map.values()) {
+						map3.put(value.getcouId(), new StuCouQuality(value));
+
+					}
+					map3.get(Couid).delflag();
+					stu_couBuffer.put(Stuid, map3);
 					Check();
 					return 1;
 				}
@@ -262,9 +305,38 @@ public class Stu_CourseBuffer {
 			return 0;
 		}
 			
+	public void clear() throws Exception {
+		Iterator<Entry<String, Map>> entries =stu_couBuffer.entrySet().iterator();
+		while(entries.hasNext()){
+		    Entry<String, Map> item = entries.next();
+//		    if(entry.getValue().flag==0)
+//			{
+//				studentMap.remove(entry.getKey());
+//				//没有被修改过 直接丢弃
+//			}
 			
+		//    Map.Entry<String, Map> item = (Entry<String, Map>)stu_couBuffer.entrySet().iterator().next();
+			//获取第一个键值对
+			Map<String, StuCouQuality> m2= item.getValue();
+			//选课信息貌似不会被修改？只有增加和删除？？？
+									
+			for (StuCouQuality value : m2.values()) {
+				if(value.flag1==1)
+					tool2.add(value.stu_Course);
+				else if(value.flag1==-1)
+					tool2.delete(value.stu_Course.getstuId(), value.stu_Course.getcouId());
+					//add(value.stu_Course.getstuId(), value.stu_Course.getcouId());
+			}
+			stu_couBuffer.remove(item.getKey());	
+		    
+		    
+			
+		}
+		
+	}	
 	public static void main(String[] args) {
 		//Stu_CourseBuffer mBuffer = new Stu_CourseBuffer(, c, filename)
+		//System.out.println("lalalalala");
 	}
 	
 	

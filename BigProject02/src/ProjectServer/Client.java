@@ -291,7 +291,7 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 		}
 	}
 	public void exitChoosecourseManage() {
-		
+		r.exitChoosecourseManage();
 	}
 	public void exitStudentManage() {
 		r.exitStudentManage();
