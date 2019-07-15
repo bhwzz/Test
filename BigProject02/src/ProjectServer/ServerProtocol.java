@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import EntityClass.Course;
+import EntityClass.Stu_Course;
 import EntityClass.Student;
 
 public class ServerProtocol implements IOStrategy{
@@ -40,29 +41,55 @@ public class ServerProtocol implements IOStrategy{
 		try {
 			DataInputStream dis=new DataInputStream(Clientsocket.getInputStream());
 			DataOutputStream dos=new DataOutputStream(Clientsocket.getOutputStream());
-//			ObjectInputStream ois=new ObjectInputStream(Clientsocket.getInputStream());
-//			ObjectOutputStream oos=new ObjectOutputStream(Clientsocket.getOutputStream());
-//			PrintWriter pw=new PrintWriter(new OutputStreamWriter(Clientsocket.getOutputStream()));			
-//			BufferedReader br=new BufferedReader(new InputStreamReader(Clientsocket.getInputStream()));
-//			BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(Clientsocket.getOutputStream()));
 			while(true) {
 				int i=dis.readInt();
 				System.out.println("客户端请求："+i);
 				switch(i) {
-//				case 1://选课:返回1选课成功；返回0选课失败，接着返回一个字符串（
-//					sid=br.readLine();
-//					cid=br.readLine();
-//					bool=cci.chooseCourse(sid,cid);
-//					bw.write(bool);
-//					bw.flush();
-//					break;
-//				case 2://退选
-//					sid=br.readLine();
-//					cid=br.readLine();
-//					bool=cci.dropCourse(sid,cid);
-//					bw.write(bool);
-//					bw.flush();
-//					break;
+				case 1://选课:返回1选课成功；返回0选课失败，接着返回一个字符串（
+					sid=dis.readUTF();
+					cid=dis.readUTF();
+					bool=cci.chooseCourse(sid, cid);
+					if(bool==1) {
+						dos.writeInt(1);
+					}
+					else if(bool==-1) {
+						dos.writeInt(0);
+						dos.writeUTF("The student does not exist!");
+					}
+					else if(bool==-2) {
+						dos.writeInt(0);
+						dos.writeUTF("The course does not exist!");
+					}
+					else if(bool==-3) {
+						dos.writeInt(0);
+						dos.writeUTF("There is no spare capacity for the course!");
+					}
+					else if(bool==-4) {
+						dos.writeInt(0);
+						dos.writeUTF("The student has already taken this course!");
+					}
+					dos.flush();
+					break;
+				case 2://退选
+					sid=dis.readUTF();
+					cid=dis.readUTF();
+					bool=cci.dropCourse(sid, cid);
+					if(bool==1) {
+						dos.writeInt(1);
+					}
+					else if(bool==-1) {
+						dos.writeInt(0);
+						dos.writeUTF("The student does not exist!");
+					}
+					else if(bool==-2) {
+						dos.writeInt(0);
+						dos.writeUTF("The course does not exist!");
+					}
+					else if(bool==-3) {
+						dos.writeInt(0);
+						dos.writeUTF("The student had not taken the course!");
+					}
+					break;
 				case 3://增加学生信息，传给我一个整的字符串
 					s=dis.readUTF();//传给我一个整的字符串
 					Student stu=Student.toStudent(s);
@@ -88,7 +115,7 @@ public class ServerProtocol implements IOStrategy{
 					dos.writeInt(bool);;//返回1：修改成功；返回0：修改失败
 					dos.flush();
 					break;
-				case 6://查找学生信息，传给我学生id
+				case 6://查找学生信息，传给我学生id,返回学生个人信息+学生所有选课信息
 					sid=dis.readUTF();
 					//返回学生个人信息以及选课信息
 					System.out.println("客户端要查找的学生id："+sid);
@@ -100,6 +127,16 @@ public class ServerProtocol implements IOStrategy{
 						System.out.println("数据库查找该学生成功！");
 						dos.writeUTF(stu3.toString());
 						System.out.println(stu3.toString());
+						//学生存在查找学生选课信息
+						List<Stu_Course> list=sii.FindCourse(sid);
+						int num=list.size();
+						dos.writeInt(num);//先写回选课数目
+						if(num>0) {
+							for(int i1=0;i1<num;i1++) {
+								dos.writeUTF(list.get(i1).toString());//每次写回一条选课记录
+							}
+						}
+						dos.flush();
 					}
 					dos.flush();
 					break;

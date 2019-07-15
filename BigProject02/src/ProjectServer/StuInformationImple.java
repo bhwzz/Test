@@ -6,7 +6,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
+import EntityClass.Stu_Course;
 import EntityClass.Student;
 
 public class StuInformationImple implements InformationOperate{
@@ -111,13 +114,27 @@ public class StuInformationImple implements InformationOperate{
 		return stu;
 	}
 	//查找学生已选课程
-	public String FindCourse(String id) {
-		
-		return "";		
-	}
-	//查找学生已选课程数目，该函数可以与上一个函数调用思洋的相同函数，自己处理返回结果即可
-	public int FindCourseNum(String id) {
-		
-		return 0;
+	public List FindCourse(String id) {//传stuid返回该学生选的所有的课,该学生一定存在
+		try {
+			dos.writeInt(12);
+			dos.writeUTF(id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int num;
+		String s;
+		List<Stu_Course> list=new ArrayList<Stu_Course>();
+		try {
+			num = dis.readInt();
+			for(int i=0;i<num;i++) {
+				s=dis.readUTF();
+				list.add(Stu_Course.toStuCourse(s));
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		return list;//如果没有选课记录，就使用list.size()判断		
 	}
 }
