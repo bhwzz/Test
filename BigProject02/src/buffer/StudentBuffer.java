@@ -197,9 +197,42 @@ public class StudentBuffer {
 				tool1.delete(entry.getKey());
 			}
 		}
+		studentMap.clear();
 		
 		return true;
 	}
+	
+	public boolean Fresh() throws Exception {
+		Iterator<Entry<String, StudentQuality>> entries = studentMap.entrySet().iterator();
+		List<String> list=new ArrayList<String>() ;
+		while(entries.hasNext()){
+		    Entry<String, StudentQuality> entry = entries.next();
+//		    if(entry.getValue().flag==0)
+//			{
+//				studentMap.remove(entry.getKey());
+//				//没有被修改过 直接丢弃
+//			}
+			
+			if(entry.getValue().flag==1)
+			{
+				
+				tool1.writeback(entry.getValue().getStudent());
+				entry.getValue().flag=0;
+			//	studentMap.remove(entry.getKey());
+				//被修改过 写回去
+			}
+			else if(entry.getValue().flag==-1) {
+				tool1.delete(entry.getKey());
+				list.add(entry.getKey());
+			}
+		}
+		for(String value:list) {
+			studentMap.remove(value);
+		}
+		
+		return true;
+	}
+	
 	public static void main(String[] args) throws Exception {
 		StudentBuffer studentBuffer = new StudentBuffer("d:\\test3.txt");
 		Student s1 = Student.toStudent("2202197,喵喵,03,男");

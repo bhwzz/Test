@@ -327,13 +327,55 @@ public class Stu_CourseBuffer {
 					tool2.delete(value.stu_Course.getstuId(), value.stu_Course.getcouId());
 					//add(value.stu_Course.getstuId(), value.stu_Course.getcouId());
 			}
-			stu_couBuffer.remove(item.getKey());	
+			//stu_couBuffer.remove(item.getKey());	
 		    
 		    
 			
 		}
+		stu_couBuffer.clear();
 		
 	}	
+	
+	
+	public void fresh() throws Exception {
+		Iterator<Entry<String, Map>> entries =stu_couBuffer.entrySet().iterator();
+		while(entries.hasNext()){
+		    Entry<String, Map> item = entries.next();
+		//获取第一个键值对
+			Map<String, StuCouQuality> m2= item.getValue();
+			List<String> list = new ArrayList<String>();
+			//选课信息貌似不会被修改？只有增加和删除？？？
+									
+			for (StuCouQuality value : m2.values()) {
+				if(value.flag1==1) {
+					tool2.add(value.stu_Course);
+					value.flag1=0;
+				}
+					
+				else if(value.flag1==-1) {
+					tool2.delete(value.stu_Course.getstuId(), value.stu_Course.getcouId());
+					//add(value.stu_Course.getstuId(), value.stu_Course.getcouId());
+					list.add( value.stu_Course.getcouId());
+				}
+			}
+			for(String value:list) {
+				m2.remove(value);
+			}
+		}
+		Iterator<Entry<String, Map>> entries2 =stu_couBuffer.entrySet().iterator();
+		List<String> list2 = new ArrayList<String>();
+		while(entries2.hasNext()) {
+			 Entry<String, Map> item2 = entries.next();
+			 if(item2.getValue().size()==0) {
+				 list2.add(item2.getKey());
+			 }
+		}
+		for(String value:list2) {
+			stu_couBuffer.remove(value);
+		}
+		
+	}	
+	
 	public static void main(String[] args) {
 		//Stu_CourseBuffer mBuffer = new Stu_CourseBuffer(, c, filename)
 		//System.out.println("lalalalala");
