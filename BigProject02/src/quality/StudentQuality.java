@@ -12,6 +12,12 @@ public class StudentQuality {
 		this.student = s;
 		this.flag = 0;
 	}
+	public void changeflag() {
+		flag=1;
+	}
+	public void delflag() {
+		flag=-1;
+	}
 	public Student getStudent() {
 		return student;
 	}

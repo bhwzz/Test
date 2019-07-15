@@ -57,12 +57,16 @@ public class StudentBuffer {
 				//没有被修改过 直接丢弃
 			}
 			
-			else if(item.getValue().flag!=0)
+			else if(item.getValue().flag==1)//被增加 or删除
 			{
 				
 				tool1.writeback(item.getValue().getStudent());
 				studentMap.remove(item.getKey());
 				//被修改过 写回去
+			}
+			else if(item.getValue().flag==-1) {
+				tool1.delete(item.getKey());
+				studentMap.remove(item.getKey());
 			}
 			//TreeMap<String,String>写索引
 			//RandomAccessFile 随机访问文件
@@ -78,6 +82,9 @@ public class StudentBuffer {
 		System.out.println("要查找的学生id"+ID);
 		
 		if (studentMap.get(ID)!=null) {
+			if(studentMap.get(ID).flag==1) {
+				return null;
+			}
 			Student s = studentMap.get(ID).getStudent();
 			StudentQuality sq = new StudentQuality(s);
 			studentMap.remove(studentMap.get(ID));
@@ -154,8 +161,9 @@ public class StudentBuffer {
 		}
 	
 		else if(stucoubufferBuffer.find(s).size()==0) {
-			studentMap.remove(s);
-			tool1.delete(s);
+		//	studentMap.remove(s);
+		//	tool1.delete(s);
+			studentMap.get(s).delflag();
 			System.out.println("删除学生函数结束！");
 			return 1;
 		}
@@ -178,12 +186,15 @@ public class StudentBuffer {
 //				//没有被修改过 直接丢弃
 //			}
 			
-			if(entry.getValue().flag!=0)
+			if(entry.getValue().flag==1)
 			{
 				
 				tool1.writeback(entry.getValue().getStudent());
 			//	studentMap.remove(entry.getKey());
 				//被修改过 写回去
+			}
+			else if(entry.getValue().flag==-1) {
+				tool1.delete(entry.getKey());
 			}
 		}
 		
