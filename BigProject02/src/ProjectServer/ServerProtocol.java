@@ -126,8 +126,10 @@ public class ServerProtocol implements IOStrategy{
 					//返回学生个人信息以及选课信息
 					System.out.println("客户端要查找的学生id："+sid);
 					Student stu3=(Student)sii.Find(sid);
-					if(stu3==null)
+					if(stu3==null) {
 						s = "0";
+						System.out.println("查找该学生不存在！");
+					}
 					else {
 						s = "1";
 						System.out.println("数据库查找该学生成功！");
@@ -141,10 +143,10 @@ public class ServerProtocol implements IOStrategy{
 								s=s.concat("."+list.get(i1).toString());//每次写回一条选课记录
 							}
 						}
-						System.out.println(s);
-						dos.writeUTF(s);
-						dos.flush();
 					}
+					System.out.println(s);
+					dos.writeUTF(s);
+					dos.flush();
 					dos.flush();
 					break;
 				case 7://增加课程:传给我一个字符串（id，name，容量）
