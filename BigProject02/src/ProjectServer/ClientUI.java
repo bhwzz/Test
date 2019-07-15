@@ -79,7 +79,7 @@ abstract public class ClientUI {
 			System.out.println("    1.增加学生信息");
 			System.out.println("    2.删除学生信息");
 			System.out.println("    3.修改学生信息");
-			System.out.println("    4.查询学生信息");
+			System.out.println("    4.查找学生信息");
 			System.out.println("    5.返回");
 			System.out.print("请输入你要进行的操作编号：  ");
 			Scanner sc=new Scanner(System.in);
@@ -165,6 +165,8 @@ abstract public class ClientUI {
     	来源：CSDN 
     	原文：https://blog.csdn.net/qq_18144681/article/details/51222405 
     	版权声明：本文为博主原创文章，转载请附上博文链接！*/
+
+
     }
     public static void delay(int time) {
     	Robot r;

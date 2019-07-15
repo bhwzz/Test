@@ -2,6 +2,7 @@ package buffer;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -17,26 +18,31 @@ import quality.StudentQuality;
 public class CourseBuffer {
 
 	public Map<String, Course> CourseMap;//(cou_id,course)
-	
+	public File rootfile;
 	public CourseBuffer(String file) throws IOException {
 		BufferedReader br=new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 		CourseMap=new HashMap<String,Course>();
 		String line;
 		Course cou=null;
+		rootfile = new File(file);
 		while((line=br.readLine())!=null) {
 			cou=Course.toCourse(line);
 			CourseMap.put(cou.getCourse_id(), cou);
 		}
 		
 	}
-	public void writeFile(String file) throws IOException {//将map中的课程信息写会文件
-		PrintWriter pw=new PrintWriter((new FileOutputStream(file)));
+	public void writeFile() throws IOException {//将map中的课程信息写会文件
+		PrintWriter pw=new PrintWriter((new FileOutputStream(rootfile.getAbsolutePath())));
 		Iterator it=CourseMap.entrySet().iterator();
 		while(it.hasNext()) {
 			Map.Entry<String, Course> entry=(Map.Entry<String, Course>)it.next();
 			pw.println(entry.getValue().toString());
 		}
 		pw.close();
+	}
+	
+	protected void finalize() throws Exception {
+		writeFile();
 	}
 	
 	public Course Find(String s) {    //找到返回course 没找到返回null

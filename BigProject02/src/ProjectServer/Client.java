@@ -168,9 +168,7 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 			int selectedCourseNum = s.length - 1;//该学生已选课程数目
 			System.out.println("学生信息如下：");
 			String info[] = s[0].substring(1).split(",");
-			System.out.println("学号："+info[0]+"\n姓名:"+info[1]+"\n班级:"+info[2]+"\n性别:"+info[3]
-					+"\n已选课程数目:"+selectedCourseNum);
-
+			System.out.println("学号："+info[0]+"\n姓名:"+info[1]+"\n班级:"+info[2]+"\n性别:"+info[3]+"\n已选课程数目:"+selectedCourseNum);
 			//int courseNum = Integer.parseInt(info[4]);
 			if(selectedCourseNum>0) {
 				System.out.println("已选课程信息如下：");
