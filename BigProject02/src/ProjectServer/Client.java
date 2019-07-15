@@ -290,4 +290,16 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 			System.out.println("不存在该课程号，增加失败");
 		}
 	}
+	public void exitChoosecourseManage() {
+		
+	}
+	public void exitStudentManage() {
+		
+	}
+	public void exitCourseManage() {
+		
+	}
+	
+
+	
 }
