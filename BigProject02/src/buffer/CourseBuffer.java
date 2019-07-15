@@ -28,8 +28,7 @@ public class CourseBuffer {
 		while((line=br.readLine())!=null) {
 			cou=Course.toCourse(line);
 			CourseMap.put(cou.getCourse_id(), cou);
-		}
-		
+		}		
 	}
 	public void writeFile() throws IOException {//将map中的课程信息写会文件
 		PrintWriter pw=new PrintWriter((new FileOutputStream(rootfile.getAbsolutePath())));
@@ -38,6 +37,7 @@ public class CourseBuffer {
 			Map.Entry<String, Course> entry=(Map.Entry<String, Course>)it.next();
 			pw.println(entry.getValue().toString());
 		}
+		pw.flush();
 		pw.close();
 	}
 	
