@@ -82,7 +82,7 @@ public class StudentBuffer {
 		System.out.println("要查找的学生id"+ID);
 		
 		if (studentMap.get(ID)!=null) {
-			if(studentMap.get(ID).flag==1) {
+			if(studentMap.get(ID).flag==-1) {
 				return null;
 			}
 			Student s = studentMap.get(ID).getStudent();
