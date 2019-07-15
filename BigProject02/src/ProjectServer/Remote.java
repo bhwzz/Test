@@ -159,4 +159,21 @@ public class Remote { //本地（客户端）代理，与服务器通信方式
 			throw new ArithmeticException(e.getMessage());
 		}
 	}
+	public void exitChoosecourseManage() {
+		//dos.writeInt(v);
+	}
+	public void exitStudentManage() {
+		try {
+			dos.writeInt(-2); //-2表示告诉服务器退出学生管理
+		} catch (IOException e) {
+			throw new ArithmeticException(e.getMessage());
+		}
+	}
+	public void exitCourseManage() {
+		try {
+			dos.writeInt(-3); //-2表示告诉服务器退出课程管理
+		} catch (IOException e) {
+			throw new ArithmeticException(e.getMessage());
+		}
+	}
 }

@@ -176,7 +176,7 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 				for(int i=0; i<selectedCourseNum; i++) {
 					course = s[i+1].split(",");//读取课程信息
 					System.out.println("-------课程"+(i+1)+"-------");
-					System.out.println("课程号："+course[0]+"\n课程名:"+course[1]+"\n课容量:"+course[2]+"\n已选人数:"+course[3]+"\n课余量:"+course[4]+"\n");
+					System.out.println("课程号："+course[0]+"\n课程名:"+course[1]+"\n课容量:"+course[2]+"\n课余量:"+course[3]+"\n已选人数:"+course[4]+"\n");
 				}
 			}
 			break;
@@ -264,7 +264,7 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 		for(int i=0; i<courseNum; i++) {
 			course = allCourseStr[i].split(",");
 			System.out.println("-------课程"+(i+1)+"-------");
-			System.out.println("课程号："+course[0]+"\n课程名:"+course[1]+"\n课容量:"+course[2]+"\n已选人数:"+course[3]+"\n课余量:"+course[4]+"\n");
+			System.out.println("课程号："+course[0]+"\n课程名:"+course[1]+"\n课容量:"+course[2]+"\n课余量:"+course[3]+"\n已选人数:"+course[4]+"\n");
 		}
 		
 		//按任意键继续...
@@ -290,4 +290,16 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 			System.out.println("不存在该课程号，增加失败");
 		}
 	}
+	public void exitChoosecourseManage() {
+		
+	}
+	public void exitStudentManage() {
+		
+	}
+	public void exitCourseManage() {
+		
+	}
+	
+
+	
 }

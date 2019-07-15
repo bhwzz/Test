@@ -28,8 +28,7 @@ public class CourseBuffer {
 		while((line=br.readLine())!=null) {
 			cou=Course.toCourse(line);
 			CourseMap.put(cou.getCourse_id(), cou);
-		}
-		
+		}		
 	}
 	public void writeFile() throws IOException {//将map中的课程信息写会文件
 		PrintWriter pw=new PrintWriter((new FileOutputStream(rootfile.getAbsolutePath())));
@@ -38,6 +37,7 @@ public class CourseBuffer {
 			Map.Entry<String, Course> entry=(Map.Entry<String, Course>)it.next();
 			pw.println(entry.getValue().toString());
 		}
+		pw.flush();
 		pw.close();
 	}
 	
@@ -113,15 +113,16 @@ public class CourseBuffer {
 			return false;
 	}
 //	public static void main(String[] args) throws IOException {
-//		CourseBuffer cb=new CourseBuffer("D:\\Test4.txt");
+//		CourseBuffer cb=new CourseBuffer("D:\\test4.txt");
 //		Iterator it=cb.CourseMap.entrySet().iterator();
 //		while(it.hasNext()) {
 //			Map.Entry<String, Course> entry=(Map.Entry<String, Course>)it.next();
 //			System.out.println(entry.getKey());
 //			entry.getValue().print();
 //		}
+//		cb.Add(Course.toCourse("007,模电,100,100,0"));
 //		cb.Find("004");
 //		cb.Find("001");
-//		cb.writeFile("D:\\Test5.txt");
+//		cb.writeFile();
 //	}
 }

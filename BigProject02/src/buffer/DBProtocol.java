@@ -116,6 +116,12 @@ public class DBProtocol {
 						}
 					}
 					dos.flush();
+					break;
+				case -2://清空学生缓存
+					sb.Clear();
+				case -3://清空课程缓存
+					cb.writeFile();
+					
 				}
 			}
 		} catch (IOException e) {
@@ -131,7 +137,7 @@ public class DBProtocol {
 		System.out.println(DBport);
 		ServerSocket ss=new ServerSocket(Integer.parseInt(DBport));
 		System.out.println("数据库服务程序已经准备好了！");
-		DBProtocol dbp=new DBProtocol("D:\\test3.txt","D:\\Test4.txt","D:\\testK.txt");
+		DBProtocol dbp=new DBProtocol("D:\\test3.txt","D:\\test4.txt","D:\\testK.txt");
 		while(true) {
 			Socket s=ss.accept();
 			dbp.Service(s);

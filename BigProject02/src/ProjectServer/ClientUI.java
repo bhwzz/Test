@@ -35,6 +35,7 @@ abstract public class ClientUI {
 				courseInformationInterface();
 				break;
 			case 4:
+				//Client.exit();
 				System.out.println("谢谢您的使用！");
 				System.exit(0);
 			default:
@@ -63,6 +64,7 @@ abstract public class ClientUI {
 				client.dropCourse();
 				break;
 			case 3:
+				client.exitChoosecourseManage();
 				return;
 			default:
 				System.out.println("请输入正确编号：");
@@ -98,6 +100,7 @@ abstract public class ClientUI {
 				client.findStudent();
 				break;
 			case 5:
+				client.exitStudentManage();
 				return;
 			default:
 				System.out.println("请输入正确编号：");
@@ -137,6 +140,7 @@ abstract public class ClientUI {
 				client.addCourseCapacity();
 				break;
 			case 6:
+				client.exitCourseManage();
 				return;
 			default:
 				System.out.println("请输入正确编号：");
@@ -146,25 +150,32 @@ abstract public class ClientUI {
 		}
 	}
     public static void clear() {
-//    	Robot r;
-//		try {
-//			r = new Robot();
-//	        r.mousePress(InputEvent.BUTTON3_MASK);       // 按下鼠标右键
-//	        r.mouseRelease(InputEvent.BUTTON3_MASK);    // 释放鼠标右键
-//	        r.keyPress(KeyEvent.VK_CONTROL);             // 按下Ctrl键
-//	        r.keyPress(KeyEvent.VK_R);                    // 按下R键
-//	        r.keyRelease(KeyEvent.VK_R);                  // 释放R键
-//	        r.keyRelease(KeyEvent.VK_CONTROL);            // 释放Ctrl键
-//	        r.delay(1000);    
-//		} catch (AWTException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//       
 
+    	/*
+    	Robot r;
+		try {
+			r = new Robot();
+	        r.mousePress(InputEvent.BUTTON3_MASK);       // 按下鼠标右键
+	        r.mouseRelease(InputEvent.BUTTON3_MASK);    // 释放鼠标右键
+	        r.keyPress(KeyEvent.VK_CONTROL);             // 按下Ctrl键
+	        r.keyPress(KeyEvent.VK_R);                    // 按下R键
+	        r.keyRelease(KeyEvent.VK_R);                  // 释放R键
+	        r.keyRelease(KeyEvent.VK_CONTROL);            // 释放Ctrl键
+	        r.delay(500);    
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        /*--------------------- 
+    	作者：Demon530 
+    	来源：CSDN 
+    	原文：https://blog.csdn.net/qq_18144681/article/details/51222405 
+    	版权声明：本文为博主原创文章，转载请附上博文链接！*/
+    	
 
     }
     public static void delay(int time) {
+    	/*
     	Robot r;
 		try {
 			r = new Robot();
@@ -173,6 +184,8 @@ abstract public class ClientUI {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
     }
-
+	
 }
+    
