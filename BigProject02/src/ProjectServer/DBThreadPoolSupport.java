@@ -3,20 +3,19 @@ package ProjectServer;
 import java.net.Socket;
 import java.util.ArrayList;
 
-//线程库类
-public class ThreadPoolSupport implements IOStrategy{
-	ArrayList<IOThread> threads=new ArrayList<IOThread>();
+public class DBThreadPoolSupport implements IOStrategy{
+	ArrayList<DBThread> threads=new ArrayList<DBThread>();
 	int INIT_THREADS=100;
 	int MAX_THREADS=150;
 	IOStrategy ios=null;
 	
-	public ThreadPoolSupport(IOStrategy ios){//初始化线程池
+	public DBThreadPoolSupport(IOStrategy ios){//初始化线程池
 		this.ios=ios;
 		//初始化选课协议
 		//((ChooseProtocol)this.ios).Init();
 		
 		for(int i=0;i<INIT_THREADS;i++) {
-			IOThread t=new IOThread(ios);
+			DBThread t=new DBThread(ios);
 			t.start();
 			threads.add(t);
 		}	
@@ -29,7 +28,7 @@ public class ThreadPoolSupport implements IOStrategy{
 	public void  Service(Socket socket) {
 		boolean flag=false;
 		int i;
-		IOThread t=null;
+		DBThread t=null;
 		for(i=0;i<threads.size();i++) {//遍历线程池，找一个空闲线程
 			if(threads.get(i).isIdle()) {
 				flag=true;
@@ -38,7 +37,7 @@ public class ThreadPoolSupport implements IOStrategy{
 			}
 		}
 		if(!flag) {//没有空闲线程
-			t=new IOThread(ios);
+			t=new DBThread(ios);
 			t.start();
 			try {
 				Thread.sleep(300);
@@ -54,5 +53,4 @@ public class ThreadPoolSupport implements IOStrategy{
 		// TODO Auto-generated method stub
 		
 	}
-
 }

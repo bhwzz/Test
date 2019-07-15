@@ -21,8 +21,9 @@ import java.util.Properties;
 import EntityClass.Course;
 import EntityClass.Stu_Course;
 import EntityClass.Student;
+import ProjectServer.IOStrategy;
 
-public class DBProtocol {
+public class DBProtocol implements IOStrategy{
 	StudentBuffer sb=null;//用于学生操作
 	CourseBuffer cb=null;//用于课程操作
 	Stu_CourseBuffer scb=null;
@@ -35,7 +36,8 @@ public class DBProtocol {
 		this.sb.set(scb);
 	}
 
-	public void Service(Socket serverSocket) throws ClassNotFoundException, Exception {
+	public void Service(Socket serverSocket){
+		System.out.println(Thread.currentThread().getName()+"---数据库开始service！");
 		try {
 			DataInputStream dis=new DataInputStream(serverSocket.getInputStream());
 			DataOutputStream dos=new DataOutputStream(serverSocket.getOutputStream());
@@ -45,30 +47,61 @@ public class DBProtocol {
 				System.out.println("服务器请求："+i);
 				switch(i) {
 				case 1://选课
-					dos.writeInt(scb.add(dis.readUTF(),dis.readUTF()));
+					try {
+						dos.writeInt(scb.add(dis.readUTF(),dis.readUTF()));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					dos.flush();
 					break;
 				case 2://退选	
-					dos.writeInt(scb.delete(dis.readUTF(),dis.readUTF()));
+					try {
+						dos.writeInt(scb.delete(dis.readUTF(),dis.readUTF()));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					dos.flush();
 					break;				
 				case 3://增加学生信息，传来一个学生对象
-					dos.writeBoolean(sb.Add(Student.toStudent(dis.readUTF())));
+					try {
+						dos.writeBoolean(sb.Add(Student.toStudent(dis.readUTF())));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					System.out.println("数据库端增加学生成功！");
 					dos.flush();
 					break;
 				case 4://删除学生信息，传给我一个学生id
-					dos.writeInt(sb.Delete(dis.readUTF()));
+					try {
+						dos.writeInt(sb.Delete(dis.readUTF()));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					System.out.println("数据库删除学生成功！");
 					dos.flush();
 					break;
 				case 5://修改学生信息，传来一个学生对象
-					dos.writeBoolean(sb.Change(Student.toStudent(dis.readUTF())));
+					try {
+						dos.writeBoolean(sb.Change(Student.toStudent(dis.readUTF())));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					System.out.println("数据库端修改学生成功！");
 					dos.flush();
 					break;
 				case 6://查找学生信息，传给我学生id
-					Student s=sb.Find(dis.readUTF());
+					Student s = null;
+					try {
+						s = sb.Find(dis.readUTF());
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					if(s==null) {
 						dos.writeUTF("null");
 						System.out.println("null");
@@ -105,7 +138,13 @@ public class DBProtocol {
 					dos.flush();
 					break;
 				case 12://查找学生已选课程信息,该学生一定存在
-					Map<String,Stu_Course> map1=scb.find(dis.readUTF());
+					Map<String, Stu_Course> map1 = null;
+					try {
+						map1 = scb.find(dis.readUTF());
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					int num=map1.size();
 					dos.writeInt(num);
 					if(num>0) {
@@ -118,9 +157,19 @@ public class DBProtocol {
 					dos.flush();
 					break;
 				case -1://刷新选课记录文件
-					scb.fresh();
+					try {
+						scb.fresh();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				case -2://清空学生缓存
-					sb.Fresh();
+					try {
+						sb.Fresh();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				case -3://清空课程缓存
 					cb.writeFile();
 					
@@ -131,19 +180,25 @@ public class DBProtocol {
 			System.out.println("没有连接到客户端");
 		}
 	}
-	
-	public static void main(String[] args) throws ClassNotFoundException, Exception {
-		Properties p=new Properties();
-		p.load(new FileInputStream("file.properties"));
-		String DBport=p.getProperty("DBport");
-		System.out.println(DBport);
-		ServerSocket ss=new ServerSocket(Integer.parseInt(DBport));
-		System.out.println("数据库服务程序已经准备好了！");
-		DBProtocol dbp=new DBProtocol("D:\\test3.txt","D:\\test4.txt","D:\\testK.txt");
-		while(true) {
-			Socket s=ss.accept();
-			dbp.Service(s);
-		}
+
+	@Override
+	public void Service(Socket socket1, Socket socket2) {
+		// TODO Auto-generated method stub
+		
 	}
+	
+//	public static void main(String[] args) throws ClassNotFoundException, Exception {
+//		Properties p=new Properties();
+//		p.load(new FileInputStream("file.properties"));
+//		String DBport=p.getProperty("DBport");
+//		System.out.println(DBport);
+//		ServerSocket ss=new ServerSocket(Integer.parseInt(DBport));
+//		System.out.println("数据库服务程序已经准备好了！");
+//		DBProtocol dbp=new DBProtocol("D:\\test3.txt","D:\\test4.txt","D:\\testK.txt");
+//		while(true) {
+//			Socket s=ss.accept();
+//			dbp.Service(s);
+//		}
+//	}
 	
 }

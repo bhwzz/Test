@@ -19,25 +19,30 @@ import EntityClass.Stu_Course;
 import EntityClass.Student;
 
 public class ServerProtocol implements IOStrategy{
-	ChooseCourseImple cci=null;
-	StuInformationImple sii=null;
-	CouInformationImple cii=null;
-	
-	ServerProtocol(Socket DBsocket){
-		cci=new ChooseCourseImple(DBsocket);
-		sii=new StuInformationImple(DBsocket);
-		cii=new CouInformationImple(DBsocket);
-	}
+//	ChooseCourseImple cci=null;
+//	StuInformationImple sii=null;
+//	CouInformationImple cii=null;
+//	
+//	public void setImple(Socket DBsocket){
+//		cci=new ChooseCourseImple(DBsocket);
+//		sii=new StuInformationImple(DBsocket);
+//		cii=new CouInformationImple(DBsocket);
+//	}
 	public ServerProtocol() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public void Service(Socket Clientsocket) {
+	public void Service(Socket Clientsocket,Socket DBSocket) {
+		ChooseCourseImple cci=new ChooseCourseImple(DBSocket);
+		StuInformationImple sii=new StuInformationImple(DBSocket);
+		CouInformationImple cii=new CouInformationImple(DBSocket);
+		
+		
 		String sid=null;
 		String cid=null; 
 		String s=null;
 		int bool;
-		System.out.println("服务器开始service！");
+		System.out.println(Thread.currentThread().getName()+"---服务器开始service！");
 		try {
 			DataInputStream dis=new DataInputStream(Clientsocket.getInputStream());
 			DataOutputStream dos=new DataOutputStream(Clientsocket.getOutputStream());
@@ -45,7 +50,7 @@ public class ServerProtocol implements IOStrategy{
 				int i=dis.readInt();
 				System.out.println("客户端请求："+i);
 				switch(i) {
-				case 1://选课:返回1选课成功；返回0选课失败，接着返回一个字符串（
+				case 1://选课:返回1选课成功；返回0选课失败，接着返回一个字符串
 					sid=dis.readUTF();
 					cid=dis.readUTF();
 					bool=cci.chooseCourse(sid, cid);
@@ -206,6 +211,11 @@ public class ServerProtocol implements IOStrategy{
 			// TODO Auto-generated catch block
 			System.out.println("。。。。。。没有连接到客户端");
 		}
+	}
+	@Override
+	public void Service(Socket socket) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

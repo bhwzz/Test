@@ -6,4 +6,5 @@ import java.net.Socket;
 //封装服务器端的服务函数
 public interface IOStrategy {
 	public void Service(Socket socket);
+	public void Service(Socket socket1,Socket socket2);
 }

@@ -30,11 +30,11 @@ public class Client100 extends Thread{  //Î´Íê³É
 
 	}
 	public static void main(String[] args) throws Exception {
-		Client100[] client = new Client100[100];
-		for(int i=0; i<100; i++) {
-			client[i] = new Client100("localhost", 4563, i+1234500+"", "001");
+		Client100[] client = new Client100[10];
+		for(int i=0; i<10; i++) {
+			client[i] = new Client100("localhost", 4444, i+1234500+"", "001");
 		}
-		for(int i=0; i<100; i++) {
+		for(int i=0; i<10; i++) {
 			client[i].start();
 		}
 	}
