@@ -1,7 +1,5 @@
-package buffer;
-
 import java.io.*;
-import java.text.SimpleDateFormat;
+
 import java.util.*;
 //
 //import com.sun.jndi.rmi.registry.ReferenceWrapper;
@@ -26,7 +24,7 @@ public class Stu_CourseBuffer {
 	int COUIDSIZE = 3;
 	int TIMESIZE = 0;
 	int SIZE = 10;
-	public Stu_CourseBuffer(StudentBuffer s,CourseBuffer c,String filename) throws Exception {
+	public Stu_CourseBuffer(StudentBuffer s,CourseBuffer c,String filename) {
 		stubuffer = s;
 		coubuffer = c;
 		rootfile = new File(filename);
@@ -70,7 +68,7 @@ public class Stu_CourseBuffer {
 //		rootfile = new File(s);
 //		// TODO Auto-generated constructor stub
 //	}
-	public Map find(String Stuid) throws Exception {
+	public Map find(String Stuid) {
 		if(stubuffer.Find(Stuid)==null)
 		{
 			System.out.println("该学生不存在");
@@ -95,7 +93,7 @@ public class Stu_CourseBuffer {
 			return map;
 		}
 	}
-	public int find(String Stuid,String Couid) throws Exception {
+	public int find(String Stuid,String Couid) {
 		if(stubuffer.Find(Stuid)==null)
 		{
 			System.out.println("该学生不存在");
@@ -137,10 +135,10 @@ public class Stu_CourseBuffer {
 		
 	}
 			
-	public int add(String Stuid,String Couid) throws Exception			
+	public int add(Stu_Course s)			
 	{
-		//String Stuid = s.getstuId();
-		//String Couid = s.getcouId();
+		String Stuid = s.getstuId();
+		String Couid = s.getcouId();
 		if(stubuffer.Find(Stuid)==null)
 		{
 			System.out.println("该学生不存在");
@@ -159,9 +157,6 @@ public class Stu_CourseBuffer {
 					System.out.println("该课程已满课");
 					return -3;
 				}
-				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
-				String time= sdf.format( new Date());
-				Stu_Course s=new Stu_Course(Stuid,Couid,time);
 				map.put(Couid, s);
 				tool2.add(s);
 				Check();
@@ -183,9 +178,6 @@ public class Stu_CourseBuffer {
 					System.out.println("该课程已满课");
 					return -3;
 				}
-				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
-				String time= sdf.format( new Date());
-				Stu_Course s=new Stu_Course(Stuid,Couid,time);
 				tool2.add(s);//往文件里面加入一条记录
 				Map<String, Stu_Course> map2 = new HashMap<String, Stu_Course>();
 				map2.put(Couid, s);
@@ -202,9 +194,6 @@ public class Stu_CourseBuffer {
 					System.out.println("该课程已满课");
 					return -3;
 				}
-				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
-				String time= sdf.format( new Date());
-				Stu_Course s=new Stu_Course(Stuid,Couid,time);
 				tool2.add(s);//往文件里面加入一条记录
 				map.put(Couid, s);
 				stu_couBuffer.put(Stuid, map);
@@ -215,7 +204,7 @@ public class Stu_CourseBuffer {
 	}
 //			Map <String,String> map=new HashMap<String, String>();
 
-	public int delete(String Stuid,String Couid) throws Exception {
+	public int delete(String Stuid,String Couid) {
 			if(stubuffer.Find(Stuid)==null)
 			{
 				System.out.println("该学生不存在");
@@ -259,7 +248,8 @@ public class Stu_CourseBuffer {
 					return 1;
 				}
 			}
-			return 0;
+				
+			
 		}
 			
 			

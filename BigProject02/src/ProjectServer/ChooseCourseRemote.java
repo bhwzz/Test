@@ -34,4 +34,15 @@ public class ChooseCourseRemote implements ChooseCourse{
 		}
 	}
 	//ÍËÑ¡º¯Êý
+	public int dropCourse(String stuId,String couId) {
+		try {
+			pw.print(2);
+			pw.println(stuId);
+			pw.println(couId);			
+			pw.flush();			
+			return br.read();
+		}catch (Exception e) {
+			throw new ArithmeticException(e.getMessage());
+		}
+	}
 }

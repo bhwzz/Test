@@ -49,9 +49,13 @@ public class Remote { //本地（客户端）代理，与服务器通信方式
 	{
 		try {
 			dos.writeInt(3);//3表示增加学生信息
+			dos.flush();
+			System.out.println(student);
 			dos.writeUTF(student); //以逗号作为分隔符向服务器传数据
 			dos.flush();
-			return dis.readInt()== 1;
+			int bool=dis.readInt();
+			System.out.println("客户端请求增加学生成功！");
+			return (bool==1)?true:false;
 		}catch (Exception e) {
 			throw new ArithmeticException(e.getMessage());
 		}

@@ -79,7 +79,7 @@ abstract public class ClientUI {
 			System.out.println("    1.增加学生信息");
 			System.out.println("    2.删除学生信息");
 			System.out.println("    3.修改学生信息");
-			System.out.println("    4.查找学生信息");
+			System.out.println("    4.查询学生信息");
 			System.out.println("    5.返回");
 			System.out.print("请输入你要进行的操作编号：  ");
 			Scanner sc=new Scanner(System.in);

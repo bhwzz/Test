@@ -1,6 +1,8 @@
 package EntityClass;
 
-public class Student {
+import java.io.Serializable;
+
+public class Student implements Serializable{
 	private String id;
 	private String name;
 	private int classroom;
@@ -59,22 +61,33 @@ public class Student {
 		String [] s=new String[4];
 		s=stu.split(",");
 		//System.out.println(s[0]+s[1]+Integer.parseInt(s[2])+s[3].charAt(0));
-		Student student=new Student(s[0],s[1],Integer.parseInt(s[2]),s[3].charAt(0));
-		return student;	
+		return new Student(s[0],s[1],Integer.parseInt(s[2]),s[3].charAt(0));
 		
 		
 	}
 	//将学生转为字符串
 	public String toString() {
-		return ""+this.id+","+this.name+","+this.classroom+","+this.gender;
-		
+		String classString=String.format("%2d", classroom).replace(" ", "0");
+		return ""+this.id+","+this.name+","+classString+","+this.gender;
 	}
 	
-	public static void main(String[] args) {
-		Student s1=new Student("0000001","王丽安",10,'女');
-		s1.print();
-		System.out.println(s1.toString());
-		Student s2=toStudent("0000001, 丽安,10,女");
-		s2.print();
-	}
+//	public static void main(String[] args) {
+//		Student s1=new Student("0000001","王丽安",1,'女');
+//		s1.print();
+//		System.out.println(s1.toString());
+//		Student s2=toStudent("0000001, 丽安,10,女");
+//		s2.print();
+//		Student s3=null;
+//		Student s4=new Student();
+//		Student s5=s1;
+//		if(s3==null)
+//			System.out.println("s3=null");
+//		if(s1==null)
+//			System.out.println("s1==null");
+//		if(s4==null)
+//			System.out.println("s4==null");
+//		if(s5==null)
+//			System.out.println("s5==null");
+//	}
+
 }
