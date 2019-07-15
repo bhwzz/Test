@@ -15,7 +15,7 @@ abstract public class ClientUI {
 	public static void mainInterface(){
 		
 		while(true) {
-			clear();
+		//	clear();
 			System.out.println("----------------------------");
 			System.out.println("    1.选课管理");
 			System.out.println("    2.学生信息管理");
@@ -48,7 +48,7 @@ abstract public class ClientUI {
 	//选课管理界面
 	public static void choosecourseInformationInterface(){
 		while(true) {
-			clear();
+			//clear();
 			System.out.println("----------选课管理--------------");
 			System.out.println("    1.选课");
 			System.out.println("    2.退课");
@@ -76,7 +76,7 @@ abstract public class ClientUI {
 	public static void studentInformationInterface(){
 
 		while(true) {
-			clear();
+			//clear();
 			System.out.println("----------学生信息管理--------------");
 			System.out.println("    1.增加学生信息");
 			System.out.println("    2.删除学生信息");
@@ -150,6 +150,7 @@ abstract public class ClientUI {
 		}
 	}
     public static void clear() {
+
     	/*
     	Robot r;
 		try {
