@@ -72,7 +72,7 @@ public class StuCouTool {
 		Map <String,Stu_Course> map = new HashMap<String,Stu_Course>();
 		RandomAccessFile raf=new RandomAccessFile(rootfile, "r");  
         //获取RandomAccessFile对象文件指针的位置，初始位置是0
-		if(bookMap.get(id)==null||bookMap.get(id).size()==1) {
+		if(bookMap.get(id)==null||bookMap.get(id).size()==0) {
 			return null;
 		}
 		Map<String,String> map2=bookMap.get(id);
