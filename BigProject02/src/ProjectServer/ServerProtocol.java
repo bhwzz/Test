@@ -11,7 +11,10 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
+import EntityClass.Course;
 import EntityClass.Student;
 
 public class ServerProtocol implements IOStrategy{
@@ -70,7 +73,7 @@ public class ServerProtocol implements IOStrategy{
 					break;
 				case 4://删除学生信息，传给我一个学生id
 					sid=dis.readUTF();
-					bool=sii.Delete(sid)?1:0;//删除学生的函数要判断该学生有没有选课
+					bool=sii.Delete(sid);//删除学生的函数要判断该学生有没有选课
 					dos.writeInt(bool);//返回1：删除成功；返回0：删除学生失败？？？？？？？（待修改）
 					System.out.println("删除结果"+bool);
 					if(bool==0) {//删除失败返回一个失败原因字符串
@@ -80,8 +83,7 @@ public class ServerProtocol implements IOStrategy{
 					break;
 				case 5://修改学生信息，传给我一整个学生信息字符串
 					s=dis.readUTF();
-					Student stu2=Student.toStudent(s);
-					bool=sii.Change(stu2)?1:0;
+					bool=sii.Change(s)?1:0;
 					System.out.println("修改结果"+bool);
 					dos.writeInt(bool);;//返回1：修改成功；返回0：修改失败
 					dos.flush();
@@ -103,18 +105,36 @@ public class ServerProtocol implements IOStrategy{
 					break;
 				case 7://增加课程:传给我一个字符串（id，name，容量）
 					s=dis.readUTF();
-					
+					bool=cii.Add(Course.toCourse(s+",0,0"))?1:0;
+					dos.writeInt(bool);
+					dos.flush();
 					break;
-				case 8://删除课程，要求该课程的选课人数为0（返回结果同student）
-					
+				case 8://删除课程，要求该课程的选课人数为0（返回-2，-1，1）
+					cid=dis.readUTF();
+					dos.writeInt(cii.Delete(cid));
+					dos.flush();
 					break;
 				case 9://修改课程信息(只允许修改课程名字）传课程id+name//返回1，0
-					
+					s=dis.readUTF();
+					bool=cii.Change(s)?1:0;
+					dos.writeInt(bool);
+					dos.flush();
 					break;
 				case 10://查找课程信息，返回所有课程信息，有几个课程传几次
-					
+					List<Course> array=cii.FindAll();
+					int num=array.size();
+					dos.writeInt(num);//先写回课程数目
+					for(int i1=0;i1<num;i1++) {
+						dos.writeUTF(array.get(i1).toString());
+					}
+					dos.flush();
 					break;
 				case 11://增加课程容量，传id+addnum//返回1，0
+					cid=dis.readUTF();
+					int addnum=dis.readInt();
+					bool=cii.AddCapacity(cid, addnum)?1:0;
+					dos.writeInt(bool);
+					dos.flush();
 					break;
 				}
 			}

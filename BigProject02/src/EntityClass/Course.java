@@ -56,7 +56,7 @@ public class Course {
 		return new Course(c[0],c[1],Integer.parseInt(c[2]),Integer.parseInt(c[3]),Integer.parseInt(c[4]));
 	}
 	public String toString() {
-		return ""+this.course_id+this.course_name+this.num+this.left_num+this.stu_num;
+		return ""+this.course_id+","+this.course_name+","+this.num+","+this.left_num+","+this.stu_num;
 	}
 	public void print() {
 		System.out.println(course_id+","+course_name+","+num+","+left_num+","+stu_num);

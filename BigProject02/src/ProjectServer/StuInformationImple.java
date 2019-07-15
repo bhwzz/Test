@@ -48,8 +48,8 @@ public class StuInformationImple implements InformationOperate{
 	}
 
 	@Override
-	public boolean Delete(String id) {//删除学生,删除成功返回1，学生不存在返回-1，学生有选课记录返回-2???????(待修改）
-		boolean bool=false;
+	public int Delete(String id) {//删除学生,删除成功返回1，学生不存在返回-1，学生有选课记录返回-2???????(待修改）
+		int bool=0;
 		try {
 			dos.writeInt(4);
 			dos.writeUTF(id);
@@ -59,7 +59,7 @@ public class StuInformationImple implements InformationOperate{
 			e.printStackTrace();
 		}
 		try {
-			bool=dis.readBoolean();
+			bool=dis.readInt();
 			System.out.println("客户端向服务器请求删除学生成功！");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -69,11 +69,11 @@ public class StuInformationImple implements InformationOperate{
 	}
 
 	@Override
-	public boolean Change(Object o) {//修改学生信息，无需判断该学生是否已经存在，不存在返回false
+	public boolean Change(String s) {//修改学生信息，无需判断该学生是否已经存在，不存在返回false
 		boolean bool=false;
 		try {
 			dos.writeInt(5);
-			dos.writeUTF(o.toString());
+			dos.writeUTF(s);
 			dos.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

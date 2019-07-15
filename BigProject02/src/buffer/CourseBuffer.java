@@ -1,3 +1,13 @@
+package buffer;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.*;
 import EntityClass.*;
 
@@ -6,12 +16,30 @@ import quality.StudentQuality;
 
 public class CourseBuffer {
 
-	public Map<String, Course> CourseMap;// = new LinkedHashMap<String, StudentQuality>();
-
-	//public List<Course> coursebuffeer;
-	public Course Find(String s)    //找到返回true 没找到返回false
-	//public boolean change(Object s) ;   //找到返回true 没找到返回false
-	{
+	public Map<String, Course> CourseMap;//(cou_id,course)
+	
+	public CourseBuffer(String file) throws IOException {
+		BufferedReader br=new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+		CourseMap=new HashMap<String,Course>();
+		String line;
+		Course cou=null;
+		while((line=br.readLine())!=null) {
+			cou=Course.toCourse(line);
+			CourseMap.put(cou.getCourse_id(), cou);
+		}
+		
+	}
+	public void writeFile(String file) throws IOException {//将map中的课程信息写会文件
+		PrintWriter pw=new PrintWriter((new FileOutputStream(file)));
+		Iterator it=CourseMap.entrySet().iterator();
+		while(it.hasNext()) {
+			Map.Entry<String, Course> entry=(Map.Entry<String, Course>)it.next();
+			pw.println(entry.getValue().toString());
+		}
+		pw.close();
+	}
+	
+	public Course Find(String s) {    //找到返回course 没找到返回null
 		Course c=CourseMap.get(s);
 		if(c==null)
 		{
@@ -19,36 +47,75 @@ public class CourseBuffer {
 		}
 		return c;
 	}
-	
-	public boolean Change(Course s) {
-		if(Find(s.getCourse_id())==null) {
+	public Map FindAll() {//查找所有课程信息
+		return CourseMap;
+	}
+	public boolean Change(String s) {//修改课程信息，传入“id，name”只允许修改课程名
+		//先判断该课程是否存在
+		String []ss=new String[2];
+		ss=s.split(",");
+		if(Find(ss[0])==null) {
 			System.out.println("不存在这个课程");
 			return false;
 		}
-	
-		CourseMap.put(s.getCourse_id(), s);
+		CourseMap.get(ss[0]).setCourse_name(ss[1]);
+		CourseMap.put(ss[0],CourseMap.get(ss[0]));
 		return true;
 	}
 	
-	public boolean Add(Course s) {
-		//先看
+	public boolean Add(Course s) {//增加课程，还课程已存在返回false
 		if(Find(s.getCourse_id())!=null) {
 			System.out.println("已经存在这个课程");
 			return false;
-		}
-	
+		}	
 		CourseMap.put(s.getCourse_id(), s);
 		return true;
 		
 	}
 	
-	public boolean Delete(String s){
+	public int Delete(String s){//删除课程，课程不存在返回-1,课程已选人数》0返回-2，成功返回1
 		if(Find(s)==null) {
 			System.out.println("不存在这个课程");
+			return -1;
+		}	
+		else if(CourseMap.get(s).getStu_num()!=0) {
+			System.out.println("该课程已经被选，不可删除");
+			return -2;
+		}
+		CourseMap.remove(s);
+		return 1;
+	}
+	public boolean AddCapcity(String id,int num) {//增加课程容量，课程不存在返回false
+		if(CourseMap.get(id)==null) {
+			System.out.println("该课程不存在！");
 			return false;
 		}
-	
-		CourseMap.remove(s);
+		CourseMap.get(id).setNum(CourseMap.get(id).getNum()+num);
 		return true;
 	}
+	public void DropCourse(String id) {//退课函数，每次+1
+		CourseMap.get(id).setLeft_num(CourseMap.get(id).getLeft_num()+1);
+		CourseMap.get(id).setStu_num(CourseMap.get(id).getStu_num()-1);
+	}
+	public boolean AddCourse(String id) {//如果没有课程不能再减，用于选课
+		if(CourseMap.get(id).getLeft_num()>0) {
+			CourseMap.get(id).setLeft_num(CourseMap.get(id).getLeft_num()-1);
+			CourseMap.get(id).setStu_num(CourseMap.get(id).getStu_num()+1);
+			return true;
+		}
+		else
+			return false;
+	}
+//	public static void main(String[] args) throws IOException {
+//		CourseBuffer cb=new CourseBuffer("D:\\Test4.txt");
+//		Iterator it=cb.CourseMap.entrySet().iterator();
+//		while(it.hasNext()) {
+//			Map.Entry<String, Course> entry=(Map.Entry<String, Course>)it.next();
+//			System.out.println(entry.getKey());
+//			entry.getValue().print();
+//		}
+//		cb.Find("004");
+//		cb.Find("001");
+//		cb.writeFile("D:\\Test5.txt");
+//	}
 }
