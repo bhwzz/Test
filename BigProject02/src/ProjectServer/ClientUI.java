@@ -8,7 +8,7 @@ import java.awt.event.*;
 abstract public class ClientUI {
 	static Client client;
 	public static void main(String[] args) throws Exception {		
-		ClientUI.client = new Client("LocalHost",4444);
+		ClientUI.client = new Client("localhost",4444);
 		ClientUI.mainInterface();
 	}
 	//主界面
@@ -79,7 +79,7 @@ abstract public class ClientUI {
 			System.out.println("    1.增加学生信息");
 			System.out.println("    2.删除学生信息");
 			System.out.println("    3.修改学生信息");
-			System.out.println("    4.查询学生信息");
+			System.out.println("    4.查找学生信息");
 			System.out.println("    5.返回");
 			System.out.print("请输入你要进行的操作编号：  ");
 			Scanner sc=new Scanner(System.in);
@@ -114,25 +114,29 @@ abstract public class ClientUI {
 			System.out.println("    1.增加课程信息");
 			System.out.println("    2.删除课程信息");
 			System.out.println("    3.修改课程信息");
-			System.out.println("    4.查询课程信息");
-			System.out.println("    5.返回");
+			System.out.println("    4.查询所有课程信息");
+			System.out.println("    5.增加课程容量");
+			System.out.println("    6.返回");
 			System.out.print("请输入你要进行的操作编号：  ");
 			Scanner sc=new Scanner(System.in);
 			int i=sc.nextInt();
 			switch(i) {
 			case 1:
-				
+				client.addCourse();
 				break;
 			case 2:
-				
+				client.deleteCourse();
 				break;
 			case 3:
-				
+				client.changeCourse();
 				break;
 			case 4:
-				
+				client.findAllCourse();
 				break;
 			case 5:
+				client.addCourseCapacity();
+				break;
+			case 6:
 				return;
 			default:
 				System.out.println("请输入正确编号：");
@@ -142,7 +146,6 @@ abstract public class ClientUI {
 		}
 	}
     public static void clear() {
-    	/*
     	Robot r;
 		try {
 			r = new Robot();
@@ -157,7 +160,6 @@ abstract public class ClientUI {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		*/
         /*--------------------- 
     	作者：Demon530 
     	来源：CSDN 
