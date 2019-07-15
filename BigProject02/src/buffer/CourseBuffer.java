@@ -113,15 +113,16 @@ public class CourseBuffer {
 			return false;
 	}
 //	public static void main(String[] args) throws IOException {
-//		CourseBuffer cb=new CourseBuffer("D:\\Test4.txt");
+//		CourseBuffer cb=new CourseBuffer("D:\\test4.txt");
 //		Iterator it=cb.CourseMap.entrySet().iterator();
 //		while(it.hasNext()) {
 //			Map.Entry<String, Course> entry=(Map.Entry<String, Course>)it.next();
 //			System.out.println(entry.getKey());
 //			entry.getValue().print();
 //		}
+//		cb.Add(Course.toCourse("007,Ä£µç,100,100,0"));
 //		cb.Find("004");
 //		cb.Find("001");
-//		cb.writeFile("D:\\Test5.txt");
+//		cb.writeFile();
 //	}
 }
