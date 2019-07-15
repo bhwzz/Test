@@ -32,6 +32,8 @@ public class Stu_CourseBuffer {
 		stu_couBuffer = new HashMap<String, Map>();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
 	public boolean Check() throws Exception {
 		if(stu_couBuffer.size()<=SIZE)
 			return false;
@@ -84,21 +86,22 @@ public class Stu_CourseBuffer {
 			if(map==null||map.size()==0)
 			{
 				System.out.println("该学生未选过课");
-				return null;
+				Map <String ,Stu_Course> map2=new HashMap<String, Stu_Course>();
+				return map2;
 			}
 			stu_couBuffer.put(Stuid, map);
 			return map;
 		}
 	}
-	public boolean find(String Stuid,String Couid) {
+	public int find(String Stuid,String Couid) {
 		if(stubuffer.Find(Stuid)==null)
 		{
 			System.out.println("该学生不存在");
-			return false;
+			return -1;
 		}
 		else if(coubuffer.Find(Couid)==null) {
 			System.out.println("该课程不存在");
-			return false;
+			return -2;
 		}
 //		else if(stu_couBook.get(Stuid)==null)
 //		{
@@ -110,56 +113,60 @@ public class Stu_CourseBuffer {
 			Map<String,Stu_Course> map=(Map)stu_couBuffer.get(Stuid);
 			if(map.get(Couid)==null||map.size()==0) {
 				System.out.println("该学生未选过这节课");
-				return false;
+				return -3;
 			}
-			return true;
+			return 1;
 		}
 	
 		else {
 			Map map=tool2.get(Stuid);
 			if(map==null||map.size()==0) {
 				System.out.println("该学生未选过课");
-				return false;
+				return -3;
 			}
 			stu_couBuffer.put(Stuid, map);
 			Check();
 			if(map.get(Couid)==null) {
 				System.out.println("该学生未选过这节课");
-				return false;
+				return -3;
 			}
-			return true;
+			return 1;
 		}
 		
 	}
 			
-	public boolean add(Stu_Course s)			
+	public int add(Stu_Course s)			
 	{
 		String Stuid = s.getstuId();
 		String Couid = s.getcouId();
 		if(stubuffer.Find(Stuid)==null)
 		{
 			System.out.println("该学生不存在");
-			return false;
+			return -1;
 		}
 		else if(coubuffer.Find(Couid)==null)
 		{
 			System.out.println("该课程不存在");
-			return false;
+			return -2;
 		}
 		else if(stu_couBuffer.get(Stuid)!=null)
 		{//在缓存中能找到这个学生
 			Map map = stu_couBuffer.get(Stuid);
 			if(map.get(Couid)==null) {  //这个学生没有选过这节课
+				if(!coubuffer.AddCourse(Couid)) {
+					System.out.println("该课程已满课");
+					return -3;
+				}
 				map.put(Couid, s);
 				tool2.add(s);
 				Check();
-				return true;
+				return 1;
 			}
 			//在文件结尾添加一行 一会根据格式写
 			
 			else {
 				System.out.println("已经选过这节课了");
-				return false;
+				return -4;
 			}
 			
 		}
@@ -167,68 +174,78 @@ public class Stu_CourseBuffer {
 			Map map=tool2.get(Stuid);
 			if(map==null||map.size()==0) {
 				System.out.println("这个学生没有选过任何课");
+				if(!coubuffer.AddCourse(Couid)) {
+					System.out.println("该课程已满课");
+					return -3;
+				}
 				tool2.add(s);//往文件里面加入一条记录
 				Map<String, Stu_Course> map2 = new HashMap<String, Stu_Course>();
 				map2.put(Couid, s);
 				stu_couBuffer.put(Stuid, map2);
 				Check();
-				return true;
+				return 1;
 			}
 			else if(map.get(Couid)!=null){
 				System.out.println("这个学生已经选过这节课了");
-				return false;
+				return -4;
 			}
 			else {
+				if(!coubuffer.AddCourse(Couid)) {
+					System.out.println("该课程已满课");
+					return -3;
+				}
 				tool2.add(s);//往文件里面加入一条记录
 				map.put(Couid, s);
 				stu_couBuffer.put(Stuid, map);
 				Check();
-				return true;
+				return 1;
 			}
 		}
 	}
 //			Map <String,String> map=new HashMap<String, String>();
 
-	public boolean delete(String Stuid,String Couid) {
+	public int delete(String Stuid,String Couid) {
 			if(stubuffer.Find(Stuid)==null)
 			{
 				System.out.println("该学生不存在");
-				return false;
+				return -1;
 			}
 			else if(coubuffer.Find(Couid)==null)
 			{
 				System.out.println("该课程不存在");
-				return false;
+				return -2;
 			}
 			else if(stu_couBuffer.get(Stuid)!=null) {
 				Map map=stu_couBuffer.get(Stuid);
 				if(map.get(Couid)==null) {
 					System.out.println("该学生选过课 但是没选过这节课");
-					return false;
+					return -3;
 				}
 				else {
+					coubuffer.DropCourse(Couid);
 					map.remove(Couid);
 					tool2.delete( Stuid, Couid);
-					return true;
+					return 1;
 				}
 			}
 			else {
 				Map map=tool2.get(Stuid);
 				if(map==null||map.size()==0) {
 					System.out.println("该学生从未选过课");
-					return false;
+					return -3;
 				}
 				else if(map.get(Couid)==null)
 				{
 					System.out.println("该学生没选过这节课");
-					return false;
+					return -3;
 				}
 				else if(map.get(Couid)!=null) {
+					coubuffer.DropCourse(Couid);
 					tool2.delete(Stuid, Couid);
 					map.remove(Couid);
 					stu_couBuffer.put(Stuid, map);
 					Check();
-					return true;
+					return 1;
 				}
 			}
 				
@@ -237,7 +254,7 @@ public class Stu_CourseBuffer {
 			
 			
 	public static void main(String[] args) {
-		Stu_CourseBuffer mBuffer = new Stu_CourseBuffer(, c, filename)
+		//Stu_CourseBuffer mBuffer = new Stu_CourseBuffer(, c, filename)
 	}
 	
 	

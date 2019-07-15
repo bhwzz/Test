@@ -20,15 +20,24 @@ public class StudentBuffer {
 	public Map<String, StudentQuality> studentMap;// = new LinkedHashMap<String, StudentQuality>();
 	//前面是ID 后面是Student类+flag(是否被修改过）
 	private StuFileTool tool1;
+	private Stu_CourseBuffer stucoubufferBuffer = null;
 	//面向文件的Student工具包
 	
 	int SIZE = 2  ;
 		//缓存的大小
 	int LENGTH = 1024;
+	
+	protected void finalize() throws Exception {
+		Clear();
+	}
 	public StudentBuffer(String s) throws Exception {
 		studentMap = new LinkedHashMap<String, StudentQuality>();
 		tool1 = new StuFileTool(s);
 		// TODO Auto-generated constructor stub
+	}
+	
+	public void set(Stu_CourseBuffer s) {
+		stucoubufferBuffer = s;
 	}
 	//public Map<String, Integer> map = new TreeMap<String, Integer>();
 	
@@ -138,19 +147,25 @@ public class StudentBuffer {
 		return true;
 	}
 	
-	public boolean Delete(String s) throws Exception {
+	public int Delete(String s) throws Exception {
 		if(Find(s)==null)
 		{
-			return false;
+			return -1;
 		}
 	
-		studentMap.remove(s);
-		
-		//tool加锁
-		tool1.delete(s);
-		System.out.println("删除学生函数结束！");
+		else if(stucoubufferBuffer.find(s).size()==0) {
+			studentMap.remove(s);
+			tool1.delete(s);
+			System.out.println("删除学生函数结束！");
+			return 1;
+		}
+		else return -2;
+//		
+//		//tool加锁
+//		tool1.delete(s);
+//		System.out.println("删除学生函数结束！");
 		//这个要remove----》省事 不用check里面再写一个if了  看看后期有没有bug
-		return true;
+//		return true;
 	}
 	
 	public boolean Clear() throws Exception {
