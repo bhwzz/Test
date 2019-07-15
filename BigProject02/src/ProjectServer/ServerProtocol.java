@@ -101,10 +101,16 @@ public class ServerProtocol implements IOStrategy{
 				case 4://删除学生信息，传给我一个学生id
 					sid=dis.readUTF();
 					bool=sii.Delete(sid);//删除学生的函数要判断该学生有没有选课
-					dos.writeInt(bool);//返回1：删除成功；返回0：删除学生失败？？？？？？？（待修改）
 					System.out.println("删除结果"+bool);
-					if(bool==0) {//删除失败返回一个失败原因字符串
-						dos.writeUTF("not found");
+					if(bool==1)
+						dos.writeInt(1);//返回1：删除成功；返回0：删除学生失败？？？？？？？（待修改）
+					else if(bool==-1) {//删除失败返回一个失败原因字符串
+						dos.writeInt(0);
+						dos.writeUTF("The student does not exist!");
+					}
+					else if(bool==-2){//该学生有选课记录
+						dos.writeInt(0);
+						dos.writeUTF("The student has selected a course that cannot be deleted!");
 					}
 					dos.flush();
 					break;

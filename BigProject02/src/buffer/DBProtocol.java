@@ -32,15 +32,13 @@ public class DBProtocol {
 		this.sb=new StudentBuffer(stufile);
 		this.cb=new CourseBuffer(coufile);
 		this.scb=new Stu_CourseBuffer(sb,cb);
+		
 	}
 
 	public void Service(Socket serverSocket) throws ClassNotFoundException, Exception {
 		try {
 			DataInputStream dis=new DataInputStream(serverSocket.getInputStream());
-			DataOutputStream dos=new DataOutputStream(serverSocket.getOutputStream());;
-//			ObjectInputStream ois;
-//			ObjectOutputStream oos=new ObjectOutputStream(serverSocket.getOutputStream());
-//			PrintWriter pw=new PrintWriter(new OutputStreamWriter(serverSocket.getOutputStream()));
+			DataOutputStream dos=new DataOutputStream(serverSocket.getOutputStream());
 			int i;
 			while(true) {
 				i=dis.readInt();
@@ -53,15 +51,14 @@ public class DBProtocol {
 				case 2://退选	
 					dos.writeInt(scb.delete(dis.readUTF(),dis.readUTF()));
 					dos.flush();
-					break;
-					
+					break;				
 				case 3://增加学生信息，传来一个学生对象
 					dos.writeBoolean(sb.Add(Student.toStudent(dis.readUTF())));
 					System.out.println("数据库端增加学生成功！");
 					dos.flush();
 					break;
 				case 4://删除学生信息，传给我一个学生id
-					dos.writeBoolean(sb.Delete(dis.readUTF()));
+					dos.writeInt(sb.Delete(dis.readUTF()));
 					System.out.println("数据库删除学生成功！");
 					dos.flush();
 					break;

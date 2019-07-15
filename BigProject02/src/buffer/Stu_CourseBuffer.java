@@ -1,3 +1,5 @@
+package buffer;
+
 import java.io.*;
 
 import java.util.*;
@@ -24,7 +26,7 @@ public class Stu_CourseBuffer {
 	int COUIDSIZE = 3;
 	int TIMESIZE = 0;
 	int SIZE = 10;
-	public Stu_CourseBuffer(StudentBuffer s,CourseBuffer c,String filename) {
+	public Stu_CourseBuffer(StudentBuffer s,CourseBuffer c,String filename) throws Exception {
 		stubuffer = s;
 		coubuffer = c;
 		rootfile = new File(filename);
@@ -68,7 +70,7 @@ public class Stu_CourseBuffer {
 //		rootfile = new File(s);
 //		// TODO Auto-generated constructor stub
 //	}
-	public Map find(String Stuid) {
+	public Map find(String Stuid) throws Exception {
 		if(stubuffer.Find(Stuid)==null)
 		{
 			System.out.println("该学生不存在");
@@ -93,7 +95,7 @@ public class Stu_CourseBuffer {
 			return map;
 		}
 	}
-	public int find(String Stuid,String Couid) {
+	public int find(String Stuid,String Couid) throws Exception {
 		if(stubuffer.Find(Stuid)==null)
 		{
 			System.out.println("该学生不存在");
@@ -135,7 +137,7 @@ public class Stu_CourseBuffer {
 		
 	}
 			
-	public int add(Stu_Course s)			
+	public int add(Stu_Course s) throws Exception			
 	{
 		String Stuid = s.getstuId();
 		String Couid = s.getcouId();
@@ -204,7 +206,7 @@ public class Stu_CourseBuffer {
 	}
 //			Map <String,String> map=new HashMap<String, String>();
 
-	public int delete(String Stuid,String Couid) {
+	public int delete(String Stuid,String Couid) throws Exception {
 			if(stubuffer.Find(Stuid)==null)
 			{
 				System.out.println("该学生不存在");
@@ -248,8 +250,7 @@ public class Stu_CourseBuffer {
 					return 1;
 				}
 			}
-				
-			
+			return 0;
 		}
 			
 			
