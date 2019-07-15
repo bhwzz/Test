@@ -15,7 +15,7 @@ abstract public class ClientUI {
 	public static void mainInterface(){
 		
 		while(true) {
-			clear();
+		//	clear();
 			System.out.println("----------------------------");
 			System.out.println("    1.选课管理");
 			System.out.println("    2.学生信息管理");
@@ -47,7 +47,7 @@ abstract public class ClientUI {
 	//选课管理界面
 	public static void choosecourseInformationInterface(){
 		while(true) {
-			clear();
+			//clear();
 			System.out.println("----------选课管理--------------");
 			System.out.println("    1.选课");
 			System.out.println("    2.退课");
@@ -74,7 +74,7 @@ abstract public class ClientUI {
 	public static void studentInformationInterface(){
 
 		while(true) {
-			clear();
+			//clear();
 			System.out.println("----------学生信息管理--------------");
 			System.out.println("    1.增加学生信息");
 			System.out.println("    2.删除学生信息");
@@ -146,25 +146,21 @@ abstract public class ClientUI {
 		}
 	}
     public static void clear() {
-    	Robot r;
-		try {
-			r = new Robot();
-	        r.mousePress(InputEvent.BUTTON3_MASK);       // 按下鼠标右键
-	        r.mouseRelease(InputEvent.BUTTON3_MASK);    // 释放鼠标右键
-	        r.keyPress(KeyEvent.VK_CONTROL);             // 按下Ctrl键
-	        r.keyPress(KeyEvent.VK_R);                    // 按下R键
-	        r.keyRelease(KeyEvent.VK_R);                  // 释放R键
-	        r.keyRelease(KeyEvent.VK_CONTROL);            // 释放Ctrl键
-	        r.delay(500);    
-		} catch (AWTException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        /*--------------------- 
-    	作者：Demon530 
-    	来源：CSDN 
-    	原文：https://blog.csdn.net/qq_18144681/article/details/51222405 
-    	版权声明：本文为博主原创文章，转载请附上博文链接！*/
+//    	Robot r;
+//		try {
+//			r = new Robot();
+//	        r.mousePress(InputEvent.BUTTON3_MASK);       // 按下鼠标右键
+//	        r.mouseRelease(InputEvent.BUTTON3_MASK);    // 释放鼠标右键
+//	        r.keyPress(KeyEvent.VK_CONTROL);             // 按下Ctrl键
+//	        r.keyPress(KeyEvent.VK_R);                    // 按下R键
+//	        r.keyRelease(KeyEvent.VK_R);                  // 释放R键
+//	        r.keyRelease(KeyEvent.VK_CONTROL);            // 释放Ctrl键
+//	        r.delay(1000);    
+//		} catch (AWTException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//       
 
 
     }
