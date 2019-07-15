@@ -72,7 +72,15 @@ public class ChooseCourseImple implements ChooseCourse{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return bool;
-		
+		return bool;		
+	}
+	public void flushFile() {
+		try {
+			dos.writeInt(-1);
+			dos.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -190,6 +190,8 @@ public class ServerProtocol implements IOStrategy{
 					dos.writeInt(bool);
 					dos.flush();
 					break;
+				case -1://刷新选课记录文件
+					cci.flushFile();
 				case -2://刷新学生文件
 					sii.flushFile();
 					break;

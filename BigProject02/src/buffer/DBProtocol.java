@@ -117,8 +117,10 @@ public class DBProtocol {
 					}
 					dos.flush();
 					break;
+				case -1://刷新选课记录文件
+					scb.fresh();
 				case -2://清空学生缓存
-					sb.Clear();
+					sb.Fresh();
 				case -3://清空课程缓存
 					cb.writeFile();
 					
