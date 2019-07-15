@@ -231,7 +231,7 @@ public class Stu_CourseBuffer {
 					System.out.println("¸Ã¿Î³ÌÒÑÂú¿Î");
 					return -3;
 				}
-				Map<String, StuCouQuality> map3=new HashMap<String, StuCouQuality>;
+				Map<String, StuCouQuality> map3=new HashMap<String, StuCouQuality>();
 				for (Stu_Course value : map.values()) {
 					map3.put(value.getcouId(), new StuCouQuality(value));
 
