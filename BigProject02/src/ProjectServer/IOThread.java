@@ -3,6 +3,8 @@ package ProjectServer;
 import java.net.Socket;
 
 public class IOThread extends Thread{
+//	private Socket clientsocket=null;
+//	private Socket DBsocket=null;
 	private Socket socket=null;
 	private IOStrategy ios=null;
 	

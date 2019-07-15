@@ -46,7 +46,10 @@ public class CourseBuffer {
 	}
 	
 	public Course Find(String s) {    //找到返回course 没找到返回null
-		Course c=CourseMap.get(s);
+		Course c=null;
+		synchronized(CourseMap.get(s)) {
+			c=CourseMap.get(s);
+		}
 		if(c==null)
 		{
 			return null;
@@ -64,8 +67,10 @@ public class CourseBuffer {
 			System.out.println("不存在这个课程");
 			return false;
 		}
-		CourseMap.get(ss[0]).setCourse_name(ss[1]);
-		CourseMap.put(ss[0],CourseMap.get(ss[0]));
+		synchronized(CourseMap.get(s)) {
+			CourseMap.get(ss[0]).setCourse_name(ss[1]);
+			CourseMap.put(ss[0],CourseMap.get(ss[0]));
+		}
 		return true;
 	}
 	
@@ -74,7 +79,9 @@ public class CourseBuffer {
 			System.out.println("已经存在这个课程");
 			return false;
 		}	
-		CourseMap.put(s.getCourse_id(), s);
+		synchronized(CourseMap.get(s)) {
+			CourseMap.put(s.getCourse_id(), s);
+		}
 		return true;
 		
 	}
@@ -83,12 +90,13 @@ public class CourseBuffer {
 		if(Find(s)==null) {
 			System.out.println("不存在这个课程");
 			return -1;
-		}	
-		else if(CourseMap.get(s).getStu_num()!=0) {
-			System.out.println("该课程已经被选，不可删除");
-			return -2;
 		}
-		CourseMap.remove(s);
+		synchronized(CourseMap.get(s)) {
+			if(CourseMap.get(s).getStu_num()!=0) {
+				System.out.println("该课程已经被选，不可删除");
+				return -2;
+			}
+		}
 		return 1;
 	}
 	public boolean AddCapcity(String id,int num) {//增加课程容量，课程不存在返回false
@@ -96,21 +104,27 @@ public class CourseBuffer {
 			System.out.println("该课程不存在！");
 			return false;
 		}
-		CourseMap.get(id).setNum(CourseMap.get(id).getNum()+num);
+		synchronized(CourseMap.get(id)) {
+			CourseMap.get(id).setNum(CourseMap.get(id).getNum()+num);
+		}
 		return true;
 	}
 	public void DropCourse(String id) {//退课函数，每次+1
-		CourseMap.get(id).setLeft_num(CourseMap.get(id).getLeft_num()+1);
-		CourseMap.get(id).setStu_num(CourseMap.get(id).getStu_num()-1);
+		synchronized(CourseMap.get(id)) {
+			CourseMap.get(id).setLeft_num(CourseMap.get(id).getLeft_num()+1);
+			CourseMap.get(id).setStu_num(CourseMap.get(id).getStu_num()-1);
+		}
 	}
 	public boolean AddCourse(String id) {//如果没有课程不能再减，用于选课
-		if(CourseMap.get(id).getLeft_num()>0) {
-			CourseMap.get(id).setLeft_num(CourseMap.get(id).getLeft_num()-1);
-			CourseMap.get(id).setStu_num(CourseMap.get(id).getStu_num()+1);
-			return true;
+		synchronized(CourseMap.get(id)) {
+			if(CourseMap.get(id).getLeft_num()>0) {
+				CourseMap.get(id).setLeft_num(CourseMap.get(id).getLeft_num()-1);
+				CourseMap.get(id).setStu_num(CourseMap.get(id).getStu_num()+1);
+				return true;
+			}
+			else
+				return false;
 		}
-		else
-			return false;
 	}
 //	public static void main(String[] args) throws IOException {
 //		CourseBuffer cb=new CourseBuffer("D:\\test4.txt");
