@@ -179,6 +179,12 @@ public class ServerProtocol implements IOStrategy{
 					dos.writeInt(bool);
 					dos.flush();
 					break;
+				case -2://刷新学生文件
+					sii.flushFile();
+					break;
+				case -3://刷新课程文件
+					cii.flushFile();
+					break;
 				}
 			}
 		} catch (IOException e) {

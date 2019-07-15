@@ -137,4 +137,13 @@ public class StuInformationImple implements InformationOperate{
 		}	
 		return list;//如果没有选课记录，就使用list.size()判断		
 	}
+	public void flushFile() {
+		try {
+			dos.writeInt(-2);
+			dos.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

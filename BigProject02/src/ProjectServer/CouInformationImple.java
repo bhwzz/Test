@@ -145,4 +145,13 @@ public class CouInformationImple implements InformationOperate {
 		}
 		return bool;
 	}
+	public void flushFile() {
+		try {
+			dos.writeInt(-3);
+			dos.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
