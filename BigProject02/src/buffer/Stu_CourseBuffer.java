@@ -365,7 +365,7 @@ public class Stu_CourseBuffer {
 		Iterator<Entry<String, Map>> entries2 =stu_couBuffer.entrySet().iterator();
 		List<String> list2 = new ArrayList<String>();
 		while(entries2.hasNext()) {
-			 Entry<String, Map> item2 = entries.next();
+			 Entry<String, Map> item2 = entries2.next();
 			 if(item2.getValue().size()==0) {
 				 list2.add(item2.getKey());
 			 }
