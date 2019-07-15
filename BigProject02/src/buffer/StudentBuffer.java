@@ -133,7 +133,7 @@ public class StudentBuffer {
 			return false;
 		}
 		//给tool1加锁
-		tool1.add(s);    
+		//tool1.add(s);    
 		//给tool1解锁   和remove同理 比较省事
 		
 		StudentQuality sq = new StudentQuality(s);
