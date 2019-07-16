@@ -1,4 +1,4 @@
-package ProjectServer;
+package client;
 
 import java.util.Properties;
 import java.util.Scanner;
@@ -10,11 +10,12 @@ import java.io.FileInputStream;
 abstract public class ClientUI {
 	static Client client;
 	public static void main(String[] args) throws Exception {		
+		//从配置文件中读初始化信息（服务器主机名，端口号）
 		Properties p=new Properties();
 		p.load(new FileInputStream("file.properties"));
-		String host = p.getProperty("DBserver");
+		String host = p.getProperty("Server");
 		String clientPort = p.getProperty("Clientport");
-		ClientUI.client = new Client("localhost",Integer.parseInt(clientPort));
+		ClientUI.client = new Client(host,Integer.parseInt(clientPort));
 		ClientUI.mainInterface();
 	}
 	//主界面
