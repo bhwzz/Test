@@ -4,13 +4,14 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import quality.*;
+import quality.StuCouQuality;
+
 //
 //import com.sun.jndi.rmi.registry.ReferenceWrapper;
 //import com.sun.tools.classfile.StackMapTable_attribute.same_frame;
 import java.util.Map.Entry;
 
 import EntityClass.*;
-import quality.StudentQuality;
 import filetool.*;
 //import filetool.StuCouQuality;
 
