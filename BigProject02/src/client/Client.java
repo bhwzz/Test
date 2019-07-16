@@ -6,9 +6,9 @@ import ProjectServer.ClientReadSource;
 
 public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 
-	Remote r;
+	ClientRemote r;
 	Client(String host, int port) throws Exception{
-		r = new Remote(host, port);
+		r = new ClientRemote(host, port);
 	}
 	
 	

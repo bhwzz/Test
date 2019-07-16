@@ -7,12 +7,12 @@ import java.io.IOException;
 public class ClientChoosecourseSimulation extends Thread{ 
 	private String studentId;
 	private String courseId;
-	private Remote remote;
+	private ClientRemote remote;
 	ClientChoosecourseSimulation(){
 		
 	}
 	ClientChoosecourseSimulation(String host, int post, String sid, String cid) throws Exception{
-		remote = new Remote(host, post); //通过客户端代理建立到服务器的连接
+		remote = new ClientRemote(host, post); //通过客户端代理建立到服务器的连接
 		//建立选课信息
 		studentId=sid;
 		courseId=cid;
