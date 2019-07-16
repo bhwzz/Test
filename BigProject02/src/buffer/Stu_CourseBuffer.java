@@ -26,7 +26,7 @@ public class Stu_CourseBuffer {
 	int STUIDSIZE = 7;
 	int COUIDSIZE = 3;
 	int TIMESIZE = 0;
-	int SIZE = 10;
+	int SIZE = 1000;
 	public Stu_CourseBuffer(StudentBuffer s,CourseBuffer c,String filename) throws Exception {
 		stubuffer = s;
 		coubuffer = c;
@@ -43,21 +43,43 @@ public class Stu_CourseBuffer {
 				return false;
 			//如果现在的缓存没有被装满 返回false
 			else {
-	//			studentMap.remove(key)
-				Map.Entry<String, Map> item = (Entry<String, Map>)stu_couBuffer.entrySet().iterator().next();
-				//获取第一个键值对
-				Map<String, StuCouQuality> m2= item.getValue();
-				//选课信息貌似不会被修改？只有增加和删除？？？
-										
-				for (StuCouQuality value : m2.values()) {
-					if(value.flag1==1)
-						tool2.add(value.stu_Course);;
-					if(value.flag1==-1)
-						tool2.delete(value.stu_Course.getstuId(), value.stu_Course.getcouId());
-						//add(value.stu_Course.getstuId(), value.stu_Course.getcouId());
+				if(stu_couBuffer.size()<50) {
+		//			studentMap.remove(key)
+					Map.Entry<String, Map> item = (Entry<String, Map>)stu_couBuffer.entrySet().iterator().next();
+					//获取第一个键值对
+					Map<String, StuCouQuality> m2= item.getValue();
+					//选课信息貌似不会被修改？只有增加和删除？？？
+											
+					for (StuCouQuality value : m2.values()) {
+						if(value.flag1==1)
+							tool2.add(value.stu_Course);;
+						if(value.flag1==-1)
+							tool2.delete(value.stu_Course.getstuId(), value.stu_Course.getcouId());
+							//add(value.stu_Course.getstuId(), value.stu_Course.getcouId());
+					}
+					stu_couBuffer.remove(item.getKey());	
+					return true;
 				}
-				stu_couBuffer.remove(item.getKey());	
-				return true;
+				else{
+					for(int i=0;i<5;i++) {
+					//			studentMap.remove(key)
+								Map.Entry<String, Map> item = (Entry<String, Map>)stu_couBuffer.entrySet().iterator().next();
+								//获取第一个键值对
+								Map<String, StuCouQuality> m2= item.getValue();
+								//选课信息貌似不会被修改？只有增加和删除？？？
+														
+								for (StuCouQuality value : m2.values()) {
+									if(value.flag1==1)
+										tool2.add(value.stu_Course);;
+									if(value.flag1==-1)
+										tool2.delete(value.stu_Course.getstuId(), value.stu_Course.getcouId());
+										//add(value.stu_Course.getstuId(), value.stu_Course.getcouId());
+								}
+								stu_couBuffer.remove(item.getKey());	
+								
+							}
+					return true;
+				}
 			}
 		}
 	}
@@ -104,7 +126,7 @@ public class Stu_CourseBuffer {
 		else {
 			Map<String,Stu_Course> map=null;
 			synchronized(stu_couBuffer) {
-				 map = tool2.get(Stuid);
+				 map = (Map<String,Stu_Course>)tool2.get(Stuid);
 			}
 			if(map==null||map.size()==0)
 			{

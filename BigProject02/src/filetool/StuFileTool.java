@@ -135,7 +135,7 @@ public class StuFileTool implements tool {
 	    		g='男';
 	    	}
 	    	else g='女';
-	    	int id1=(1+(int)(Math.random()*10000000));
+	    	int id1=((int)(Math.random()*10000000));
 	    	String id = String.format("%7d", id1).replace(" ", "0"); 
 	    	map.put(id, new StuQuality(id,s1,d,g));
 	        //map.add(id,new quality(id));
@@ -185,7 +185,7 @@ public class StuFileTool implements tool {
             	
             }
             else {
-            	System.out.println("已被删除");
+//            	System.out.println("已被删除");
 			}
             i++;
         } 
@@ -208,24 +208,24 @@ public class StuFileTool implements tool {
 	        int len = -1;  
 	        int i=0;
 	        while( (len = br.read(buff)) != -1 ){  
-	            System.out.print(new String(buff, 0, len));  
-	            System.out.println(new String(buff, 0, len).getBytes().length);
+//	            System.out.print(new String(buff, 0, len));  
+//	            System.out.println(new String(buff, 0, len).getBytes().length);
 	            //System.out.println(new String(buff, 0, len).get);
-	            System.out.println(new String(buff, 0, 7));
+//	            System.out.println(new String(buff, 0, 7));
 	            if(new String(buff, 21, 1).equals("0"))
 	            {
 	            	 bufferMap.put(new String(buff, 0, 7), i+"");
 	            	
 	            }
 	            else {
-	            	System.out.println("已被删除");
+//	            	System.out.println("已被删除");
 				}
 	         //   bufferMap.put(new String(buff, 0, 7), i+"");
 	            i++;
 	        } 
 	        in.close();
 	        br.close();
-	        System.out.println(bufferMap);
+//	        System.out.println(bufferMap);
 	}
 	
 	//随机读取一条学生信息测试
@@ -237,8 +237,8 @@ public class StuFileTool implements tool {
 		else {
 			RandomAccessFile raf=new RandomAccessFile(f1, "r");  
         //获取RandomAccessFile对象文件指针的位置，初始位置是0  
-			System.out.println("RandomAccessFile文件指针的初始位置:"+raf.getFilePointer());  
-			System.out.println(placeString);
+//			System.out.println("RandomAccessFile文件指针的初始位置:"+raf.getFilePointer());  
+//			System.out.println(placeString);
 			raf.seek(Integer.parseInt(placeString)*LINELENGTH);//移动文件指针位置  
 			//char[] buff = new char[20]; 
 //			String mString = new String(raf.readline().getBytes("ISO-8859-1"), "utf-8");
@@ -249,7 +249,7 @@ public class StuFileTool implements tool {
 		//		c[i]=raf.readChar();
 		//	}
 			String mString=new String(b);
-			System.out.println(mString+"");
+//			System.out.println(mString+"");
 			//System.out.println(mString.toCharArray());
 			//int i=mString()
 			mString = mString.replaceAll("[\\t\\n\\r]", "");
@@ -261,7 +261,7 @@ public class StuFileTool implements tool {
 			}
 	//		System.out.println(mString+"");
 			mString =  mString.substring(0,mString.length()-2);
-			System.out.println(mString);
+//			System.out.println(mString);
 			//Student student=Student.toStudent(mString);
 			return mString;
 			
@@ -281,7 +281,7 @@ public class StuFileTool implements tool {
 			test1.write();
 			// TODO Auto-generated method stub
 //			test1.getbuffer();
-			System.out.println("ok");
+//			System.out.println("ok");
 		//	test1.findinfile("1722981");
 //			 Scanner sc = new Scanner(System.in);
 		        //利用hasNextXXX()判断是否还有下一输入项
@@ -293,7 +293,7 @@ public class StuFileTool implements tool {
 //		    }
 	//		 test1.writeback("2964715");
 			test1.add("2272176,双卿扑,03,男");
-			System.out.println(test1.bufferMap);
+//			System.out.println(test1.bufferMap);
 	}
 
 
