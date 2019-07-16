@@ -1,4 +1,4 @@
-import EntityClass.Student;
+package buffer;
 
 public interface MyBuffer
 {
