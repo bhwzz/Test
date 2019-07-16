@@ -207,13 +207,13 @@ public class ServerProtocol implements IOStrategy{
 				case -3://刷新课程文件
 					cii.flushFile();
 					break;
-				case 0:
-					cci.flushFile();
+				case 0://多线程
 					cii.flushFile();
 					dis.close();
 					dos.close();
 					Clientsocket.close();
 					flag = false;
+					
 				}
 				//监控客户端是否还有操作
 				
