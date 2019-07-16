@@ -9,14 +9,14 @@ import EntityClass.Student;
 
 
 //Student s1=new Student("0000001","王丽安",18,'女');
-public class StuFileTool {
+public class StuFileTool implements tool {
 	int LINELENGTH = 24;
 	File f1;
 	public Map<String , String> bufferMap;
 	public StuFileTool(String s) throws Exception {
 		// TODO Auto-generated constructor stub
 		f1 = new File(s);
-		this.getbuffer();
+		this.getbook();
 	}
 
 	
@@ -39,7 +39,8 @@ public class StuFileTool {
 		}
 	}
 	
-	public void delete(String s) throws Exception {
+	public void delete(String[] ss) throws Exception {
+		String s=ss[0];
 		if( bufferMap.get(s)!=null) {
 			String pathString = bufferMap.get(s);
 			RandomAccessFile raf = new RandomAccessFile(f1, "rw");
@@ -52,16 +53,17 @@ public class StuFileTool {
 		}
 	}
 	
-	public void add(Student s) throws Exception {
+	public void add(Object k) throws Exception {
 //	public void add(String s) throws Exception {
 	//String pathString = bufferMap.get(s);
+		String s=(String)k;
 		RandomAccessFile raf=new RandomAccessFile(f1, "rw");
 	//	String pathString = bufferMap.get(s.getId());
 	//	
 	//	
 //		public void writeback(String s) throws Exception {
 //			String pathString = bufferMap.get(s);
-			//RandomAccessFile raf = new RandomAccessFile(f1, "rw");
+			//Rando(mAccessFile raf = new RandomAccessFile(f1, "rw");
 			raf.seek(raf.length());
 			String tempString=new StuQuality(s).get()+",0"+"\r\n";	
 			raf.write(tempString.getBytes());
@@ -163,7 +165,7 @@ public class StuFileTool {
 		bw.close();
 	}
 
-	public void getbuffer(String s) throws Exception
+	public void getbook(String s) throws Exception
 	{
 		bufferMap = new TreeMap<String, String>();
 	//	FileReader r1= new FileReader(s);
@@ -191,7 +193,7 @@ public class StuFileTool {
         br.close();
      //   System.out.println(bufferMap);
 	}
-	public void getbuffer() throws Exception   //生成索引
+	public void getbook() throws Exception   //生成索引
 	{
 		bufferMap = new TreeMap<String, String>();
 		//FileReader r1=new FileReader(f1.getAbsolutePath());
@@ -293,5 +295,9 @@ public class StuFileTool {
 			test1.add("2272176,双卿扑,03,男");
 			System.out.println(test1.bufferMap);
 	}
+
+
+
+	
 
 }

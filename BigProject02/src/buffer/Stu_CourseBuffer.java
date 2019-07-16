@@ -21,7 +21,7 @@ public class Stu_CourseBuffer {
 	private CourseBuffer coubuffer;
 //	public Map<String, Set> stu_couBook;
 	public Map<String, Map> stu_couBuffer;
-	public StuCouTool tool2;
+	public tool tool2;
 	public File rootfile;
 	int LINELENGTH = 1;
 	int STUIDSIZE = 7;
