@@ -35,12 +35,12 @@ public class StuFileTool implements tool {
 			raf.close();
 		}
 		else if(bufferMap.get(s.getId())==null) {
-			add(s);
+			add(s.toString());
 		}
 	}
 	
-	public void delete(String[] ss) throws Exception {
-		String s=ss[0];
+	public void delete(String s) throws Exception {
+//		String s=ss[0];
 		if( bufferMap.get(s)!=null) {
 			String pathString = bufferMap.get(s);
 			RandomAccessFile raf = new RandomAccessFile(f1, "rw");
@@ -295,6 +295,25 @@ public class StuFileTool implements tool {
 			test1.add("2272176,Ë«ÇäÆË,03,ÄÐ");
 			System.out.println(test1.bufferMap);
 	}
+
+
+	@Override
+	public void delete(String s, String s2) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public Object get(String stuid) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	
 
 
 
