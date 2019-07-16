@@ -1,10 +1,10 @@
-package ProjectServer;
+package client;
 
 import java.io.*;
 import java.net.Socket;
 
 
-public class Remote { //本地（客户端）代理，与服务器通信方式
+public class ClientRemote { //本地（客户端）代理，与服务器通信方式
 	String host;
 	int port;
 	private DataInputStream dis = null;
@@ -12,7 +12,7 @@ public class Remote { //本地（客户端）代理，与服务器通信方式
 	BufferedReader br=null;
 	PrintWriter pw=null;
 
-	Remote(String host, int port) throws Exception{
+	ClientRemote(String host, int port) throws Exception{
 		this.host = host;
 		this.port = port;
 		Socket socket = new Socket(host, port);
