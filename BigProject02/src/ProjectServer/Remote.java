@@ -18,8 +18,6 @@ public class Remote { //本地（客户端）代理，与服务器通信方式
 		Socket socket = new Socket(host, port);
 		dis = new DataInputStream(socket.getInputStream());
 		dos = new DataOutputStream(socket.getOutputStream());
-		//br=new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		//pw=new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
 	}
 	public String chooseCourse(String studentId, String CourseId) //返回 （1成功）/（0失败+失败原因）
 	{
@@ -162,7 +160,7 @@ public class Remote { //本地（客户端）代理，与服务器通信方式
 	}
 	public void exitConnection() {
 		try {
-			dos.writeInt(0); //0表示告诉服务器断开连接
+			dos.writeInt(0); //0表示告诉服务器关闭连接
 		} catch (IOException e) {
 			throw new ArithmeticException(e.getMessage());
 		}
@@ -183,7 +181,7 @@ public class Remote { //本地（客户端）代理，与服务器通信方式
 	}
 	public void exitCourseManage() {
 		try {
-			dos.writeInt(-3); //-2表示告诉服务器退出课程管理
+			dos.writeInt(-3); //-3表示告诉服务器退出课程管理
 		} catch (IOException e) {
 			throw new ArithmeticException(e.getMessage());
 		}

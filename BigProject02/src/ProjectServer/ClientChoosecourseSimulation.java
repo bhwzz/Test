@@ -1,15 +1,17 @@
 package ProjectServer;
 
+import java.io.DataInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 
-public class Client100 extends Thread{  //未完成
+public class ClientChoosecourseSimulation extends Thread{ 
 	private String studentId;
 	private String courseId;
 	private Remote remote;
-	Client100(){
+	ClientChoosecourseSimulation(){
 		
 	}
-	Client100(String host, int post, String sid, String cid) throws Exception{
+	ClientChoosecourseSimulation(String host, int post, String sid, String cid) throws Exception{
 		remote = new Remote(host, post); //通过客户端代理建立到服务器的连接
 		//建立选课信息
 		studentId=sid;
@@ -31,11 +33,20 @@ public class Client100 extends Thread{  //未完成
 			}
 	}
 	public static void main(String[] args) throws Exception {
-		Client100[] client = new Client100[100];
-		for(int i=0; i<100; i++) {
-			client[i] = new Client100("localhost", 4444, i+1234500+"", "002");
+		//从文件信息中初始化
+		FileInputStream fis = new FileInputStream("ChooseCourse200.txt");
+		DataInputStream dis = new DataInputStream(fis);
+		ClientChoosecourseSimulation[] client = new ClientChoosecourseSimulation[200];
+		String studentId, CourseId;
+		for(int i=0; i<200; i++) {
+			studentId = dis.readUTF();
+			CourseId = dis.readUTF();
+			client[i] = new ClientChoosecourseSimulation("localhost", 4444, studentId, CourseId);
 		}
-		for(int i=0; i<100; i++) {
+		dis.close();
+		fis.close();
+		//启动200个选课线程
+		for(int i=0; i<200; i++) {
 			client[i].start();
 		}
 	}

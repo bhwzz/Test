@@ -14,33 +14,17 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 		System.out.print("请输入学号：");
 		Scanner sc=new Scanner(System.in);
 		String studentId = sc.next(); 
-		while(!isNumber(studentId) || studentId.length()!=7){
+		while(!Tool.isNumber(studentId) || studentId.length()!=7){
 			System.out.println("输入有误，请输入7位数字学号：");
 			studentId = sc.next();
 		}
 		return studentId;
 	}
-	public static boolean isChineseCharacters(String name) {
-	        for(int i = 0; i < name.length(); i++) {
-	            if(!(19968 <= (int)name.charAt(i) && (int)name.charAt(i) <40869)) {
-	                return false;
-	            }
-	        }
-	        return true;
-	}
-	public static boolean isNumber(String str){
-	  for(int i = str.length();--i>=0;){ 
-	   if(!Character.isDigit(str.charAt(i))){
-	    return false;
-	   }
-	  }
-	  return true;
-	}
 	public static String readStudentName() { //读姓名
 		System.out.print("姓名：");
 		Scanner sc=new Scanner(System.in);
 		String studentName = sc.next(); 
-		while(!isChineseCharacters(studentName) || (studentName.length()!=2 && studentName.length()!=3) ){
+		while(!Tool.isChineseCharacters(studentName) || (studentName.length()!=2 && studentName.length()!=3) ){
 			System.out.print("输入有误，请输入2-3位汉字！：");
 			studentName = sc.next();
 		}
@@ -50,7 +34,7 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 		System.out.print("班级：");
 		Scanner sc=new Scanner(System.in);
 		String classroom = sc.next(); 
-		while(!isNumber(classroom) || classroom.length()>2) { //若班级数字位数多于2位，则报错，重新输入
+		while(!Tool.isNumber(classroom) || classroom.length()>2) { //若班级数字位数多于2位，则报错，重新输入
 			System.out.println("输入有误，请输入两位以内数字：");
 			classroom = sc.next();
 		}
@@ -70,7 +54,7 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 		System.out.print("请输入课程号：");
 		Scanner sc=new Scanner(System.in);
 		String courseId = sc.next(); 
-		while(!isNumber(courseId) || courseId.length()!=3){
+		while(!Tool.isNumber(courseId) || courseId.length()!=3){
 			System.out.println("输入有误，请输入3位数字课程号：");
 			courseId = sc.next();
 		}
@@ -235,7 +219,7 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 	{
 		System.out.println("请输入要删除课程的课程信息：");
 		String id = readCourseId(); //读入课程号
-		String s = r.deleteCourse(id);
+		String s = r.deleteStudent(id);
 		switch(s.charAt(0)){
 		case '0':
 			String info = s.substring(1); //除去第一位的子串，表示错误信息
