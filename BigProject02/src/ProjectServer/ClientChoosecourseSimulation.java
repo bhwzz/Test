@@ -33,7 +33,7 @@ public class ClientChoosecourseSimulation extends Thread{
 			}
 	}
 	public static void main(String[] args) throws Exception {
-		//从文件信息中初始化
+		//从文件信息中初始化，包含200条选课请求，学号从9999000-9999199，一半选001课程，一半选002课程
 		FileInputStream fis = new FileInputStream("ChooseCourse200.txt");
 		DataInputStream dis = new DataInputStream(fis);
 		ClientChoosecourseSimulation[] client = new ClientChoosecourseSimulation[200];
@@ -48,6 +48,10 @@ public class ClientChoosecourseSimulation extends Thread{
 		//启动200个选课线程
 		for(int i=0; i<200; i++) {
 			client[i].start();
-		}
+		}	
+		//所有线程结束后向服务器发送更新选课记录文件的指令(-1)
+		while(Thread.activeCount() != 1)
+			System.out.println("仍有线程在运行");//测试debug用
+		new Client("localhost",4444).exitChoosecourseManage();
 	}
 }
