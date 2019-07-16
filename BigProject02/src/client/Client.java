@@ -2,8 +2,6 @@ package client;
 
 import java.util.Scanner;
 
-import ProjectServer.ClientReadSource;
-
 public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 
 	ClientRemote r;

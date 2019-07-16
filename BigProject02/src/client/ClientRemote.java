@@ -2,6 +2,7 @@ package client;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Properties;
 
 
 public class ClientRemote { //本地（客户端）代理，与服务器通信方式
@@ -9,8 +10,6 @@ public class ClientRemote { //本地（客户端）代理，与服务器通信方式
 	int port;
 	private DataInputStream dis = null;
 	private DataOutputStream dos = null;
-	BufferedReader br=null;
-	PrintWriter pw=null;
 
 	ClientRemote(String host, int port) throws Exception{
 		this.host = host;
@@ -161,6 +160,7 @@ public class ClientRemote { //本地（客户端）代理，与服务器通信方式
 	public void exitConnection() {
 		try {
 			dos.writeInt(0); //0表示告诉服务器关闭连接
+			dos.flush();
 		} catch (IOException e) {
 			throw new ArithmeticException(e.getMessage());
 		}
@@ -168,6 +168,7 @@ public class ClientRemote { //本地（客户端）代理，与服务器通信方式
 	public void exitChoosecourseManage() {
 		try {
 			dos.writeInt(-1); //-1表示告诉服务器退出选课管理
+			dos.flush();
 		} catch (IOException e) {
 			throw new ArithmeticException(e.getMessage());
 		}
@@ -175,6 +176,7 @@ public class ClientRemote { //本地（客户端）代理，与服务器通信方式
 	public void exitStudentManage() {
 		try {
 			dos.writeInt(-2); //-2表示告诉服务器退出学生管理
+			dos.flush();
 		} catch (IOException e) {
 			throw new ArithmeticException(e.getMessage());
 		}
@@ -182,8 +184,19 @@ public class ClientRemote { //本地（客户端）代理，与服务器通信方式
 	public void exitCourseManage() {
 		try {
 			dos.writeInt(-3); //-3表示告诉服务器退出课程管理
+			dos.flush();
 		} catch (IOException e) {
 			throw new ArithmeticException(e.getMessage());
 		}
+	}
+	public static void closeServer() throws Exception {
+		//从配置文件中读初始化信息（服务器主机名，端口号）
+		Properties p=new Properties();
+		p.load(new FileInputStream("file.properties"));
+		String host = p.getProperty("Server");
+		String clientPort = p.getProperty("Clientport");
+		Client c = new Client(host,Integer.parseInt(clientPort));
+		c.r.dos.writeInt(100);
+		c.r.dos.flush();
 	}
 }

@@ -1,8 +1,6 @@
-package ProjectServer;
+package client;
 
 import java.util.Scanner;
-
-import client.Tool;
 
 abstract public class ClientReadSource {  //定义了从输入中读学号、姓名、班级、性别、课程号、课程名、课余量的方法，增强拓展性（易更改为从其他地方读，比如文件）
 	public static String readStudentId() { //读学号

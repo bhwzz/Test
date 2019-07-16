@@ -21,14 +21,13 @@ public class ClientChoosecourseSimulation extends Thread{
 	public void run() {
 			String info = remote.chooseCourse(studentId, courseId); //info记录选课结果信息
 			remote.exitConnection(); //选课结束后关闭连接
-			System.out.println("学生"+studentId+"选课"+courseId+"结果：");
 			switch(info.charAt(0)){
 			case '0':
 				String s = info.substring(1); //除去第一位的子串，表示失败原因
-				System.out.println("选课失败，失败原因"+s);
+				System.out.println("学生"+studentId+"选课"+courseId+"失败，失败原因"+s);
 				break;
 			case '1':
-				System.out.println("选课成功");
+				System.out.println("学生"+studentId+"选课"+courseId+"成功");
 				break;
 			}
 	}
