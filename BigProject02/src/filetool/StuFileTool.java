@@ -140,12 +140,85 @@ public class StuFileTool implements tool {
 	    	map.put(id, new StuQuality(id,s1,d,g));
 	        //map.add(id,new quality(id));
 	        //如果容量等于100  跳出循环
-	        if(map.size()==10)
+	        if(map.size()==1000000)
 	        {
 	            break;
 	        }
 	    }
 	    //遍历
+	    
+	    for(int i=9999000;;i++)
+	    {
+
+//	          
+//	          
+//	          
+//	    	String s1=ret;
+	    	String s1 = "";
+	    	String str = null; 
+	    	
+	    	int q1=(int)(Math.random()*10);
+//	    	System.out.println(q);
+	    	int f1=q1%2;
+	    	if (f1==1) {
+	    	
+	    	for(int j=0;j<3;j++) {
+//	   
+	    	int hightPos, lowPos; // 定义高低位 
+	    	Random random = new Random(); 
+	    	hightPos = (176 + Math.abs(random.nextInt(39)));//获取高位值 
+	    	lowPos = (161 + Math.abs(random.nextInt(93)));//获取低位值 
+	    	byte[] b = new byte[2]; 
+	    	b[0] = (new Integer(hightPos).byteValue()); 
+	    	b[1] = (new Integer(lowPos).byteValue()); 
+	    	str = new String(b, "GBk");//转成中文 
+	    	s1=s1+str;
+	    	}
+	    	}
+	    	else {
+	    		s1 = "  ";
+	    		for(int j=0;j<2;j++) {
+//	    			   
+	    			    	int hightPos, lowPos; // 定义高低位 
+	    			    	Random random = new Random(); 
+	    			    	hightPos = (176 + Math.abs(random.nextInt(39)));//获取高位值 
+	    			    	lowPos = (161 + Math.abs(random.nextInt(93)));//获取低位值 
+	    			    	byte[] b = new byte[2]; 
+	    			    	b[0] = (new Integer(hightPos).byteValue()); 
+	    			    	b[1] = (new Integer(lowPos).byteValue()); 
+	    			    	str = new String(b, "GBk");//转成中文 
+	    			    	s1=s1+str;
+	    			    	}
+	    	}
+	    //	s1=str;
+	    	//String s1=str;
+	    	
+	 
+	    	int d=(int)((Math.random()*9+1)*10%16+1);
+	    	
+	    	int q=(int)(Math.random()*10);
+//	    	System.out.println(q);
+	    	int f=q%2;
+	    	char g;
+	    	if (f==1) {
+	    		g='男';
+	    	}
+	    	else g='女';
+	    	int id1=i;
+	    	String id = String.format("%7d", id1).replace(" ", "0"); 
+	    	map.put(id, new StuQuality(id,s1,d,g));
+	        //map.add(id,new quality(id));                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+	        //如果容量等于100  跳出循环
+	        if(i==9999199)
+	        {
+	            break;
+	        }
+	    }
+	    //遍历
+	    
+	    
+	    
+	    
 	    
 	    PrintWriter fw = new PrintWriter(f1.getAbsolutePath());
 		BufferedWriter bw = new BufferedWriter(fw);
@@ -277,7 +350,7 @@ public class StuFileTool implements tool {
 //		test1.findinfile("1722981");
 		
 		
-		StuFileTool test1 = new StuFileTool("d:\\test3.txt");
+		StuFileTool test1 = new StuFileTool("d:\\testS.txt");
 			test1.write();
 			// TODO Auto-generated method stub
 //			test1.getbuffer();

@@ -49,7 +49,7 @@ public class ClientChoosecourseSimulation extends Thread{
 			client[i].start();
 		}	
 		//所有线程结束后向服务器发送更新选课记录文件的指令(-1)
-		while(Thread.activeCount() != 1)
+		while(Thread.activeCount() != 1);
 			//System.out.println("仍有线程在运行");//测试debug用
 		new Client("localhost",4444).exitChoosecourseManage();
 	}
