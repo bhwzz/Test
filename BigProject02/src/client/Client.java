@@ -1,7 +1,8 @@
-package ProjectServer;
+package client;
 
-import java.io.IOException;
 import java.util.Scanner;
+
+import ProjectServer.ClientReadSource;
 
 public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 
@@ -10,77 +11,16 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 		r = new Remote(host, port);
 	}
 	
-	public static String readStudentId() { //定义了读学号的方法，增强拓展性（易更改为从其他地方读，比如文件）
-		System.out.print("请输入学号：");
-		Scanner sc=new Scanner(System.in);
-		String studentId = sc.next(); 
-		while(!Tool.isNumber(studentId) || studentId.length()!=7){
-			System.out.println("输入有误，请输入7位数字学号：");
-			studentId = sc.next();
-		}
-		return studentId;
-	}
-	public static String readStudentName() { //读姓名
-		System.out.print("姓名：");
-		Scanner sc=new Scanner(System.in);
-		String studentName = sc.next(); 
-		while(!Tool.isChineseCharacters(studentName) || (studentName.length()!=2 && studentName.length()!=3) ){
-			System.out.print("输入有误，请输入2-3位汉字！：");
-			studentName = sc.next();
-		}
-		return studentName;
-	}
-	public int readClassroom() { //读班级
-		System.out.print("班级：");
-		Scanner sc=new Scanner(System.in);
-		String classroom = sc.next(); 
-		while(!Tool.isNumber(classroom) || classroom.length()>2) { //若班级数字位数多于2位，则报错，重新输入
-			System.out.println("输入有误，请输入两位以内数字：");
-			classroom = sc.next();
-		}
-		return Integer.parseInt(classroom);
-	}
-	public static char readGender() { //读性别
-		System.out.print("性别：");
-		Scanner sc=new Scanner(System.in);
-		char gender = sc.next().charAt(0); //读入性别
-		while(gender!='男' && gender!='女'){
-			System.out.println("无效性别，请输入男/女：");
-			gender = sc.next().charAt(0);
-		}
-		return gender;
-	}
-	public static String readCourseId() { //读课程号
-		System.out.print("请输入课程号：");
-		Scanner sc=new Scanner(System.in);
-		String courseId = sc.next(); 
-		while(!Tool.isNumber(courseId) || courseId.length()!=3){
-			System.out.println("输入有误，请输入3位数字课程号：");
-			courseId = sc.next();
-		}
-		return courseId;
-	}
-	public static String readCourseName() { //读课程名
-		System.out.print("课程名：");
-		Scanner sc=new Scanner(System.in);
-		String courseName = sc.next(); 
-		return courseName;
-	}
-	public static int readCourseCapacity() { //读课程容量
-		System.out.print("课程容量：");
-		Scanner sc=new Scanner(System.in);
-		int courseCapacity = sc.nextInt(); 
-		return courseCapacity;
-	}
+	
 	public void chooseCourse() //按提示进行选课操作
 	{
 		System.out.println("--------------选课操作--------------");
 
-		String studentId = readStudentId(); //读入学号
+		String studentId = ClientReadSource.readStudentId(); //读入学号
 		/*
 		findAllCourse();
 		*/
-		String courseId = readCourseId(); //读入课序号
+		String courseId = ClientReadSource.readCourseId(); //读入课序号
 		String s = r.chooseCourse(studentId, courseId);
 		switch(s.charAt(0)){
 		case '0':
@@ -98,8 +38,8 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 		/*根据id列出学生信息
 		String stuId = findStudent();*/
 		
-		String studentId = readStudentId(); //读入学号
-		String courseId = readCourseId(); //读入课序号
+		String studentId = ClientReadSource.readStudentId(); //读入学号
+		String courseId = ClientReadSource.readCourseId(); //读入课序号
 		String s = r.dropCourse(studentId, courseId);
 		switch(s.charAt(0)){
 		case '0':
@@ -114,10 +54,10 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 	public void addStudent()
 	{
 		System.out.println("请输入要添加学生的信息：");
-		String id = readStudentId(); //读入学号
-		String name = readStudentName(); //读入姓名
-		int classroom = readClassroom(); //读入班级
-		char gender = readGender(); //读入性别
+		String id = ClientReadSource.readStudentId(); //读入学号
+		String name = ClientReadSource.readStudentName(); //读入姓名
+		int classroom = ClientReadSource.readClassroom(); //读入班级
+		char gender = ClientReadSource.readGender(); //读入性别
 		String student = new String(id+","+name+","+classroom+","+gender);//向服务器传递的待增加的学生信息
 		if(r.addStudent(student)){
 			System.out.println("添加成功");	
@@ -132,7 +72,7 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 	public void deleteStudent()
 	{
 		System.out.println("请输入要删除学生的信息：");
-		String id = readStudentId(); //读入学号
+		String id = ClientReadSource.readStudentId(); //读入学号
 		String s = r.deleteStudent(id);
 		switch(s.charAt(0)){
 		case '0':
@@ -150,10 +90,10 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 	public void changeStudent()
 	{
 		System.out.println("请输入要修改的学生信息：");
-		String id = readStudentId(); //读入学号
-		String name = readStudentName(); //读入姓名
-		int classroom = readClassroom(); //读入班级
-		char gender = readGender(); //读入性别
+		String id = ClientReadSource.readStudentId(); //读入学号
+		String name = ClientReadSource.readStudentName(); //读入姓名
+		int classroom = ClientReadSource.readClassroom(); //读入班级
+		char gender = ClientReadSource.readGender(); //读入性别
 		String student = new String(id+","+name+","+classroom+","+gender);//向服务器传递的待修改的学生信息
 		//System.out.println(student);
 		if(r.changeStudent(student)) {
@@ -170,7 +110,7 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 	{
 		
 		System.out.print("请输入要查询学生的信息：");
-		String id = readStudentId(); //读入学号
+		String id = ClientReadSource.readStudentId(); //读入学号
 		String s[] = r.findStudent(id);
 		switch(s[0].charAt(0)){
 		case '0':
@@ -202,9 +142,9 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 	//课序号，课程名，课容量
 	{
 		System.out.println("请输入要添加课程的信息：");
-		String id = readCourseId(); //读入课程号
-		String name = readCourseName();//
-		int num = readCourseCapacity();
+		String id = ClientReadSource.readCourseId(); //读入课程号
+		String name = ClientReadSource.readCourseName();//
+		int num = ClientReadSource.readCourseCapacity();
 		if(r.addCourse(id,name,num)){
 			System.out.println("添加成功");	
 		}
@@ -218,7 +158,7 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 	public void deleteCourse()//根据输入的课程号删除课程
 	{
 		System.out.println("请输入要删除课程的课程信息：");
-		String id = readCourseId(); //读入课程号
+		String id = ClientReadSource.readCourseId(); //读入课程号
 		String s = r.deleteCourse(id);
 		switch(s.charAt(0)){
 		case '0':
