@@ -62,7 +62,7 @@ public class CouInformationImple implements InformationOperate {
 			e.printStackTrace();
 		}
 		try {
-			dis.readInt();
+			bool=dis.readInt();
 			System.out.println("服务器端请求删除课程操作成功！");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
