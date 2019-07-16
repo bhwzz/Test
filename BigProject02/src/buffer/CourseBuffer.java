@@ -47,14 +47,14 @@ public class CourseBuffer {
 	
 	public Course Find(String s) {    //找到返回course 没找到返回null
 		Course c=null;
-		synchronized(CourseMap.get(s)) {
-			c=CourseMap.get(s);
-		}
+		c=CourseMap.get(s);
 		if(c==null)
 		{
 			return null;
 		}
-		return c;
+		synchronized(c) {
+			return c;
+		}
 	}
 	public Map FindAll() {//查找所有课程信息
 		return CourseMap;
@@ -67,7 +67,7 @@ public class CourseBuffer {
 			System.out.println("不存在这个课程");
 			return false;
 		}
-		synchronized(CourseMap.get(s)) {
+		synchronized(CourseMap.get(ss[0])) {
 			CourseMap.get(ss[0]).setCourse_name(ss[1]);
 			CourseMap.put(ss[0],CourseMap.get(ss[0]));
 		}
