@@ -79,7 +79,7 @@ public class CourseBuffer {
 			System.out.println("已经存在这个课程");
 			return false;
 		}	
-		synchronized(CourseMap.get(s)) {
+		synchronized(CourseMap) {
 			CourseMap.put(s.getCourse_id(), s);
 		}
 		return true;
@@ -96,6 +96,7 @@ public class CourseBuffer {
 				System.out.println("该课程已经被选，不可删除");
 				return -2;
 			}
+			CourseMap.remove(s);
 		}
 		return 1;
 	}

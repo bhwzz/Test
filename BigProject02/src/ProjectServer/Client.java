@@ -235,7 +235,7 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 	{
 		System.out.println("请输入要删除课程的课程信息：");
 		String id = readCourseId(); //读入课程号
-		String s = r.deleteStudent(id);
+		String s = r.deleteCourse(id);
 		switch(s.charAt(0)){
 		case '0':
 			String info = s.substring(1); //除去第一位的子串，表示错误信息

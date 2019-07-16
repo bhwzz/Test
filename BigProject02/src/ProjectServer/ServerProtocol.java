@@ -200,7 +200,7 @@ public class ServerProtocol implements IOStrategy{
 					dos.flush();
 					break;
 				case -1://刷新选课记录文件
-					cii.flushFile();
+					cci.flushFile();
 				case -2://刷新学生文件
 					sii.flushFile();
 					break;
@@ -208,7 +208,7 @@ public class ServerProtocol implements IOStrategy{
 					cii.flushFile();
 					break;
 				case 0:
-					cii.flushFile();
+					cci.flushFile();
 					cii.flushFile();
 					dis.close();
 					dos.close();
