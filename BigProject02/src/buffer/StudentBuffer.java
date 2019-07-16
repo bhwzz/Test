@@ -23,7 +23,7 @@ public class StudentBuffer {
 	private Stu_CourseBuffer stucoubufferBuffer = null;
 	//面向文件的Student工具包
 	
-	int SIZE = 1000 ;
+	int SIZE = 10 ;
 		//缓存的大小
 	int LENGTH = 1024;
 	
@@ -43,10 +43,13 @@ public class StudentBuffer {
 	
 	//检查缓存大小的函数 将缓存数量控制在一定范围内
 	public boolean Check() throws Exception {
-		if(studentMap.size()<=SIZE)
+		if(studentMap.size()<=SIZE) {
+			System.out.println("目前缓存大小为"+studentMap.size());
 			return false;
+		}
 		//如果现在的缓存没有被装满 返回false
 		else {
+			System.out.println("目前缓存大小为"+studentMap.size());
 			if(studentMap.size()<=10) {
 	//			studentMap.remove(key)
 				Map.Entry<String, StudentQuality> item = (Entry<String, StudentQuality>) 	studentMap.entrySet().iterator().next();
@@ -54,18 +57,21 @@ public class StudentBuffer {
 				
 				if(item.getValue().flag==0)
 				{
+					System.out.println("丢弃"+item.getKey());
+					
 					studentMap.remove(item.getKey());
 					//没有被修改过 直接丢弃
 				}
 				
 				else if(item.getValue().flag==1)//被增加 or删除
 				{
-					
+					System.out.println("写回并丢弃"+item.getKey());
 					tool1.writeback(item.getValue().getStudent());
 					studentMap.remove(item.getKey());
 					//被修改过 写回去
 				}
 				else if(item.getValue().flag==-1) {
+					System.out.println("删除并丢弃"+item.getKey());
 					tool1.delete(item.getKey());
 					studentMap.remove(item.getKey());
 				}
@@ -226,6 +232,7 @@ public class StudentBuffer {
 			}
 		}
 		studentMap.clear();
+		System.out.println("缓存清空并全部写回");
 		
 		return true;
 	}
