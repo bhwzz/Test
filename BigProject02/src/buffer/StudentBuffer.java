@@ -23,7 +23,7 @@ public class StudentBuffer {
 	private Stu_CourseBuffer stucoubufferBuffer = null;
 	//面向文件的Student工具包
 	
-	int SIZE = 2  ;
+	int SIZE = 1000 ;
 		//缓存的大小
 	int LENGTH = 1024;
 	
@@ -47,31 +47,59 @@ public class StudentBuffer {
 			return false;
 		//如果现在的缓存没有被装满 返回false
 		else {
-//			studentMap.remove(key)
-			Map.Entry<String, StudentQuality> item = (Entry<String, StudentQuality>) 	studentMap.entrySet().iterator().next();
-			//获取第一个键值对
-			
-			if(item.getValue().flag==0)
-			{
-				studentMap.remove(item.getKey());
-				//没有被修改过 直接丢弃
-			}
-			
-			else if(item.getValue().flag==1)//被增加 or删除
-			{
+			if(studentMap.size()<=10) {
+	//			studentMap.remove(key)
+				Map.Entry<String, StudentQuality> item = (Entry<String, StudentQuality>) 	studentMap.entrySet().iterator().next();
+				//获取第一个键值对
 				
-				tool1.writeback(item.getValue().getStudent());
-				studentMap.remove(item.getKey());
-				//被修改过 写回去
+				if(item.getValue().flag==0)
+				{
+					studentMap.remove(item.getKey());
+					//没有被修改过 直接丢弃
+				}
+				
+				else if(item.getValue().flag==1)//被增加 or删除
+				{
+					
+					tool1.writeback(item.getValue().getStudent());
+					studentMap.remove(item.getKey());
+					//被修改过 写回去
+				}
+				else if(item.getValue().flag==-1) {
+					tool1.delete(item.getKey());
+					studentMap.remove(item.getKey());
+				}
+				//TreeMap<String,String>写索引
+				//RandomAccessFile 随机访问文件
+				
+				return true;
 			}
-			else if(item.getValue().flag==-1) {
-				tool1.delete(item.getKey());
-				studentMap.remove(item.getKey());
+			else {
+				for(int k=0;k<10;k++) {
+					Map.Entry<String, StudentQuality> item = (Entry<String, StudentQuality>) 	studentMap.entrySet().iterator().next();
+					//获取第一个键值对
+					
+					if(item.getValue().flag==0)
+					{
+						studentMap.remove(item.getKey());
+						//没有被修改过 直接丢弃
+					}
+					
+					else if(item.getValue().flag==1)//被增加 or删除
+					{
+						
+						tool1.writeback(item.getValue().getStudent());
+						studentMap.remove(item.getKey());
+						//被修改过 写回去
+					}
+					else if(item.getValue().flag==-1) {
+						tool1.delete(item.getKey());
+						studentMap.remove(item.getKey());
+					}
+				}
+				return true;
+				
 			}
-			//TreeMap<String,String>写索引
-			//RandomAccessFile 随机访问文件
-			
-			return true;
 		}
 //		return true;
 		

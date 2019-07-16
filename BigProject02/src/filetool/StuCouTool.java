@@ -9,7 +9,7 @@ import java.util.*;
 
 import EntityClass.*;
 
-public class StuCouTool {
+public class StuCouTool implements tool {
 
 	File rootfile;
 	Map <String,Map> bookMap;
@@ -52,22 +52,7 @@ public class StuCouTool {
 	        br.close();
 	}
 
-	        //    System.out.print(new String(buff, 0, len));  
-//	        	if(new String(buff, 24, 1).equals("0"))
-//	            {
-//	            	 bookMap.put(new String(buff, 0, 7), i+"");
-//	            	
-//	            }
-//	            else {
-//	            	System.out.println("已被删除");
-//				}
-//	            i++;
-//	        } 
-//	        in.close();
-//	        br.close();
-//	     //   System.out.println(bufferMap);
-//		
-//	}
+
 	public Map get(String id) throws Exception {
 		Map <String,Stu_Course> map = new HashMap<String,Stu_Course>();
 		RandomAccessFile raf=new RandomAccessFile(rootfile, "r");  
@@ -96,12 +81,13 @@ public class StuCouTool {
 //			bookMap.put(s.getstuId(), map);
 		return map;
 	}
-	public void add(Stu_Course s) throws Exception {
+	public void add(Object ss) throws Exception {
+		Stu_Course s=(Stu_Course)ss;
 		RandomAccessFile raf=new RandomAccessFile(rootfile, "rw");  
         //获取RandomAccessFile对象文件指针的位置，初始位置是0  
-		if(bookMap.get(s.getstuId())==null) {
+		if(bookMap.get((s).getstuId())==null) {
 			Map<String, String> map=new HashMap<String, String>();
-			map.put(s.getcouId(), ""+(rootfile.length()/LINELENGTH) );
+			map.put(( s).getcouId(), ""+(rootfile.length()/LINELENGTH) );
 			bookMap.put(s.getstuId(), map);
 		}
 		else {
@@ -121,7 +107,9 @@ public class StuCouTool {
 		
 	//	bookMap.put(s.getstuId(), )
 	}
-	public void delete(String stuid,String couid) throws Exception {
+	public void delete(String []s) throws Exception {
+		String stuid=s[0];
+		String couid=s[1];
 		RandomAccessFile raf=new RandomAccessFile(rootfile, "rw");
 		System.out.println("RandomAccessFile文件指针的初始位置:"+raf.getFilePointer()); 
 		raf.seek(Integer.valueOf((String)bookMap.get(stuid).get(couid)).intValue()*LINELENGTH+32);
@@ -142,4 +130,18 @@ public class StuCouTool {
 		System.out.println(tool.get("1234569"));
 		
 	}
+	
+	@Override
+	public void writeback(Student s) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public String findinfile(String f) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
 }

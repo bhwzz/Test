@@ -8,7 +8,15 @@ public class StuQuality {
 	private int classroom;
 	private char gender;
 	StuQuality(String id){
-		this.id = id;
+		String [] s=new String[4];
+		s=id.split(",");
+		//System.out.println(s[0]+s[1]+Integer.parseInt(s[2])+s[3].charAt(0));
+	//	return new Student(s[0],s[1],Integer.parseInt(s[2]),s[3].charAt(0));
+		
+		this.id = s[0];
+		this.name=s[1];
+		classroom=Integer.parseInt(s[2]);
+		gender=s[3].charAt(0);
 	}
 	StuQuality(String id,String name,int classroom,char gender){
 		this.id = id;
