@@ -40,7 +40,7 @@ public class Stu_CourseBuffer {
 	
 	public boolean Check() throws Exception {
 		synchronized(stu_couBuffer) {
-			System.out.println("目前缓存大小为"+stu_couBuffer.size());
+			System.out.println("目前选课缓存大小为"+stu_couBuffer.size());
 			if(stu_couBuffer.size()<=SIZE)
 				return false;
 			//如果现在的缓存没有被装满 返回false
@@ -355,7 +355,7 @@ public class Stu_CourseBuffer {
 			}
 			else if(mainMap!=null) {
 				Map map=mainMap;
-				if(map.get(Couid)==null) {
+				if(map.get(Couid)==null||((StuCouQuality)(mainMap.get(Couid))).flag1==-1) {
 					System.out.println("该学生选过课 但是没选过这节课");
 					return -3;
 				}

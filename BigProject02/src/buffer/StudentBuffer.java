@@ -44,12 +44,12 @@ public class StudentBuffer {
 	//检查缓存大小的函数 将缓存数量控制在一定范围内
 	public boolean Check() throws Exception {
 		if(studentMap.size()<=SIZE) {
-			System.out.println("目前缓存大小为"+studentMap.size());
+			System.out.println("目前学生缓存大小为"+studentMap.size());
 			return false;
 		}
 		//如果现在的缓存没有被装满 返回false
 		else {
-			System.out.println("目前缓存大小为"+studentMap.size());
+			System.out.println("目前学生缓存大小为"+studentMap.size());
 			if(studentMap.size()<=10) {
 	//			studentMap.remove(key)
 				Map.Entry<String, StudentQuality> item = (Entry<String, StudentQuality>) 	studentMap.entrySet().iterator().next();
