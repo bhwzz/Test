@@ -160,6 +160,13 @@ public class Remote { //本地（客户端）代理，与服务器通信方式
 			throw new ArithmeticException(e.getMessage());
 		}
 	}
+	public void exitConnection() {
+		try {
+			dos.writeInt(0); //0表示告诉服务器断开连接
+		} catch (IOException e) {
+			throw new ArithmeticException(e.getMessage());
+		}
+	}
 	public void exitChoosecourseManage() {
 		try {
 			dos.writeInt(-1); //-1表示告诉服务器退出选课管理

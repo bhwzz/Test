@@ -5,14 +5,12 @@ import java.util.ArrayList;
 
 public class DBThreadPoolSupport implements IOStrategy{
 	ArrayList<DBThread> threads=new ArrayList<DBThread>();
-	int INIT_THREADS=100;
-	int MAX_THREADS=150;
+	int INIT_THREADS=1000;
+	int MAX_THREADS=1000;
 	IOStrategy ios=null;
 	
 	public DBThreadPoolSupport(IOStrategy ios){//初始化线程池
 		this.ios=ios;
-		//初始化选课协议
-		//((ChooseProtocol)this.ios).Init();
 		
 		for(int i=0;i<INIT_THREADS;i++) {
 			DBThread t=new DBThread(ios);

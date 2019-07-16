@@ -11,6 +11,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,17 +37,18 @@ public class ServerProtocol implements IOStrategy{
 		ChooseCourseImple cci=new ChooseCourseImple(DBSocket);
 		StuInformationImple sii=new StuInformationImple(DBSocket);
 		CouInformationImple cii=new CouInformationImple(DBSocket);
-		
-		
+		DataInputStream dis = null;
+		DataOutputStream dos=null;
 		String sid=null;
 		String cid=null; 
 		String s=null;
 		int bool;
 		System.out.println(Thread.currentThread().getName()+"---服务器开始service！");
 		try {
-			DataInputStream dis=new DataInputStream(Clientsocket.getInputStream());
-			DataOutputStream dos=new DataOutputStream(Clientsocket.getOutputStream());
-			while(true) {
+			dis=new DataInputStream(Clientsocket.getInputStream());
+			dos=new DataOutputStream(Clientsocket.getOutputStream());
+			boolean flag = true;
+			while(flag) {
 				int i=dis.readInt();
 				System.out.println("客户端请求："+i);
 				switch(i) {
@@ -198,19 +200,32 @@ public class ServerProtocol implements IOStrategy{
 					dos.flush();
 					break;
 				case -1://刷新选课记录文件
-					cci.flushFile();
+					cii.flushFile();
 				case -2://刷新学生文件
 					sii.flushFile();
 					break;
 				case -3://刷新课程文件
 					cii.flushFile();
 					break;
+				case 0:
+					cii.flushFile();
+					cii.flushFile();
+					dis.close();
+					dos.close();
+					Clientsocket.close();
+					flag = false;
 				}
+				//监控客户端是否还有操作
+				
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			System.out.println("。。。。。。没有连接到客户端");
+			//System.out.println("。。。。。。没有连接到客户端");
+		
+
+			e.printStackTrace();
 		}
+		
 	}
 	@Override
 	public void Service(Socket socket) {

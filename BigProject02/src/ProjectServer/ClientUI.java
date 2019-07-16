@@ -41,7 +41,7 @@ abstract public class ClientUI {
 				courseInformationInterface();
 				break;
 			case 4:
-				//Client.exit();
+				client.exitConnection();
 				System.out.println("Ğ»Ğ»ÄúµÄÊ¹ÓÃ£¡");
 				System.exit(0);
 			default:

@@ -18,23 +18,24 @@ public class Client100 extends Thread{  //未完成
 	@Override
 	public void run() {
 			String info = remote.chooseCourse(studentId, courseId); //info记录选课结果信息
+			remote.exitConnection(); //选课结束后关闭连接
+			System.out.println("学生"+studentId+"选课"+courseId+"结果：");
 			switch(info.charAt(0)){
 			case '0':
 				String s = info.substring(1); //除去第一位的子串，表示失败原因
-				System.out.println("选课失败，失败原因："+s);
+				System.out.println("选课失败，失败原因"+s);
 				break;
 			case '1':
 				System.out.println("选课成功");
 				break;
 			}
-
 	}
 	public static void main(String[] args) throws Exception {
-		Client100[] client = new Client100[10];
-		for(int i=0; i<10; i++) {
+		Client100[] client = new Client100[100];
+		for(int i=0; i<100; i++) {
 			client[i] = new Client100("localhost", 4444, i+1234500+"", "001");
 		}
-		for(int i=0; i<10; i++) {
+		for(int i=0; i<100; i++) {
 			client[i].start();
 		}
 	}

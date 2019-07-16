@@ -6,8 +6,8 @@ import java.util.ArrayList;
 //线程库类
 public class ThreadPoolSupport implements IOStrategy{
 	ArrayList<IOThread> threads=new ArrayList<IOThread>();
-	int INIT_THREADS=100;
-	int MAX_THREADS=150;
+	int INIT_THREADS=1000;
+	int MAX_THREADS=1050;
 	IOStrategy ios=null;
 	
 	public ThreadPoolSupport(IOStrategy ios){//初始化线程池
