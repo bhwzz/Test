@@ -107,9 +107,7 @@ public class StuCouTool implements tool {
 		
 	//	bookMap.put(s.getstuId(), )
 	}
-	public void delete(String []s) throws Exception {
-		String stuid=s[0];
-		String couid=s[1];
+	public void delete(String stuid,String couid) throws Exception {
 		RandomAccessFile raf=new RandomAccessFile(rootfile, "rw");
 		System.out.println("RandomAccessFile文件指针的初始位置:"+raf.getFilePointer()); 
 		raf.seek(Integer.valueOf((String)bookMap.get(stuid).get(couid)).intValue()*LINELENGTH+32);
@@ -140,6 +138,11 @@ public class StuCouTool implements tool {
 	public String findinfile(String f) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public void delete(String s) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

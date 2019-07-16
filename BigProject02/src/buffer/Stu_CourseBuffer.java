@@ -10,7 +10,6 @@ import quality.*;
 import java.util.Map.Entry;
 
 import EntityClass.*;
-import EntityClass.Student;
 import quality.StudentQuality;
 import filetool.*;
 //import filetool.StuCouQuality;
@@ -188,8 +187,9 @@ public class Stu_CourseBuffer {
 			}
 			synchronized(stu_couBuffer) {
 				stu_couBuffer.put(Stuid, map3);
+			
+				Check();
 			}
-			Check();
 			if(map.get(Couid)==null) {
 				System.out.println("该学生未选过这节课");
 				return -3;
@@ -238,7 +238,9 @@ public class Stu_CourseBuffer {
 				quality.changeflag();
 				map.put(Couid, quality);
 			//	tool2.add(s);
-				Check();
+				synchronized(stu_couBuffer) {
+					Check();
+				}
 				return 1;
 			}
 			//在文件结尾添加一行 一会根据格式写
@@ -252,7 +254,7 @@ public class Stu_CourseBuffer {
 		else {
 			Map<String,Stu_Course> map=null;
 			synchronized(stu_couBuffer) {
-				map=tool2.get(Stuid);
+				map=(Map<String, Stu_Course>)tool2.get(Stuid);
 			}
 			if(map==null||map.size()==0) {
 				System.out.println("这个学生没有选过任何课");
@@ -270,8 +272,9 @@ public class Stu_CourseBuffer {
 				map2.put(Couid, quality);
 				synchronized(stu_couBuffer) {
 					stu_couBuffer.put(Stuid, map2);
+				
+					Check();
 				}
-				Check();
 				return 1;
 			}
 			else if(map.get(Couid)!=null){
@@ -297,8 +300,9 @@ public class Stu_CourseBuffer {
 				map3.put(Couid, quality);
 				synchronized(stu_couBuffer) {
 					stu_couBuffer.put(Stuid, map3);
+				
+					Check();
 				}
-				Check();
 				return 1;
 			}
 		}
@@ -365,8 +369,9 @@ public class Stu_CourseBuffer {
 					map3.get(Couid).delflag();
 					synchronized(stubuffer) {
 						stu_couBuffer.put(Stuid, map3);
+					
+						Check();
 					}
-					Check();
 					return 1;
 				}
 			}
@@ -409,6 +414,7 @@ public class Stu_CourseBuffer {
 	
 	public void fresh() throws Exception {
 		synchronized(stubuffer) {
+			System.out.println("正在刷新文件");
 			Iterator<Entry<String, Map>> entries =stu_couBuffer.entrySet().iterator();
 			while(entries.hasNext()){
 			    Entry<String, Map> item = entries.next();
