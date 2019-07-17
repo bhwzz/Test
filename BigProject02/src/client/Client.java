@@ -107,7 +107,7 @@ public class Client { //包含一系列响应用户操作和需求的函数，如选课退课查询等
 	public void findStudent() 
 	{
 		
-		System.out.print("请输入要查询学生的信息：");
+		System.out.println("请输入要查询学生的信息：");
 		String id = ClientReadSource.readStudentId(); //读入学号
 		String s[] = r.findStudent(id);
 		switch(s[0].charAt(0)){
