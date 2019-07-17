@@ -226,6 +226,7 @@ public class Stu_CourseBuffer {
 			
 	public int add(String Stuid,String Couid) throws Exception			
 	{
+		System.out.println("-------"+Stuid+"    ADD    "+"Couid");
 		//String Stuid = s.getstuId();
 		//String Couid = s.getcouId();
 		Student student=null;
@@ -292,9 +293,11 @@ public class Stu_CourseBuffer {
 				Stu_Course s=new Stu_Course(Stuid,Couid,time);
 				//tool2.add(s);//往文件里面加入一条记录
 				Map<String, StuCouQuality> map2 = new HashMap<String, StuCouQuality>();
-				StuCouQuality quality=new StuCouQuality(s);
-				quality.changeflag();
-				map2.put(Couid, quality);
+//				synchronized(map2) {
+					StuCouQuality quality=new StuCouQuality(s);
+					quality.changeflag();
+					map2.put(Couid, quality);
+//				}
 				synchronized(stu_couBuffer) {
 					stu_couBuffer.put(Stuid, map2);
 				
@@ -302,7 +305,8 @@ public class Stu_CourseBuffer {
 				}
 				return 1;
 			}
-			else if(map.get(Couid)!=null){
+		
+			if(map.get(Couid)!=null){
 				System.out.println("这个学生已经选过这节课了");
 				return -4;
 			}
@@ -404,7 +408,7 @@ public class Stu_CourseBuffer {
 		}
 			
 	public void clear() throws Exception {
-		synchronized(stubuffer) {
+		synchronized(stu_couBuffer) {
 			Iterator<Entry<String, Map>> entries =stu_couBuffer.entrySet().iterator();
 			while(entries.hasNext()){
 			    Entry<String, Map> item = entries.next();
@@ -438,7 +442,7 @@ public class Stu_CourseBuffer {
 	
 	
 	public void fresh() throws Exception {
-		synchronized(stubuffer) {
+		synchronized(stu_couBuffer) {
 			System.out.println("正在刷新文件");
 			Iterator<Entry<String, Map>> entries =stu_couBuffer.entrySet().iterator();
 			while(entries.hasNext()){
